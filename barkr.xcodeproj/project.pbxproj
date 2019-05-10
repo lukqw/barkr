@@ -15,6 +15,7 @@
 		A1EDAE1B2284FD780039247D /* barkrTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1EDAE1A2284FD780039247D /* barkrTests.swift */; };
 		A1EDAE262284FD780039247D /* barkrUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1EDAE252284FD780039247D /* barkrUITests.swift */; };
 		A1EDAE34228502F30039247D /* RoutesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1EDAE33228502F30039247D /* RoutesViewController.swift */; };
+		DB807F40289C464102148011 /* Pods_barkr.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9CE796EC23ACC7BE024CE92A /* Pods_barkr.framework */; };
 		E5595D1F95530EB7E26616FC /* Pods_barkrUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 376EAC4FB0833467D19AB6A2 /* Pods_barkrUITests.framework */; };
 /* End PBXBuildFile section */
 
@@ -39,6 +40,7 @@
 		2051438105234CEE93E81857 /* Pods-barkrTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-barkrTests.release.xcconfig"; path = "Target Support Files/Pods-barkrTests/Pods-barkrTests.release.xcconfig"; sourceTree = "<group>"; };
 		376EAC4FB0833467D19AB6A2 /* Pods_barkrUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_barkrUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		6DDD42CD511CF3378C685127 /* Pods-barkr.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-barkr.debug.xcconfig"; path = "Target Support Files/Pods-barkr/Pods-barkr.debug.xcconfig"; sourceTree = "<group>"; };
+		9CE796EC23ACC7BE024CE92A /* Pods_barkr.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_barkr.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		9E7202838A3050B29E75885A /* Pods-barkrUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-barkrUITests.debug.xcconfig"; path = "Target Support Files/Pods-barkrUITests/Pods-barkrUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		A16203F11250ED5DCB0845F6 /* Pods-barkr.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-barkr.release.xcconfig"; path = "Target Support Files/Pods-barkr/Pods-barkr.release.xcconfig"; sourceTree = "<group>"; };
 		A1EDAE002284FD770039247D /* barkr.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = barkr.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -64,6 +66,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DB807F40289C464102148011 /* Pods_barkr.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -91,6 +94,7 @@
 			children = (
 				376EAC4FB0833467D19AB6A2 /* Pods_barkrUITests.framework */,
 				B2FF046539F6B8CFB9155362 /* Pods_barkrTests.framework */,
+				9CE796EC23ACC7BE024CE92A /* Pods_barkr.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -168,6 +172,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = A1EDAE2A2284FD780039247D /* Build configuration list for PBXNativeTarget "barkr" */;
 			buildPhases = (
+				A1722E0222859278000A5FCF /* ShellScript */,
 				7847FDF5267A4E8EF8B46345 /* [CP] Check Pods Manifest.lock */,
 				A1EDADFC2284FD770039247D /* Sources */,
 				A1EDADFD2284FD770039247D /* Frameworks */,
@@ -356,6 +361,23 @@
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
+		};
+		A1722E0222859278000A5FCF /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/SwiftLint/swiftlint\"\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 

@@ -9,15 +9,13 @@
 import UIKit
 
 class RoutesViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
-    
-    let favoriteRoutes:[String] = ["FavoritesTest", "FavoritesTest1"]
-    let historyRoutes:[String] = ["HistoryTest2", "HistoryTest3"]
+
+    let favoriteRoutes: [String] = ["FavoritesTest", "FavoritesTest1"]
+    let historyRoutes: [String] = ["HistoryTest2", "HistoryTest3"]
 
     @IBOutlet weak var routesSegmentedControl: UISegmentedControl!
     @IBOutlet weak var routesTableView: UITableView!
-    
-    
-    
+
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         switch routesSegmentedControl.selectedSegmentIndex {
         case 0:
@@ -25,38 +23,35 @@ class RoutesViewController: UIViewController, UITableViewDataSource, UITableView
         case 1:
             return historyRoutes.count
         default:
-            return 0;
+            return 0
         }
     }
-    
+
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let routesCell = tableView.dequeueReusableCell(withIdentifier: "routesCell")
         switch routesSegmentedControl.selectedSegmentIndex {
         case 0:
             routesCell?.textLabel!.text = favoriteRoutes[indexPath.row]
-            break
         case 1:
             routesCell?.textLabel!.text = historyRoutes[indexPath.row]
-            break
         default:
             break
         }
         return routesCell.unsafelyUnwrapped
     }
-    
+
     @IBAction func routesSegmentedControlPressed(_ sender: Any) {
-        routesTableView.reloadData();
+        routesTableView.reloadData()
     }
-    
+
     @IBAction func editRoutesPressed(_ sender: Any) {
-        
+
     }
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
     }
-    
 
     /*
     // MARK: - Navigation
