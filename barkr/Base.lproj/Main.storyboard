@@ -13,7 +13,6 @@
         <!--Tab Bar Controller-->
         <scene sceneID="yl2-sM-qoP">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="HuB-VB-40B" sceneMemberID="firstResponder"/>
                 <tabBarController id="49e-Tb-3d3" sceneMemberID="viewController">
                     <tabBar key="tabBar" contentMode="scaleToFill" id="W28-zg-YXA">
                         <rect key="frame" x="0.0" y="975" width="768" height="49"/>
@@ -28,6 +27,7 @@
                         <segue destination="10u-5s-sa5" kind="relationship" relationship="viewControllers" id="6MX-UD-CeB"/>
                     </connections>
                 </tabBarController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="HuB-VB-40B" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="0.0" y="0.0"/>
         </scene>
@@ -133,7 +133,7 @@
         <!--Map-->
         <scene sceneID="aWu-dL-Urc">
             <objects>
-                <viewController id="bff-qn-yId" sceneMemberID="viewController">
+                <viewController id="bff-qn-yId" customClass="MapViewController" customModule="barkr" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="g3b-xl-Hp6">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -141,17 +141,39 @@
                             <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="7VC-ft-zAD">
                                 <rect key="frame" x="0.0" y="44" width="414" height="769"/>
                             </mapView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lP4-FR-KsM">
+                                <rect key="frame" x="20" y="767" width="374" height="38"/>
+                                <color key="backgroundColor" red="0.1529411765" green="0.54901960780000003" blue="0.20784313730000001" alpha="0.84999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
+                                <inset key="contentEdgeInsets" minX="20" minY="10" maxX="20" maxY="10"/>
+                                <state key="normal" title="Button">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </state>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                        <integer key="value" value="5"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                                <connections>
+                                    <action selector="mapButtonPressed:" destination="bff-qn-yId" eventType="touchUpInside" id="abB-xa-Qhe"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
+                            <constraint firstItem="lP4-FR-KsM" firstAttribute="leading" secondItem="Dsd-rz-fqv" secondAttribute="leading" constant="20" id="Db8-Lb-e5L"/>
+                            <constraint firstItem="Dsd-rz-fqv" firstAttribute="bottom" secondItem="lP4-FR-KsM" secondAttribute="bottom" constant="8" id="Ua4-f1-lGr"/>
                             <constraint firstItem="7VC-ft-zAD" firstAttribute="top" secondItem="Dsd-rz-fqv" secondAttribute="top" id="aA3-Fa-ziJ"/>
                             <constraint firstItem="Dsd-rz-fqv" firstAttribute="bottom" secondItem="7VC-ft-zAD" secondAttribute="bottom" id="atP-Kx-LaP"/>
                             <constraint firstItem="7VC-ft-zAD" firstAttribute="leading" secondItem="Dsd-rz-fqv" secondAttribute="leading" id="b36-Tz-d5k"/>
+                            <constraint firstItem="Dsd-rz-fqv" firstAttribute="trailing" secondItem="lP4-FR-KsM" secondAttribute="trailing" constant="20" id="vyG-Uj-Zf2"/>
                             <constraint firstItem="Dsd-rz-fqv" firstAttribute="trailing" secondItem="7VC-ft-zAD" secondAttribute="trailing" id="ys0-KI-RPI"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="Dsd-rz-fqv"/>
                     </view>
                     <tabBarItem key="tabBarItem" title="Map" image="map" id="wjh-IZ-9IY"/>
+                    <connections>
+                        <outlet property="mapButton" destination="lP4-FR-KsM" id="TSk-mf-6xf"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Bw8-x9-ABe" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

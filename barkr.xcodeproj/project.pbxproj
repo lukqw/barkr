@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		6266E0E5E85B0989ABCF213B /* Pods_barkrTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B2FF046539F6B8CFB9155362 /* Pods_barkrTests.framework */; };
+		A1722E0422859AE3000A5FCF /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1722E0322859AE3000A5FCF /* MapViewController.swift */; };
 		A1EDAE042284FD770039247D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1EDAE032284FD770039247D /* AppDelegate.swift */; };
 		A1EDAE0B2284FD770039247D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A1EDAE092284FD770039247D /* Main.storyboard */; };
 		A1EDAE0D2284FD780039247D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A1EDAE0C2284FD780039247D /* Assets.xcassets */; };
@@ -43,6 +44,7 @@
 		9CE796EC23ACC7BE024CE92A /* Pods_barkr.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_barkr.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		9E7202838A3050B29E75885A /* Pods-barkrUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-barkrUITests.debug.xcconfig"; path = "Target Support Files/Pods-barkrUITests/Pods-barkrUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		A16203F11250ED5DCB0845F6 /* Pods-barkr.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-barkr.release.xcconfig"; path = "Target Support Files/Pods-barkr/Pods-barkr.release.xcconfig"; sourceTree = "<group>"; };
+		A1722E0322859AE3000A5FCF /* MapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
 		A1EDAE002284FD770039247D /* barkr.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = barkr.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A1EDAE032284FD770039247D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		A1EDAE0A2284FD770039247D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -143,6 +145,7 @@
 				A1EDAE0C2284FD780039247D /* Assets.xcassets */,
 				A1EDAE0E2284FD780039247D /* LaunchScreen.storyboard */,
 				A1EDAE112284FD780039247D /* Info.plist */,
+				A1722E0322859AE3000A5FCF /* MapViewController.swift */,
 			);
 			path = barkr;
 			sourceTree = "<group>";
@@ -387,6 +390,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				A1EDAE34228502F30039247D /* RoutesViewController.swift in Sources */,
+				A1722E0422859AE3000A5FCF /* MapViewController.swift in Sources */,
 				A1EDAE042284FD770039247D /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
