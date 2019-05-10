@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		60F6C135A0C3257D0064734F /* Pods_barkrTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D87353CCAE4EA6EB4550C7FF /* Pods_barkrTests.framework */; };
+		6266E0E5E85B0989ABCF213B /* Pods_barkrTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B2FF046539F6B8CFB9155362 /* Pods_barkrTests.framework */; };
 		A1EDAE042284FD770039247D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1EDAE032284FD770039247D /* AppDelegate.swift */; };
 		A1EDAE0B2284FD770039247D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A1EDAE092284FD770039247D /* Main.storyboard */; };
 		A1EDAE0D2284FD780039247D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A1EDAE0C2284FD780039247D /* Assets.xcassets */; };
@@ -55,7 +55,7 @@
 		A1EDAE272284FD780039247D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		A1EDAE33228502F30039247D /* RoutesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoutesViewController.swift; sourceTree = "<group>"; };
 		ADD3DF9E6D63B2B932328C31 /* Pods-barkrUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-barkrUITests.release.xcconfig"; path = "Target Support Files/Pods-barkrUITests/Pods-barkrUITests.release.xcconfig"; sourceTree = "<group>"; };
-		D87353CCAE4EA6EB4550C7FF /* Pods_barkrTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_barkrTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		B2FF046539F6B8CFB9155362 /* Pods_barkrTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_barkrTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		EF96C2D9B02B041A70F7A128 /* Pods-barkrTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-barkrTests.debug.xcconfig"; path = "Target Support Files/Pods-barkrTests/Pods-barkrTests.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -71,7 +71,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				60F6C135A0C3257D0064734F /* Pods_barkrTests.framework in Frameworks */,
+				6266E0E5E85B0989ABCF213B /* Pods_barkrTests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -89,8 +89,8 @@
 		1188F8746CB41DB243613612 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				D87353CCAE4EA6EB4550C7FF /* Pods_barkrTests.framework */,
 				376EAC4FB0833467D19AB6A2 /* Pods_barkrUITests.framework */,
+				B2FF046539F6B8CFB9155362 /* Pods_barkrTests.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";

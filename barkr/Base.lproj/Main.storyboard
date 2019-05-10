@@ -19,19 +19,23 @@
                         <rect key="frame" x="0.0" y="975" width="768" height="49"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                         <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="tintColor" red="0.1529411765" green="0.54901960780000003" blue="0.20784313730000001" alpha="0.84999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="selectedImageTintColor" red="0.1529411765" green="0.54901960780000003" blue="0.20784313730000001" alpha="0.84999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
                     </tabBar>
                     <connections>
                         <segue destination="WPh-EI-Cx9" kind="relationship" relationship="viewControllers" id="BwZ-hf-uvi"/>
+                        <segue destination="bff-qn-yId" kind="relationship" relationship="viewControllers" id="7X7-s6-abI"/>
+                        <segue destination="10u-5s-sa5" kind="relationship" relationship="viewControllers" id="6MX-UD-CeB"/>
                     </connections>
                 </tabBarController>
             </objects>
             <point key="canvasLocation" x="0.0" y="0.0"/>
         </scene>
-        <!--Item-->
+        <!--Routes-->
         <scene sceneID="IDU-vw-8b4">
             <objects>
                 <navigationController id="WPh-EI-Cx9" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Item" id="G1V-I3-gsM"/>
+                    <tabBarItem key="tabBarItem" title="Routes" image="routes" id="G1V-I3-gsM"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="U9L-8K-ObL">
                         <rect key="frame" x="0.0" y="44" width="414" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -42,12 +46,12 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="CJc-f8-lgC" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="893" y="0.0"/>
+            <point key="canvasLocation" x="765" y="-639"/>
         </scene>
         <!--Routes-->
         <scene sceneID="Hqd-QJ-1qY">
             <objects>
-                <viewController id="R3M-Lf-QYJ" sceneMemberID="viewController">
+                <viewController id="R3M-Lf-QYJ" customClass="RoutesViewController" customModule="barkr" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="aNg-xV-BWa">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -55,9 +59,12 @@
                             <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="Qsz-iR-E1X">
                                 <rect key="frame" x="20" y="96" width="374" height="29"/>
                                 <segments>
-                                    <segment title="First"/>
-                                    <segment title="Second"/>
+                                    <segment title="Favorites"/>
+                                    <segment title="History"/>
                                 </segments>
+                                <connections>
+                                    <action selector="routesSegmentedControlPressed:" destination="R3M-Lf-QYJ" eventType="valueChanged" id="67Q-gy-RDe"/>
+                                </connections>
                             </segmentedControl>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="44E-eS-2do">
                                 <rect key="frame" x="0.0" y="132" width="414" height="681"/>
@@ -72,30 +79,105 @@
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                 </prototypes>
+                                <connections>
+                                    <outlet property="dataSource" destination="R3M-Lf-QYJ" id="j4P-7Q-4g7"/>
+                                    <outlet property="delegate" destination="R3M-Lf-QYJ" id="Ob3-wd-SrU"/>
+                                </connections>
                             </tableView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
-                            <constraint firstItem="Qsz-iR-E1X" firstAttribute="top" secondItem="X1Z-Hz-z0P" secondAttribute="top" constant="8" id="69F-HQ-qCg"/>
-                            <constraint firstItem="X1Z-Hz-z0P" firstAttribute="bottom" secondItem="44E-eS-2do" secondAttribute="bottom" id="ESJ-mG-Q3a"/>
-                            <constraint firstItem="Qsz-iR-E1X" firstAttribute="leading" secondItem="X1Z-Hz-z0P" secondAttribute="leading" constant="20" id="F8U-5U-kog"/>
-                            <constraint firstItem="44E-eS-2do" firstAttribute="top" secondItem="Qsz-iR-E1X" secondAttribute="bottom" constant="8" id="LyF-c3-ov0"/>
-                            <constraint firstItem="X1Z-Hz-z0P" firstAttribute="bottom" secondItem="44E-eS-2do" secondAttribute="bottom" id="fle-6a-yMM"/>
-                            <constraint firstItem="X1Z-Hz-z0P" firstAttribute="trailing" secondItem="44E-eS-2do" secondAttribute="trailing" id="gOB-bM-gCg"/>
-                            <constraint firstItem="X1Z-Hz-z0P" firstAttribute="trailing" secondItem="Qsz-iR-E1X" secondAttribute="trailing" constant="20" id="mmb-EN-phk"/>
-                            <constraint firstItem="44E-eS-2do" firstAttribute="leading" secondItem="X1Z-Hz-z0P" secondAttribute="leading" id="s97-Fv-In8"/>
-                            <constraint firstItem="44E-eS-2do" firstAttribute="trailing" secondItem="X1Z-Hz-z0P" secondAttribute="trailing" id="xnM-sD-7ev"/>
-                            <constraint firstItem="44E-eS-2do" firstAttribute="leading" secondItem="X1Z-Hz-z0P" secondAttribute="leading" id="xng-gv-9Yl"/>
+                            <constraint firstItem="Qsz-iR-E1X" firstAttribute="leading" secondItem="aNg-xV-BWa" secondAttribute="leadingMargin" id="5KA-ta-UZX"/>
+                            <constraint firstItem="44E-eS-2do" firstAttribute="leading" secondItem="aNg-xV-BWa" secondAttribute="leading" id="6Zx-Ah-wx9"/>
+                            <constraint firstItem="Qsz-iR-E1X" firstAttribute="top" secondItem="X1Z-Hz-z0P" secondAttribute="top" constant="8" id="Clu-b1-VEz"/>
+                            <constraint firstAttribute="trailing" secondItem="44E-eS-2do" secondAttribute="trailing" id="NGB-ip-cOL"/>
+                            <constraint firstItem="44E-eS-2do" firstAttribute="top" secondItem="Qsz-iR-E1X" secondAttribute="bottom" constant="8" symbolic="YES" id="cIp-Ef-bCd"/>
+                            <constraint firstItem="44E-eS-2do" firstAttribute="bottom" secondItem="X1Z-Hz-z0P" secondAttribute="bottom" id="mqJ-ZL-ISl"/>
+                            <constraint firstItem="Qsz-iR-E1X" firstAttribute="centerX" secondItem="44E-eS-2do" secondAttribute="centerX" id="rnV-rj-Xbk"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="X1Z-Hz-z0P"/>
                     </view>
                     <navigationItem key="navigationItem" title="Routes" id="Rj1-M6-2Iu">
-                        <barButtonItem key="rightBarButtonItem" style="plain" systemItem="edit" id="DiR-LB-Mjs"/>
+                        <barButtonItem key="rightBarButtonItem" style="done" systemItem="edit" id="DiR-LB-Mjs">
+                            <connections>
+                                <action selector="editRoutesPressed:" destination="R3M-Lf-QYJ" id="IcK-5r-S10"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
+                    <connections>
+                        <outlet property="routesSegmentedControl" destination="Qsz-iR-E1X" id="oay-zh-Jz7"/>
+                        <outlet property="routesTableView" destination="44E-eS-2do" id="94z-o4-cJ8"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="s96-ih-46c" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1791" y="0.0"/>
+            <point key="canvasLocation" x="1574" y="-640"/>
+        </scene>
+        <!--Statistics-->
+        <scene sceneID="34q-hh-qlf">
+            <objects>
+                <navigationController id="10u-5s-sa5" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="Statistics" image="statistics" id="V72-t4-O9m"/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="TaV-63-Iv3">
+                        <rect key="frame" x="0.0" y="44" width="414" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="g76-JN-PuL" kind="relationship" relationship="rootViewController" id="XCE-9a-YJg"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="7or-ZT-eaV" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="765" y="0.0"/>
+        </scene>
+        <!--Map-->
+        <scene sceneID="aWu-dL-Urc">
+            <objects>
+                <viewController id="bff-qn-yId" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="g3b-xl-Hp6">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="7VC-ft-zAD">
+                                <rect key="frame" x="0.0" y="44" width="414" height="769"/>
+                            </mapView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="7VC-ft-zAD" firstAttribute="top" secondItem="Dsd-rz-fqv" secondAttribute="top" id="aA3-Fa-ziJ"/>
+                            <constraint firstItem="Dsd-rz-fqv" firstAttribute="bottom" secondItem="7VC-ft-zAD" secondAttribute="bottom" id="atP-Kx-LaP"/>
+                            <constraint firstItem="7VC-ft-zAD" firstAttribute="leading" secondItem="Dsd-rz-fqv" secondAttribute="leading" id="b36-Tz-d5k"/>
+                            <constraint firstItem="Dsd-rz-fqv" firstAttribute="trailing" secondItem="7VC-ft-zAD" secondAttribute="trailing" id="ys0-KI-RPI"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="Dsd-rz-fqv"/>
+                    </view>
+                    <tabBarItem key="tabBarItem" title="Map" image="map" id="wjh-IZ-9IY"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Bw8-x9-ABe" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="764" y="644"/>
+        </scene>
+        <!--Statistics-->
+        <scene sceneID="3gA-ht-gDj">
+            <objects>
+                <viewController id="g76-JN-PuL" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="FRS-or-jdF">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <viewLayoutGuide key="safeArea" id="s5B-xK-Z5E"/>
+                    </view>
+                    <navigationItem key="navigationItem" title="Statistics" id="0IE-Nu-d6v"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="ox8-rd-1T1" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1574" y="0.0"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="map" width="30" height="30"/>
+        <image name="routes" width="30" height="30"/>
+        <image name="statistics" width="30" height="30"/>
+    </resources>
+    <color key="tintColor" red="0.15294117647058825" green="0.5490196078431373" blue="0.20784313725490194" alpha="0.84999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
 </document>
