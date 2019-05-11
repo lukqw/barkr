@@ -2,6 +2,9 @@
 <Workspace
    version = "1.0">
    <FileRef
+      location = "group:rules.swiftlint.yml">
+   </FileRef>
+   <FileRef
       location = "group:barkr.xcodeproj">
    </FileRef>
    <FileRef

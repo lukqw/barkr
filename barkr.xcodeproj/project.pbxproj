@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3738004A2286555A00E45DAE /* ChartViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 373800492286555A00E45DAE /* ChartViewController.swift */; };
+		373BA75B2285AD72003B4334 /* StatisticsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 373BA75A2285AD72003B4334 /* StatisticsViewController.swift */; };
 		6266E0E5E85B0989ABCF213B /* Pods_barkrTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B2FF046539F6B8CFB9155362 /* Pods_barkrTests.framework */; };
 		A1722E0422859AE3000A5FCF /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1722E0322859AE3000A5FCF /* MapViewController.swift */; };
 		A1EDAE042284FD770039247D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1EDAE032284FD770039247D /* AppDelegate.swift */; };
@@ -39,6 +41,8 @@
 
 /* Begin PBXFileReference section */
 		2051438105234CEE93E81857 /* Pods-barkrTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-barkrTests.release.xcconfig"; path = "Target Support Files/Pods-barkrTests/Pods-barkrTests.release.xcconfig"; sourceTree = "<group>"; };
+		373800492286555A00E45DAE /* ChartViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChartViewController.swift; sourceTree = "<group>"; };
+		373BA75A2285AD72003B4334 /* StatisticsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatisticsViewController.swift; sourceTree = "<group>"; };
 		376EAC4FB0833467D19AB6A2 /* Pods_barkrUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_barkrUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		6DDD42CD511CF3378C685127 /* Pods-barkr.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-barkr.debug.xcconfig"; path = "Target Support Files/Pods-barkr/Pods-barkr.debug.xcconfig"; sourceTree = "<group>"; };
 		9CE796EC23ACC7BE024CE92A /* Pods_barkr.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_barkr.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -141,6 +145,8 @@
 			children = (
 				A1EDAE032284FD770039247D /* AppDelegate.swift */,
 				A1EDAE092284FD770039247D /* Main.storyboard */,
+				373800492286555A00E45DAE /* ChartViewController.swift */,
+				373BA75A2285AD72003B4334 /* StatisticsViewController.swift */,
 				A1EDAE33228502F30039247D /* RoutesViewController.swift */,
 				A1EDAE0C2284FD780039247D /* Assets.xcassets */,
 				A1EDAE0E2284FD780039247D /* LaunchScreen.storyboard */,
@@ -175,11 +181,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = A1EDAE2A2284FD780039247D /* Build configuration list for PBXNativeTarget "barkr" */;
 			buildPhases = (
-				A1722E0222859278000A5FCF /* ShellScript */,
 				7847FDF5267A4E8EF8B46345 /* [CP] Check Pods Manifest.lock */,
+				A1722E0222859278000A5FCF /* ShellScript */,
 				A1EDADFC2284FD770039247D /* Sources */,
 				A1EDADFD2284FD770039247D /* Frameworks */,
 				A1EDADFE2284FD770039247D /* Resources */,
+				443E507E49D768256C3EE21C /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -321,6 +328,28 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
+		443E507E49D768256C3EE21C /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-barkr/Pods-barkr-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/Charts/Charts.framework",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Charts.framework",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-barkr/Pods-barkr-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 		7847FDF5267A4E8EF8B46345 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -392,6 +421,8 @@
 				A1EDAE34228502F30039247D /* RoutesViewController.swift in Sources */,
 				A1722E0422859AE3000A5FCF /* MapViewController.swift in Sources */,
 				A1EDAE042284FD770039247D /* AppDelegate.swift in Sources */,
+				373BA75B2285AD72003B4334 /* StatisticsViewController.swift in Sources */,
+				3738004A2286555A00E45DAE /* ChartViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

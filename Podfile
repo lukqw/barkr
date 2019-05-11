@@ -5,6 +5,7 @@ target 'barkr' do
 
   # Pods for barkr
 pod 'SwiftLint'
+pod 'Charts'
 
   target 'barkrTests' do
     inherit! :search_paths
@@ -15,3 +16,4 @@ pod 'SwiftLint'
   end
 
 end
+

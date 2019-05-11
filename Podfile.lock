@@ -1,16 +1,22 @@
 PODS:
+  - Charts (3.3.0):
+    - Charts/Core (= 3.3.0)
+  - Charts/Core (3.3.0)
   - SwiftLint (0.32.0)
 
 DEPENDENCIES:
+  - Charts
   - SwiftLint
 
 SPEC REPOS:
   https://github.com/cocoapods/specs.git:
+    - Charts
     - SwiftLint
 
 SPEC CHECKSUMS:
+  Charts: ec1f57f9340054155691e84d4544a1d239d382c5
   SwiftLint: 009a898ef2a1c851f45e1b59349bf6ff2ddc990d
 
-PODFILE CHECKSUM: cf4be8ea9fb107ad7733742d36c7d76f7953a995
+PODFILE CHECKSUM: 74074aa6e6c46fdd3cd01d1f8ed70cce2e7da6da
 
 COCOAPODS: 1.6.1
