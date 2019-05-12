@@ -7,14 +7,20 @@
 //
 
 import UIKit
+import MapKit
 
 class MapViewController: UIViewController {
+    let regionRadius: CLLocationDistance = 1000
 
-    @IBOutlet weak var mapButton: UIButton!
+    @IBOutlet weak var mapViewOutlet: MKMapView!
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
+        mapViewOutlet.userTrackingMode = .follow
+        /*if let userLocation = mapViewOutlet.userLocation.location?.coordinate {
+            let span = MKCoordinateSpan(latitudeDelta: 0.05, longitudeDelta: 0.05)
+            let region = MKCoordinateRegion(center: userLocation, span: span)
+            mapViewOutlet.setRegion(region, animated: true)
+        }*/
     }
 
     /*
@@ -26,8 +32,5 @@ class MapViewController: UIViewController {
         // Pass the selected object to the new view controller.
     }
     */
-    @IBAction func mapButtonPressed(_ sender: Any) {
-        mapButton.setTitle("test", for: UIControl.State.normal)
-    }
 
 }
