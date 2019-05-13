@@ -5,6 +5,7 @@ target 'barkr' do
 
   # Pods for barkr
 pod 'SwiftLint'
+pod 'FoldingCell'
 
   target 'barkrTests' do
     inherit! :search_paths
