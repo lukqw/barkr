@@ -154,7 +154,6 @@
 			isa = PBXGroup;
 			children = (
 				373BA75A2285AD72003B4334 /* StatisticsViewController.swift */,
-				A1EDAE33228502F30039247D /* RoutesViewController.swift */,
 				A1722E0322859AE3000A5FCF /* MapViewController.swift */,
 				A1EDAE032284FD770039247D /* AppDelegate.swift */,
 				A1E786F722885553005718BA /* BaseTabBarController.swift */,
@@ -622,7 +621,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = BC5KR3K89B;
 				INFOPLIST_FILE = barkr/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.2;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -642,7 +641,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = BC5KR3K89B;
 				INFOPLIST_FILE = barkr/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.2;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
