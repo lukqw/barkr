@@ -1,20 +1,16 @@
 PODS:
-  - FoldingCell (5.0.1)
   - SwiftLint (0.32.0)
 
 DEPENDENCIES:
-  - FoldingCell
   - SwiftLint
 
 SPEC REPOS:
   https://github.com/cocoapods/specs.git:
-    - FoldingCell
     - SwiftLint
 
 SPEC CHECKSUMS:
-  FoldingCell: 9197b915a415af9e52a857964066797af6a51c2b
   SwiftLint: 009a898ef2a1c851f45e1b59349bf6ff2ddc990d
 
-PODFILE CHECKSUM: c0d314a66257b39959de7c75f1598e6ab02132b0
+PODFILE CHECKSUM: cf4be8ea9fb107ad7733742d36c7d76f7953a995
 
 COCOAPODS: 1.6.1

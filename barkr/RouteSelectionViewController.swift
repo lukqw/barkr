@@ -6,120 +6,105 @@
 //  Copyright © 2019 luk. All rights reserved.
 //
 
-import FoldingCell
 import UIKit
 import MapKit
 
-class RouteSelectionViewController: UITableViewController {
+class RouteSelectionViewController: UIViewController, MKMapViewDelegate, UITableViewDataSource, UITableViewDelegate {
 
-    enum Const {
-        static let closeCellHeight: CGFloat = 86
-        static let openCellHeight: CGFloat = 400
-        static let rowsCount = 10
+    var routeArray: [Route] = [Route(time: 30, dogBags: 5, distance: 5300),
+                             Route(time: 27, dogBags: 4, distance: 5025),
+                             Route(time: 33, dogBags: 3, distance: 5740),
+                             Route(time: 34, dogBags: 3, distance: 5800),
+                             Route(time: 23, dogBags: 1, distance: 4700),
+                             Route(time: 26, dogBags: 0, distance: 4900)]
+    var dogBagArray: [DogBag] = [DogBag(coordinate: CLLocationCoordinate2D(latitude: 48.167471, longitude: 16.278580)),
+                                 DogBag(coordinate: CLLocationCoordinate2D(latitude: 48.168632, longitude: 16.275215)),
+                                 DogBag(coordinate: CLLocationCoordinate2D(latitude: 48.170082, longitude: 16.277615)),
+                                 DogBag(coordinate: CLLocationCoordinate2D(latitude: 48.168849, longitude: 16.279870))]
+
+    @IBOutlet var routeSelectionTableView: UITableView!
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return routeArray.count
     }
+    
 
-    var cellHeights: [CGFloat] = []
-
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        setup()
-    }
-
-    private func setup() {
-        cellHeights = Array(repeating: Const.closeCellHeight, count: Const.rowsCount)
-        tableView.estimatedRowHeight = Const.closeCellHeight
-        tableView.rowHeight = UITableView.automaticDimension
-        if #available(iOS 10.0, *) {
-            tableView.refreshControl = UIRefreshControl()
-            tableView.refreshControl?.addTarget(self, action: #selector(refreshHandler), for: .valueChanged)
-        }
-    }
-
-    @objc func refreshHandler() {
-        let deadlineTime = DispatchTime.now() + .seconds(1)
-        DispatchQueue.main.asyncAfter(deadline: deadlineTime, execute: { [weak self] in
-            if #available(iOS 10.0, *) {
-                self?.tableView.refreshControl?.endRefreshing()
-            }
-            self?.tableView.reloadData()
-        })
-    }
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
-}
-
-extension RouteSelectionViewController {
-
-    override func tableView(_: UITableView, numberOfRowsInSection _: Int) -> Int {
-        return 10
-    }
-
-    override func tableView(_: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        guard case let cell as RouteSelectionCell = cell else {
-            return
-        }
-
-        cell.backgroundColor = .clear
-
-        if cellHeights[indexPath.row] == Const.closeCellHeight {
-            cell.unfold(false, animated: false, completion: nil)
-        } else {
-            cell.unfold(true, animated: false, completion: nil)
-        }
-
-    }
-
-    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = routeSelectionTableView.dequeueReusableCell(withIdentifier: "routeSelectionCell", for: indexPath)
         // swiftlint:disable force_cast
-        let cell = tableView.dequeueReusableCell(withIdentifier: "routeSelectionCell", for: indexPath) as! FoldingCell
-        let durations: [TimeInterval] = [0.26, 0.2, 0.2]
-        cell.durationsForExpandedState = durations
-        cell.durationsForCollapsedState = durations
+        as! RouteSelectionCell
+        // swiftlint:enable force_cast
+
+        let route = routeArray[indexPath.row]
+        cell.timeLabel?.text = String(route.time) + "min"
+        cell.bagFlagLabel?.text = String(route.dogBags)
+        cell.distanceLabel?.text = String(route.distance) + "m"
+
         return cell
     }
 
-    override func tableView(_: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return cellHeights[indexPath.row]
-    }
+    @IBOutlet var routeSelectionMap: MKMapView!
+    override func viewDidLoad() {
+        super.viewDidLoad()
 
-    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        routeSelectionMap.delegate = self
 
-        // swiftlint:disable force_cast
-        let cell = tableView.cellForRow(at: indexPath) as! FoldingCell
+        let sourceLocation = routeSelectionMap.userLocation.location?.coordinate
 
-        if cell.isAnimating() {
-            return
-        }
+        routeSelectionMap.register(DogBagMarkerView.self,
+                                   forAnnotationViewWithReuseIdentifier: MKMapViewDefaultAnnotationViewReuseIdentifier)
 
-        var duration = 0.0
-        let cellIsCollapsed = cellHeights[indexPath.row] == Const.closeCellHeight
-        if cellIsCollapsed {
-            cellHeights[indexPath.row] = Const.openCellHeight
-            cell.unfold(true, animated: true, completion: nil)
-            duration = 0.5
-        } else {
-            cellHeights[indexPath.row] = Const.closeCellHeight
-            cell.unfold(false, animated: true, completion: nil)
-            duration = 0.8
-        }
+        self.routeSelectionMap.showAnnotations(dogBagArray, animated: true)
 
-        UIView.animate(withDuration: duration, delay: 0, options: .curveEaseOut, animations: { () -> Void in
-            tableView.beginUpdates()
-            tableView.endUpdates()
+        if sourceLocation != nil {
+            drawFromAtoB(sourceLocation.unsafelyUnwrapped, end: dogBagArray[0].coordinate)
 
-            // fix https://github.com/Ramotion/folding-cell/issues/169
-            if cell.frame.maxY > tableView.frame.maxY {
-                tableView.scrollToRow(at: indexPath, at: UITableView.ScrollPosition.bottom, animated: true)
+            let dogBagArrayLength = dogBagArray.count-1
+            for index in 0...dogBagArrayLength-1 {
+                drawFromAtoB(dogBagArray[index].coordinate, end: dogBagArray[index+1].coordinate)
             }
-        }, completion: nil)
+            drawFromAtoB(dogBagArray[dogBagArrayLength].coordinate, end: sourceLocation.unsafelyUnwrapped)
+
+        }
+        routeSelectionMap.userTrackingMode = .follow
     }
+
+    func drawFromAtoB(_ start: CLLocationCoordinate2D, end: CLLocationCoordinate2D) {
+        let sourcePlacemark = MKPlacemark(coordinate: start)
+        let destinationPlacemark = MKPlacemark(coordinate: end)
+
+        let sourceMapItem = MKMapItem(placemark: sourcePlacemark)
+        let destinationMapItem = MKMapItem(placemark: destinationPlacemark)
+
+        let directionRequest = MKDirections.Request()
+        directionRequest.source = sourceMapItem
+        directionRequest.destination = destinationMapItem
+        directionRequest.requestsAlternateRoutes = false
+        directionRequest.transportType = .walking
+
+        let directions = MKDirections(request: directionRequest)
+        
+        directions.calculate { (response, error) in
+            guard let response = response else {
+                if let error = error {
+                    print(error)
+                }
+                return
+            }
+            let route = response.routes[0]
+            self.routeSelectionMap.addOverlay(route.polyline, level: MKOverlayLevel.aboveRoads)
+        }
+    }
+
+    func mapView(_ mapView: MKMapView, rendererFor overlay: MKOverlay) -> MKOverlayRenderer {
+        let renderer = MKPolylineRenderer(overlay: overlay)
+        renderer.strokeColor = self.view.tintColor
+        renderer.lineWidth = 4.0
+        return renderer
+    }
+
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        print("section \(indexPath.section)")
+        print("row \(indexPath.row)")
+    }
+
 }

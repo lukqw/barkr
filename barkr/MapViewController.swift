@@ -10,7 +10,6 @@ import UIKit
 import MapKit
 
 class MapViewController: UIViewController {
-    let regionRadius: CLLocationDistance = 1000
 
     @IBOutlet weak var mapViewOutlet: MKMapView!
     override func viewDidLoad() {
