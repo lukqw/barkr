@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		372E6150228CE478009D300C /* CurrentRouteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 372E614F228CE478009D300C /* CurrentRouteViewController.swift */; };
 		373BA75B2285AD72003B4334 /* StatisticsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 373BA75A2285AD72003B4334 /* StatisticsViewController.swift */; };
 		6266E0E5E85B0989ABCF213B /* Pods_barkrTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B2FF046539F6B8CFB9155362 /* Pods_barkrTests.framework */; };
 		A1722E0422859AE3000A5FCF /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1722E0322859AE3000A5FCF /* MapViewController.swift */; };
@@ -46,6 +47,7 @@
 
 /* Begin PBXFileReference section */
 		2051438105234CEE93E81857 /* Pods-barkrTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-barkrTests.release.xcconfig"; path = "Target Support Files/Pods-barkrTests/Pods-barkrTests.release.xcconfig"; sourceTree = "<group>"; };
+		372E614F228CE478009D300C /* CurrentRouteViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrentRouteViewController.swift; sourceTree = "<group>"; };
 		373BA75A2285AD72003B4334 /* StatisticsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatisticsViewController.swift; sourceTree = "<group>"; };
 		376EAC4FB0833467D19AB6A2 /* Pods_barkrUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_barkrUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		6DDD42CD511CF3378C685127 /* Pods-barkr.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-barkr.debug.xcconfig"; path = "Target Support Files/Pods-barkr/Pods-barkr.debug.xcconfig"; sourceTree = "<group>"; };
@@ -158,6 +160,7 @@
 				A1EDAE032284FD770039247D /* AppDelegate.swift */,
 				A1E786F722885553005718BA /* BaseTabBarController.swift */,
 				A1EDAE092284FD770039247D /* Main.storyboard */,
+				372E614F228CE478009D300C /* CurrentRouteViewController.swift */,
 				A1EBD89B228B63EB001D36A5 /* Route.swift */,
 				A1EEB1392289C6860064475B /* RouteSelectionCell.swift */,
 				A1EEB1352289BA600064475B /* RouteSelectionViewController.swift */,
@@ -443,6 +446,7 @@
 				A1EBD89A228B5390001D36A5 /* DogBagViews.swift in Sources */,
 				A1EDAE042284FD770039247D /* AppDelegate.swift in Sources */,
 				373BA75B2285AD72003B4334 /* StatisticsViewController.swift in Sources */,
+				372E6150228CE478009D300C /* CurrentRouteViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
