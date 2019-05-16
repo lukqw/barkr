@@ -49,37 +49,11 @@ class RouteSelectionViewController: UIViewController, MKMapViewDelegate, UITable
     @IBOutlet var routeSelectionTableView: UITableView!
     @IBOutlet var routeSelectionMap: MKMapView!
 
-    @IBAction func minKmSegmentedControlPressed(_ sender: Any) {
-        if minKmSegmentedControl.selectedSegmentIndex == 0 {
-            pickerValueField.titleLabel?.text = String(durationValue) + " min"
-        } else {
-            pickerValueField.titleLabel?.text = " " + String(kmValue) + " km"
-        }
-    }
-
-    @IBAction func dismissVC(_ sender: Any) {
-        dismiss(animated: true, completion: nil)
-    }
-
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "sequeOpenPicker" {
-            // swiftlint:disable force_cast
-            let popup = segue.destination as! PickerViewController
-            // swiftlint:enable force_cast
-            if minKmSegmentedControl.selectedSegmentIndex == 0 {
-                popup.isKm = false
-                popup.value = durationValue
-            } else {
-                popup.isKm = true
-                popup.value = kmValue
-            }
-        }
-    }
-
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        fetchNotificaitonPicker = NotificationCenter.default.addObserver(forName: NSNotification.Name(rawValue: "valuePicker"), object: nil, queue: .main) { (notification) in
+        fetchNotificaitonPicker = NotificationCenter.default.addObserver(forName: NSNotification.Name(rawValue: "valuePicker"), object: nil, queue: .main) {
+            (notification) in
             // swiftlint:disable force_cast
             let pickerVC = notification.object as! PickerViewController
             // swiftlint:enable force_cast
@@ -99,6 +73,33 @@ class RouteSelectionViewController: UIViewController, MKMapViewDelegate, UITable
         drawRouteForDogBags(dogBagArray[0])
         routeSelectionTableView.selectRow(at: IndexPath(row: 0, section: 0), animated: false, scrollPosition: .top)
         routeSelectionMap.userTrackingMode = .follow
+    }
+    
+    @IBAction func minKmSegmentedControlPressed(_ sender: Any) {
+        if minKmSegmentedControl.selectedSegmentIndex == 0 {
+            pickerValueField.titleLabel?.text = String(durationValue) + " min"
+        } else {
+            pickerValueField.titleLabel?.text = " " + String(kmValue) + " km"
+        }
+    }
+    
+    @IBAction func dismissVC(_ sender: Any) {
+        dismiss(animated: true, completion: nil)
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "sequeOpenPicker" {
+            // swiftlint:disable force_cast
+            let popup = segue.destination as! PickerViewController
+            // swiftlint:enable force_cast
+            if minKmSegmentedControl.selectedSegmentIndex == 0 {
+                popup.isKm = false
+                popup.value = durationValue
+            } else {
+                popup.isKm = true
+                popup.value = kmValue
+            }
+        }
     }
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -173,8 +174,8 @@ class RouteSelectionViewController: UIViewController, MKMapViewDelegate, UITable
         self.routeSelectionMap.removeAnnotations(allAnnotations)
         let allRoutes = self.routeSelectionMap.overlays
         self.routeSelectionMap.removeOverlays(allRoutes)
-        drawRouteForDogBags(self.dogBagArray[indexPath.row])
         self.routeSelectionMap.showAnnotations(self.dogBagArray[indexPath.row], animated: true)
+        drawRouteForDogBags(self.dogBagArray[indexPath.row])
         routeSelectionMap.userTrackingMode = .follow
     }
 
