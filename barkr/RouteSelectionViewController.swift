@@ -11,16 +11,34 @@ import MapKit
 
 class RouteSelectionViewController: UIViewController, MKMapViewDelegate, UITableViewDataSource, UITableViewDelegate {
 
-    var routeArray: [Route] = [Route(time: 30, dogBags: 5, distance: 5300),
+    var routeArray: [Route] = [Route(time: 30, dogBags: 4, distance: 5300),
                              Route(time: 27, dogBags: 4, distance: 5025),
-                             Route(time: 33, dogBags: 3, distance: 5740),
+                             Route(time: 33, dogBags: 4, distance: 5740),
                              Route(time: 34, dogBags: 3, distance: 5800),
-                             Route(time: 23, dogBags: 1, distance: 4700),
-                             Route(time: 26, dogBags: 0, distance: 4900)]
-    var dogBagArray: [DogBag] = [DogBag(coordinate: CLLocationCoordinate2D(latitude: 48.167471, longitude: 16.278580)),
-                                 DogBag(coordinate: CLLocationCoordinate2D(latitude: 48.168632, longitude: 16.275215)),
-                                 DogBag(coordinate: CLLocationCoordinate2D(latitude: 48.170082, longitude: 16.277615)),
-                                 DogBag(coordinate: CLLocationCoordinate2D(latitude: 48.168849, longitude: 16.279870))]
+                             Route(time: 23, dogBags: 4, distance: 4700),
+                             Route(time: 26, dogBags: 2, distance: 4900)]
+    var dogBagArray: [[DogBag]] = [[DogBag(coordinate: CLLocationCoordinate2D(latitude: 48.167471, longitude: 16.278580)),
+                                    DogBag(coordinate: CLLocationCoordinate2D(latitude: 48.168632, longitude: 16.275215)),
+                                    DogBag(coordinate: CLLocationCoordinate2D(latitude: 48.170082, longitude: 16.277615)),
+                                    DogBag(coordinate: CLLocationCoordinate2D(latitude: 48.168849, longitude: 16.279870))],
+                                   [DogBag(coordinate: CLLocationCoordinate2D(latitude: 48.166939, longitude: 16.280633)),
+                                    DogBag(coordinate: CLLocationCoordinate2D(latitude: 48.164921, longitude: 16.281158)),
+                                    DogBag(coordinate: CLLocationCoordinate2D(latitude: 48.165894, longitude: 16.284109)),
+                                    DogBag(coordinate: CLLocationCoordinate2D(latitude: 48.167983, longitude: 16.285675))],
+                                   [DogBag(coordinate: CLLocationCoordinate2D(latitude: 48.170932, longitude: 16.282821)),
+                                    DogBag(coordinate: CLLocationCoordinate2D(latitude: 48.171461, longitude: 16.279237)),
+                                    DogBag(coordinate: CLLocationCoordinate2D(latitude: 48.170082, longitude: 16.277615)),
+                                    DogBag(coordinate: CLLocationCoordinate2D(latitude: 48.168849, longitude: 16.279870))],
+                                   [DogBag(coordinate: CLLocationCoordinate2D(latitude: 48.168849, longitude: 16.279870)),
+                                    DogBag(coordinate: CLLocationCoordinate2D(latitude: 48.167471, longitude: 16.278580)),
+                                    DogBag(coordinate: CLLocationCoordinate2D(latitude: 48.166939, longitude: 16.280633))],
+                                   [DogBag(coordinate: CLLocationCoordinate2D(latitude: 48.166939, longitude: 16.280633)),
+                                    DogBag(coordinate: CLLocationCoordinate2D(latitude: 48.167471, longitude: 16.278580)),
+                                    DogBag(coordinate: CLLocationCoordinate2D(latitude: 48.168849, longitude: 16.279870)),
+                                    DogBag(coordinate: CLLocationCoordinate2D(latitude: 48.170932, longitude: 16.282821))],
+                                   [DogBag(coordinate: CLLocationCoordinate2D(latitude: 48.167983, longitude: 16.285675)),
+                                    DogBag(coordinate: CLLocationCoordinate2D(latitude: 48.170932, longitude: 16.282821))]]
+
     var minutesValue: Int = 30
     var kmValue: Int = 3
     @IBOutlet weak var minOrKmButton: UIButton!
@@ -31,6 +49,9 @@ class RouteSelectionViewController: UIViewController, MKMapViewDelegate, UITable
     @IBOutlet weak var pickerContainerCancel: UIButton!
     var unit: String = " min"
     @IBOutlet weak var pickerContainerToolbar: UIToolbar!
+
+    @IBOutlet var routeSelectionTableView: UITableView!
+    @IBOutlet var routeSelectionMap: MKMapView!
     @IBAction func tabBarSelectionChanged(_ sender: Any) {
         updateMinOrKmButton()
         minOrKmPicker.reloadAllComponents()
@@ -55,7 +76,7 @@ class RouteSelectionViewController: UIViewController, MKMapViewDelegate, UITable
         }
         pickerContainerView.isHidden = false
     }
-    
+
     func initializePicker() {
         self.view.bringSubviewToFront(pickerContainerView)
         minOrKmPicker.delegate = self
@@ -63,7 +84,6 @@ class RouteSelectionViewController: UIViewController, MKMapViewDelegate, UITable
         //pickerContainerView.layer.cornerRadius = 10
         pickerContainerView.layer.borderWidth = 0.5
         pickerContainerView.layer.borderColor = UIColor.init(white: 0.8, alpha: 1).cgColor
-        
         minOrKmPicker.showsSelectionIndicator = true
         pickerContainerView.isHidden = true
         /*pickerContainerToolbar.subviews.forEach { view in
@@ -94,7 +114,6 @@ class RouteSelectionViewController: UIViewController, MKMapViewDelegate, UITable
         pickerContainerView.isHidden = true
         updateMinOrKmButton()
     }
-    @IBOutlet var routeSelectionTableView: UITableView!
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return routeArray.count
     }
@@ -105,36 +124,39 @@ class RouteSelectionViewController: UIViewController, MKMapViewDelegate, UITable
         // swiftlint:enable force_cast
 
         let route = routeArray[indexPath.row]
-        cell.timeLabel?.text = String(route.time) + "min"
+        cell.timeLabel?.text = String(route.time) + " min"
         cell.bagFlagLabel?.text = String(route.dogBags)
-        cell.distanceLabel?.text = String(route.distance) + "m"
-
+        cell.distanceLabel?.text = String(route.distance/1000) + ","
+                                    + String(route.distance%1000/100)
+                                    + String(route.distance%100/10) + " km"
+        let backgroundView = UIView()
+        backgroundView.backgroundColor = UIColor(red: 0.17, green: 0.55, blue: 0.22, alpha: 0.15)
+        cell.selectedBackgroundView = backgroundView
         return cell
     }
-    @IBOutlet var routeSelectionMap: MKMapView!
     override func viewDidLoad() {
         super.viewDidLoad()
         initializePicker()
         routeSelectionMap.delegate = self
-
-        let sourceLocation = routeSelectionMap.userLocation.location?.coordinate
-
-        routeSelectionMap.register(DogBagMarkerView.self,
+        routeSelectionMap.register(DogBagView.self,
                                    forAnnotationViewWithReuseIdentifier: MKMapViewDefaultAnnotationViewReuseIdentifier)
 
-        self.routeSelectionMap.showAnnotations(dogBagArray, animated: true)
-
-        if sourceLocation != nil {
-            drawFromAtoB(sourceLocation.unsafelyUnwrapped, end: dogBagArray[0].coordinate)
-
-            let dogBagArrayLength = dogBagArray.count-1
-            for index in 0...dogBagArrayLength-1 {
-                drawFromAtoB(dogBagArray[index].coordinate, end: dogBagArray[index+1].coordinate)
-            }
-            drawFromAtoB(dogBagArray[dogBagArrayLength].coordinate, end: sourceLocation.unsafelyUnwrapped)
-
-        }
+        self.routeSelectionMap.showAnnotations(dogBagArray[0], animated: true)
+        drawRouteForDogBags(dogBagArray[0])
+        routeSelectionTableView.selectRow(at: IndexPath(row: 0, section: 0), animated: false, scrollPosition: .top)
         routeSelectionMap.userTrackingMode = .follow
+    }
+
+    func drawRouteForDogBags(_ route: [DogBag]) {
+        let sourceLocation = routeSelectionMap.userLocation.location?.coordinate
+        if sourceLocation != nil {
+            drawFromAtoB(sourceLocation.unsafelyUnwrapped, end: route[0].coordinate)
+            let routeLength = route.count-1
+            for index in 0...routeLength-1 {
+                drawFromAtoB(route[index].coordinate, end: route[index+1].coordinate)
+            }
+            drawFromAtoB(route[routeLength].coordinate, end: sourceLocation.unsafelyUnwrapped)
+        }
     }
 
     func drawFromAtoB(_ start: CLLocationCoordinate2D, end: CLLocationCoordinate2D) {
@@ -171,8 +193,13 @@ class RouteSelectionViewController: UIViewController, MKMapViewDelegate, UITable
     }
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        print("section \(indexPath.section)")
-        print("row \(indexPath.row)")
+        let allAnnotations = self.routeSelectionMap.annotations
+        self.routeSelectionMap.removeAnnotations(allAnnotations)
+        let allRoutes = self.routeSelectionMap.overlays
+        self.routeSelectionMap.removeOverlays(allRoutes)
+        drawRouteForDogBags(self.dogBagArray[indexPath.row])
+        self.routeSelectionMap.showAnnotations(self.dogBagArray[indexPath.row], animated: true)
+        routeSelectionMap.userTrackingMode = .follow
     }
 
 }

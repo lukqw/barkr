@@ -21,8 +21,9 @@ class DogBagMarkerView: MKMarkerAnnotationView {
 class DogBagView: MKAnnotationView {
     override var annotation: MKAnnotation? {
         willSet {
-            guard let dogbag = newValue as? DogBag else {return}
-            image = UIImage(named: "icons8-poo-filled-50")
+            if let dogbag = newValue as? DogBag {
+                image = UIImage(named: "greenpoo")
+            } 
         }
     }
 }

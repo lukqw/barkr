@@ -19,8 +19,8 @@
                         <rect key="frame" x="0.0" y="975" width="768" height="49"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                         <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
-                        <color key="tintColor" red="0.1529411765" green="0.54901960780000003" blue="0.20784313730000001" alpha="0.84999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
-                        <color key="selectedImageTintColor" red="0.1529411765" green="0.54901960780000003" blue="0.20784313730000001" alpha="0.84999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="tintColor" red="0.16862745098039217" green="0.54509803921568623" blue="0.2196078431372549" alpha="0.84999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="selectedImageTintColor" red="0.16862745098039217" green="0.54509803921568623" blue="0.2196078431372549" alpha="0.84999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
                     </tabBar>
                     <userDefinedRuntimeAttributes>
                         <userDefinedRuntimeAttribute type="number" keyPath="defaultIndex">
@@ -149,7 +149,7 @@
                             </mapView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lP4-FR-KsM">
                                 <rect key="frame" x="20" y="755" width="374" height="38"/>
-                                <color key="backgroundColor" red="0.1529411765" green="0.54901960780000003" blue="0.20784313730000001" alpha="0.84999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
+                                <color key="backgroundColor" red="0.16862745098039217" green="0.54509803921568623" blue="0.2196078431372549" alpha="0.84999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
                                 <inset key="contentEdgeInsets" minX="20" minY="10" maxX="20" maxY="10"/>
                                 <state key="normal" title="New Route">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -257,11 +257,11 @@
                                                 </button>
                                             </barButtonItem>
                                             <barButtonItem style="plain" systemItem="flexibleSpace" id="91l-yJ-j4u"/>
-                                            <barButtonItem style="done" id="UHQ-s8-Kt5">
+                                            <barButtonItem style="plain" id="UHQ-s8-Kt5">
                                                 <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="5yi-kZ-Dyz">
                                                     <rect key="frame" x="308" y="7" width="46" height="30"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                    <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                                     <state key="normal" title="Done"/>
                                                     <connections>
                                                         <action selector="pickerValueSelected:" destination="feJ-65-anf" eventType="touchUpInside" id="1bn-im-un7"/>
@@ -373,7 +373,7 @@
                         <outlet property="pickerContainerToolbar" destination="Fer-Q9-eO6" id="0Lh-9h-pXV"/>
                         <outlet property="pickerContainerView" destination="4P0-5l-9YS" id="ncU-tL-bmM"/>
                         <outlet property="routeSelectionMap" destination="biG-gv-tA8" id="MPj-Ps-hhR"/>
-                        <outlet property="routeSelectionTableView" destination="r9I-xo-ok4" id="W0i-hr-0LL"/>
+                        <outlet property="routeSelectionTableView" destination="r9I-xo-ok4" id="nMc-cR-FKF"/>
                         <outlet property="tabBar" destination="y5M-Xw-ve2" id="5fr-mT-QMv"/>
                     </connections>
                 </viewController>

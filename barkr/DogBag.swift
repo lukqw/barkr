@@ -10,7 +10,7 @@ import MapKit
 
 class DogBag: NSObject, MKAnnotation {
     let coordinate: CLLocationCoordinate2D
-    let markerTintColor: UIColor = .init(red: 0.17, green: 0.55, blue: 0.22, alpha: 100)
+    let markerTintColor: UIColor = .init(red: 0.17, green: 0.55, blue: 0.22, alpha: 1.0)
     init(coordinate: CLLocationCoordinate2D) {
         self.coordinate = coordinate
         super.init()
