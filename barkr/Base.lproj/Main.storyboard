@@ -222,9 +222,12 @@
                                                 <segment title="Kilometers"/>
                                             </segments>
                                             <connections>
-                                                <action selector="tabBarSelectionChanged:" destination="feJ-65-anf" eventType="valueChanged" id="oiD-iG-Ujb"/>
+                                                <action selector="minKmSegmentedControlPressed:" destination="feJ-65-anf" eventType="valueChanged" id="lwl-FT-71P"/>
                                             </connections>
                                         </segmentedControl>
+                                        <connections>
+                                            <action selector="changeSelection:" destination="IIp-38-NVh" id="klU-5s-BRh"/>
+                                        </connections>
                                     </barButtonItem>
                                     <barButtonItem style="plain" id="5Hk-8I-0wo">
                                         <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="R2M-FD-gR7">
@@ -232,52 +235,12 @@
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             <state key="normal" title="30 Min"/>
                                             <connections>
-                                                <action selector="showPicker:" destination="feJ-65-anf" eventType="touchUpInside" id="bbK-Vh-dgk"/>
+                                                <segue destination="Xjn-Dh-aih" kind="presentation" identifier="sequeOpenPicker" id="h3w-GV-EGm"/>
                                             </connections>
                                         </button>
                                     </barButtonItem>
                                 </items>
                             </toolbar>
-                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="4P0-5l-9YS">
-                                <rect key="frame" x="20" y="230" width="374" height="197"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <subviews>
-                                    <toolbar opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" fixedFrame="YES" translucent="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Fer-Q9-eO6">
-                                        <rect key="frame" x="0.0" y="0.0" width="374" height="44"/>
-                                        <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
-                                        <items>
-                                            <barButtonItem style="plain" id="VRF-yS-hGr">
-                                                <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="9Xz-UF-EUo">
-                                                    <rect key="frame" x="20" y="7" width="48" height="30"/>
-                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                    <state key="normal" title="Cancel"/>
-                                                    <connections>
-                                                        <action selector="pickerValueCancelled:" destination="feJ-65-anf" eventType="touchUpInside" id="MrT-0N-HVE"/>
-                                                    </connections>
-                                                </button>
-                                            </barButtonItem>
-                                            <barButtonItem style="plain" systemItem="flexibleSpace" id="91l-yJ-j4u"/>
-                                            <barButtonItem style="plain" id="UHQ-s8-Kt5">
-                                                <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="5yi-kZ-Dyz">
-                                                    <rect key="frame" x="308" y="7" width="46" height="30"/>
-                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="15"/>
-                                                    <state key="normal" title="Done"/>
-                                                    <connections>
-                                                        <action selector="pickerValueSelected:" destination="feJ-65-anf" eventType="touchUpInside" id="1bn-im-un7"/>
-                                                    </connections>
-                                                </button>
-                                            </barButtonItem>
-                                        </items>
-                                    </toolbar>
-                                    <pickerView contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="sEx-6J-xxh">
-                                        <rect key="frame" x="0.0" y="44" width="374" height="153"/>
-                                        <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
-                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                    </pickerView>
-                                </subviews>
-                                <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
-                            </view>
                             <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" pitchEnabled="NO" showsUserLocation="YES" showsPointsOfInterest="NO" translatesAutoresizingMaskIntoConstraints="NO" id="biG-gv-tA8">
                                 <rect key="frame" x="0.0" y="132" width="414" height="360"/>
                                 <constraints>
@@ -366,20 +329,85 @@
                         <viewLayoutGuide key="safeArea" id="XNR-lz-tS0"/>
                     </view>
                     <connections>
-                        <outlet property="minOrKmButton" destination="R2M-FD-gR7" id="XY4-46-bWr"/>
+                        <outlet property="minKmSegmentedControl" destination="y5M-Xw-ve2" id="Hbz-lu-esO"/>
                         <outlet property="minOrKmPicker" destination="sEx-6J-xxh" id="HLq-dO-Zji"/>
-                        <outlet property="pickerContainerCancel" destination="9Xz-UF-EUo" id="Raa-4h-3N6"/>
-                        <outlet property="pickerContainerDone" destination="5yi-kZ-Dyz" id="cMm-ge-tJc"/>
                         <outlet property="pickerContainerToolbar" destination="Fer-Q9-eO6" id="0Lh-9h-pXV"/>
-                        <outlet property="pickerContainerView" destination="4P0-5l-9YS" id="ncU-tL-bmM"/>
+                        <outlet property="pickerValueField" destination="R2M-FD-gR7" id="j3f-kn-DRb"/>
                         <outlet property="routeSelectionMap" destination="biG-gv-tA8" id="MPj-Ps-hhR"/>
                         <outlet property="routeSelectionTableView" destination="r9I-xo-ok4" id="nMc-cR-FKF"/>
-                        <outlet property="tabBar" destination="y5M-Xw-ve2" id="5fr-mT-QMv"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="tsR-Mc-vcI" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <exit id="IIp-38-NVh" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
             <point key="canvasLocation" x="1573.913043478261" y="643.52678571428567"/>
+        </scene>
+        <!--Picker View Controller-->
+        <scene sceneID="H0v-aC-yEs">
+            <objects>
+                <viewController modalPresentationStyle="overCurrentContext" id="Xjn-Dh-aih" customClass="PickerViewController" customModule="barkr" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="GGY-cf-6wk">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="4P0-5l-9YS">
+                                <rect key="frame" x="20" y="349" width="374" height="197"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <subviews>
+                                    <toolbar opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" fixedFrame="YES" translucent="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Fer-Q9-eO6">
+                                        <rect key="frame" x="0.0" y="0.0" width="374" height="44"/>
+                                        <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
+                                        <items>
+                                            <barButtonItem style="plain" id="VRF-yS-hGr">
+                                                <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="9Xz-UF-EUo">
+                                                    <rect key="frame" x="20" y="7" width="48" height="30"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <state key="normal" title="Cancel"/>
+                                                    <connections>
+                                                        <action selector="pickerValueCancelled:" destination="Xjn-Dh-aih" eventType="touchUpInside" id="sDt-hV-70q"/>
+                                                    </connections>
+                                                </button>
+                                            </barButtonItem>
+                                            <barButtonItem style="plain" systemItem="flexibleSpace" id="91l-yJ-j4u"/>
+                                            <barButtonItem style="plain" id="UHQ-s8-Kt5">
+                                                <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="5yi-kZ-Dyz">
+                                                    <rect key="frame" x="308" y="7" width="46" height="30"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                                    <state key="normal" title="Done"/>
+                                                    <connections>
+                                                        <action selector="pickerValueSelected:" destination="Xjn-Dh-aih" eventType="touchUpInside" id="HXM-aB-WzA"/>
+                                                    </connections>
+                                                </button>
+                                            </barButtonItem>
+                                        </items>
+                                    </toolbar>
+                                    <pickerView contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="sEx-6J-xxh">
+                                        <rect key="frame" x="0.0" y="44" width="374" height="153"/>
+                                        <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <connections>
+                                            <outlet property="dataSource" destination="Xjn-Dh-aih" id="vBL-qJ-TBv"/>
+                                            <outlet property="delegate" destination="Xjn-Dh-aih" id="gB5-MJ-7Eq"/>
+                                        </connections>
+                                    </pickerView>
+                                </subviews>
+                                <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" red="0.60574635152284262" green="0.60574635152284262" blue="0.60574635152284262" alpha="0.51000000000000001" colorSpace="custom" customColorSpace="sRGB"/>
+                        <viewLayoutGuide key="safeArea" id="kmj-al-IAO"/>
+                    </view>
+                    <connections>
+                        <outlet property="minOrKmPicker" destination="sEx-6J-xxh" id="67m-L2-1wz"/>
+                        <outlet property="pickerContainerCancel" destination="9Xz-UF-EUo" id="2k1-Do-faq"/>
+                        <outlet property="pickerContainerDone" destination="5yi-kZ-Dyz" id="01Y-04-yg1"/>
+                        <outlet property="pickerContainerView" destination="4P0-5l-9YS" id="9zH-DQ-zJQ"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Re2-T9-LeQ" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1574" y="1344"/>
         </scene>
         <!--CurrentRouteViewController-->
         <scene sceneID="2WT-Mt-P1M">
@@ -475,27 +503,6 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ee6-jL-7fE" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="2559.4202898550725" y="641.51785714285711"/>
-        </scene>
-        <!--View Controller-->
-        <scene sceneID="xuk-aQ-nIf">
-            <objects>
-                <viewController id="41x-UQ-aEE" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="83C-Cq-NN9">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="bkm-6e-ost">
-                                <rect key="frame" x="0.0" y="44" width="414" height="818"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            </mapView>
-                        </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                        <viewLayoutGuide key="safeArea" id="KrA-sM-An2"/>
-                    </view>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="jCA-ix-S1i" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="3468.115942028986" y="645.53571428571422"/>
         </scene>
         <!--Statistics-->
         <scene sceneID="3gA-ht-gDj">

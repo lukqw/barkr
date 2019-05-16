@@ -39,104 +39,58 @@ class RouteSelectionViewController: UIViewController, MKMapViewDelegate, UITable
                                    [DogBag(coordinate: CLLocationCoordinate2D(latitude: 48.167983, longitude: 16.285675)),
                                     DogBag(coordinate: CLLocationCoordinate2D(latitude: 48.170932, longitude: 16.282821))]]
 
-    var minutesValue: Int = 30
-    var kmValue: Int = 3
-    @IBOutlet weak var minOrKmButton: UIButton!
-    @IBOutlet weak var tabBar: UISegmentedControl!
-    @IBOutlet weak var minOrKmPicker: UIPickerView!
-    @IBOutlet weak var pickerContainerView: UIView!
-    @IBOutlet weak var pickerContainerDone: UIButton!
-    @IBOutlet weak var pickerContainerCancel: UIButton!
-    var unit: String = " min"
-    @IBOutlet weak var pickerContainerToolbar: UIToolbar!
+    var durationValue: Int = 30
+    var kmValue: Int = 5
+    private var fetchNotificaitonPicker: NSObjectProtocol?
+
+    @IBOutlet var minKmSegmentedControl: UISegmentedControl!
+    @IBOutlet var pickerValueField: UIButton!
 
     @IBOutlet var routeSelectionTableView: UITableView!
     @IBOutlet var routeSelectionMap: MKMapView!
-    @IBAction func tabBarSelectionChanged(_ sender: Any) {
-        updateMinOrKmButton()
-        minOrKmPicker.reloadAllComponents()
-    }
-    func updateMinOrKmButton() {
-        switch tabBar.selectedSegmentIndex {
-        case 0:
-            unit = " min"
-            minOrKmButton.setTitle(minutesValue.description + unit, for: .normal)
-        case 1:
-            unit = " km"
-            minOrKmButton.setTitle(kmValue.description + unit, for: .normal)
-        default:
-            print("default switch case shouldn't have happened")
-        }
-    }
-    @IBAction func showPicker(_ sender: Any) {
-        if tabBar.selectedSegmentIndex == 0 {
-            minOrKmPicker.selectRow(minutesValue - 1, inComponent: 0, animated: false)
+
+    @IBAction func minKmSegmentedControlPressed(_ sender: Any) {
+        if minKmSegmentedControl.selectedSegmentIndex == 0 {
+            pickerValueField.titleLabel?.text = String(durationValue) + " min"
         } else {
-            minOrKmPicker.selectRow(kmValue - 1, inComponent: 0, animated: false)
+            pickerValueField.titleLabel?.text = " " + String(kmValue) + " km"
         }
-        pickerContainerView.isHidden = false
     }
 
-    func initializePicker() {
-        self.view.bringSubviewToFront(pickerContainerView)
-        minOrKmPicker.delegate = self
-        minOrKmPicker.dataSource = self
-        //pickerContainerView.layer.cornerRadius = 10
-        pickerContainerView.layer.borderWidth = 0.5
-        pickerContainerView.layer.borderColor = UIColor.init(white: 0.8, alpha: 1).cgColor
-        minOrKmPicker.showsSelectionIndicator = true
-        pickerContainerView.isHidden = true
-        /*pickerContainerToolbar.subviews.forEach { view in
-            view.backgroundColor = UIColor.groupTableViewBackground
-            view.layer.borderWidth = 0
-        }
-        pickerContainerToolbar.layer.cornerRadius = 10
-        pickerContainerToolbar.layer.borderWidth = 0
-        pickerContainerToolbar.layer.borderColor = UIColor.groupTableViewBackground.cgColor
-        */
-        pickerContainerToolbar.subviews.forEach { view in
-            view.backgroundColor = UIColor.groupTableViewBackground
-            view.layer.borderWidth = 0
-        }
-    }
     @IBAction func dismissVC(_ sender: Any) {
         dismiss(animated: true, completion: nil)
     }
-    @IBAction func pickerValueCancelled(_ sender: Any) {
-        pickerContainerView.isHidden = true
-    }
-    @IBAction func pickerValueSelected(_ sender: Any) {
-        if tabBar.selectedSegmentIndex == 0 {
-            minutesValue = minOrKmPicker.selectedRow(inComponent: 0) + 1
-        } else {
-            kmValue = minOrKmPicker.selectedRow(inComponent: 0) + 1
-        }
-        pickerContainerView.isHidden = true
-        updateMinOrKmButton()
-    }
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return routeArray.count
-    }
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = routeSelectionTableView.dequeueReusableCell(withIdentifier: "routeSelectionCell", for: indexPath)
-        // swiftlint:disable force_cast
-        as! RouteSelectionCell
-        // swiftlint:enable force_cast
 
-        let route = routeArray[indexPath.row]
-        cell.timeLabel?.text = String(route.time) + " min"
-        cell.bagFlagLabel?.text = String(route.dogBags)
-        cell.distanceLabel?.text = String(route.distance/1000) + ","
-                                    + String(route.distance%1000/100)
-                                    + String(route.distance%100/10) + " km"
-        let backgroundView = UIView()
-        backgroundView.backgroundColor = UIColor(red: 0.17, green: 0.55, blue: 0.22, alpha: 0.15)
-        cell.selectedBackgroundView = backgroundView
-        return cell
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "sequeOpenPicker" {
+            // swiftlint:disable force_cast
+            let popup = segue.destination as! PickerViewController
+            // swiftlint:enable force_cast
+            if minKmSegmentedControl.selectedSegmentIndex == 0 {
+                popup.isKm = false
+                popup.value = durationValue
+            } else {
+                popup.isKm = true
+                popup.value = kmValue
+            }
+        }
     }
+
     override func viewDidLoad() {
         super.viewDidLoad()
-        initializePicker()
+
+        fetchNotificaitonPicker = NotificationCenter.default.addObserver(forName: NSNotification.Name(rawValue: "valuePicker"), object: nil, queue: .main) { (notification) in
+            // swiftlint:disable force_cast
+            let pickerVC = notification.object as! PickerViewController
+            // swiftlint:enable force_cast
+            if pickerVC.isKm {
+                self.kmValue = pickerVC.value
+                self.pickerValueField.titleLabel?.text = String(pickerVC.value) + " km"
+            } else {
+                self.durationValue = pickerVC.value
+                self.pickerValueField.titleLabel?.text = String(pickerVC.value) + " min"
+            }
+        }
         routeSelectionMap.delegate = self
         routeSelectionMap.register(DogBagView.self,
                                    forAnnotationViewWithReuseIdentifier: MKMapViewDefaultAnnotationViewReuseIdentifier)
@@ -145,6 +99,28 @@ class RouteSelectionViewController: UIViewController, MKMapViewDelegate, UITable
         drawRouteForDogBags(dogBagArray[0])
         routeSelectionTableView.selectRow(at: IndexPath(row: 0, section: 0), animated: false, scrollPosition: .top)
         routeSelectionMap.userTrackingMode = .follow
+    }
+
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return routeArray.count
+    }
+
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = routeSelectionTableView.dequeueReusableCell(withIdentifier: "routeSelectionCell", for: indexPath)
+            // swiftlint:disable force_cast
+            as! RouteSelectionCell
+        // swiftlint:enable force_cast
+
+        let route = routeArray[indexPath.row]
+        cell.timeLabel?.text = String(route.time) + " min"
+        cell.bagFlagLabel?.text = String(route.dogBags)
+        cell.distanceLabel?.text = String(route.distance/1000) + ","
+            + String(route.distance%1000/100)
+            + String(route.distance%100/10) + " km"
+        let backgroundView = UIView()
+        backgroundView.backgroundColor = UIColor(red: 0.17, green: 0.55, blue: 0.22, alpha: 0.15)
+        cell.selectedBackgroundView = backgroundView
+        return cell
     }
 
     func drawRouteForDogBags(_ route: [DogBag]) {
@@ -202,24 +178,7 @@ class RouteSelectionViewController: UIViewController, MKMapViewDelegate, UITable
         routeSelectionMap.userTrackingMode = .follow
     }
 
-}
-
-extension RouteSelectionViewController: UIPickerViewDelegate, UIPickerViewDataSource {
-    func numberOfComponents(in pickerView: UIPickerView) -> Int {
-        return 1
-    }
-    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-        switch tabBar.selectedSegmentIndex {
-        case 0:
-            return 180
-        case 1:
-            return 10
-        default:
-            print("default case shouldnt have happened")
-            return 100
-        }
-    }
-    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-        return (row + 1).description
+    deinit {
+        NotificationCenter.default.removeObserver(fetchNotificaitonPicker as Any)
     }
 }
