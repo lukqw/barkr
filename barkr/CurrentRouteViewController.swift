@@ -14,15 +14,20 @@ class CurrentRouteViewController: UIViewController, MKMapViewDelegate {
     @IBOutlet weak var mapView: MKMapView!
     @IBOutlet weak var blurredContainer: UIVisualEffectView!
     @IBOutlet weak var stopButton: UIButton!
+    private var fetchNotificaitonSummary: NSObjectProtocol?
+
     var selectedRoute: Route?
     override func viewDidLoad() {
         super.viewDidLoad()
+        fetchNotificaitonSummary = NotificationCenter.default.addObserver(forName: NSNotification.Name(rawValue: "summaryDone"), object: nil, queue: .main) { (notification) in
+            self.navigationController?.popToRootViewController(animated: true)
+        }
         prettify()
         mapView.delegate = self
         for route in selectedRoute!.routes {
             self.mapView.addOverlay(route.polyline, level: MKOverlayLevel.aboveRoads)
         }
-        mapView.register(DogBagView.self, forAnnotationViewWithReuseIdentifier:  MKMapViewDefaultAnnotationViewReuseIdentifier)
+        mapView.register(DogBagView.self, forAnnotationViewWithReuseIdentifier: MKMapViewDefaultAnnotationViewReuseIdentifier)
         mapView.showAnnotations(selectedRoute!.dogBags, animated: true)
         mapView?.userTrackingMode = .followWithHeading
         mapView?.showsCompass = true
@@ -50,6 +55,10 @@ class CurrentRouteViewController: UIViewController, MKMapViewDelegate {
             popup.route = selectedRoute!
             // swiftlint:enable force_cast
         }
+    }
+    
+    deinit {
+        NotificationCenter.default.removeObserver(fetchNotificaitonSummary as Any)
     }
 }
 

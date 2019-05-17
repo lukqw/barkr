@@ -83,7 +83,7 @@ class RouteSelectionViewController: UIViewController, MKMapViewDelegate, UITable
     }
 
     @IBAction func dismissVC(_ sender: Any) {
-        dismiss(animated: true, completion: nil)
+        self.navigationController?.popToRootViewController(animated: true)
     }
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {

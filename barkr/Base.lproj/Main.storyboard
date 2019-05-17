@@ -29,7 +29,7 @@
                     </userDefinedRuntimeAttributes>
                     <connections>
                         <segue destination="WPh-EI-Cx9" kind="relationship" relationship="viewControllers" id="BwZ-hf-uvi"/>
-                        <segue destination="bff-qn-yId" kind="relationship" relationship="viewControllers" id="7X7-s6-abI"/>
+                        <segue destination="CPL-hX-hc5" kind="relationship" relationship="viewControllers" id="7X7-s6-abI"/>
                         <segue destination="10u-5s-sa5" kind="relationship" relationship="viewControllers" id="6MX-UD-CeB"/>
                     </connections>
                 </tabBarController>
@@ -136,7 +136,7 @@
             </objects>
             <point key="canvasLocation" x="765" y="0.0"/>
         </scene>
-        <!--Map-->
+        <!--Map View Controller-->
         <scene sceneID="aWu-dL-Urc">
             <objects>
                 <viewController id="bff-qn-yId" customClass="MapViewController" customModule="barkr" customModuleProvider="target" sceneMemberID="viewController">
@@ -176,19 +176,19 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="Dsd-rz-fqv"/>
                     </view>
-                    <tabBarItem key="tabBarItem" title="Map" image="map" id="wjh-IZ-9IY"/>
+                    <navigationItem key="navigationItem" id="DUi-Kt-5JD"/>
                     <connections>
                         <outlet property="mapViewOutlet" destination="7VC-ft-zAD" id="JBc-3p-Q2k"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Bw8-x9-ABe" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="764" y="644"/>
+            <point key="canvasLocation" x="1574" y="644"/>
         </scene>
         <!--Route Selection View Controller-->
         <scene sceneID="wee-Yl-8uC">
             <objects>
-                <viewController id="feJ-65-anf" customClass="RouteSelectionViewController" customModule="barkr" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController hidesBottomBarWhenPushed="YES" id="feJ-65-anf" customClass="RouteSelectionViewController" customModule="barkr" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="eki-3n-J8C">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -339,7 +339,7 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="tsR-Mc-vcI" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <exit id="IIp-38-NVh" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="1573.913043478261" y="643.52678571428567"/>
+            <point key="canvasLocation" x="2397" y="644"/>
         </scene>
         <!--Picker View Controller-->
         <scene sceneID="H0v-aC-yEs">
@@ -416,12 +416,12 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Re2-T9-LeQ" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1573.913043478261" y="1343.9732142857142"/>
+            <point key="canvasLocation" x="2396" y="1317"/>
         </scene>
         <!--CurrentRouteViewController-->
         <scene sceneID="2WT-Mt-P1M">
             <objects>
-                <viewController title="CurrentRouteViewController" id="slZ-8t-BKx" customClass="CurrentRouteViewController" customModule="barkr" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController title="CurrentRouteViewController" hidesBottomBarWhenPushed="YES" id="slZ-8t-BKx" customClass="CurrentRouteViewController" customModule="barkr" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="bBQ-MH-BJl">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -514,12 +514,12 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ee6-jL-7fE" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2548" y="644"/>
+            <point key="canvasLocation" x="3214" y="644"/>
         </scene>
         <!--Summary View Controller-->
         <scene sceneID="w0h-jH-mLb">
             <objects>
-                <viewController modalPresentationStyle="overCurrentContext" id="Dkh-os-xRq" customClass="SummaryViewController" customModule="barkr" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController modalPresentationStyle="overCurrentContext" hidesBottomBarWhenPushed="YES" id="Dkh-os-xRq" customClass="SummaryViewController" customModule="barkr" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="U5Y-S3-CKT">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -568,9 +568,12 @@
                                                 <rect key="frame" x="8" y="12" width="30" height="30"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                <state key="normal" title="Done" image="favorite-not">
+                                                <state key="normal" title="Fav" image="favorite-not">
                                                     <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 </state>
+                                                <connections>
+                                                    <action selector="favoriteButtonPressed:" destination="Dkh-os-xRq" eventType="touchUpInside" id="o33-mk-b8y"/>
+                                                </connections>
                                             </button>
                                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" reversesTitleShadowWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="w9M-T8-AZ2">
                                                 <rect key="frame" x="191" y="12" width="30" height="30"/>
@@ -603,6 +606,7 @@
                     <connections>
                         <outlet property="distanceLabel" destination="ie7-Xq-8Jg" id="7Tz-08-1LQ"/>
                         <outlet property="dogbagLabel" destination="sXs-FI-YKE" id="J3m-CG-dy1"/>
+                        <outlet property="favButton" destination="gzl-4i-IEm" id="maX-B4-QgC"/>
                         <outlet property="resultLabel" destination="OOw-JX-j6F" id="7W1-fr-c21"/>
                         <outlet property="summaryView" destination="qcC-Wz-tEi" id="uxP-BH-2kh"/>
                         <outlet property="timeLabel" destination="6NQ-KX-wyS" id="SDa-Ln-dCw"/>
@@ -610,7 +614,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="7p3-9c-AVx" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3408.6956521739135" y="643.52678571428567"/>
+            <point key="canvasLocation" x="4075" y="644"/>
         </scene>
         <!--Statistics-->
         <scene sceneID="3gA-ht-gDj">
@@ -739,6 +743,24 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ox8-rd-1T1" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1573.913043478261" y="0.0"/>
+        </scene>
+        <!--Map-->
+        <scene sceneID="EHQ-Xr-hzU">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" navigationBarHidden="YES" id="CPL-hX-hc5" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="Map" image="map" id="wjh-IZ-9IY"/>
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="BWi-81-vdT">
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="bff-qn-yId" kind="relationship" relationship="rootViewController" id="lYk-jT-2o8"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Xim-E5-u1N" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="763.768115942029" y="643.52678571428567"/>
         </scene>
     </scenes>
     <resources>
