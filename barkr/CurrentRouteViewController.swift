@@ -9,20 +9,37 @@
 import UIKit
 import MapKit
 
-class CurrentRouteViewController: UIViewController {
+class CurrentRouteViewController: UIViewController, MKMapViewDelegate {
     @IBOutlet weak var mapView: MKMapView!
     @IBOutlet weak var blurredContainer: UIVisualEffectView!
     @IBOutlet weak var stopButton: UIButton!
+    var selectedRoute: Route?
     override func viewDidLoad() {
         super.viewDidLoad()
         prettify()
-        mapView.userTrackingMode = .follow
-        mapView.showsCompass = true
+        mapView.delegate = self
+        for route in selectedRoute!.routes {
+            print(route)
+            self.mapView.addOverlay(route.polyline, level: MKOverlayLevel.aboveRoads)
+        }
+        mapView.register(DogBagView.self,
+                            forAnnotationViewWithReuseIdentifier:  MKMapViewDefaultAnnotationViewReuseIdentifier)
+        mapView.showAnnotations(selectedRoute!.dogBags, animated: true)
+        mapView?.userTrackingMode = .follow
+        mapView?.showsCompass = true
     }
     func prettify() {
         blurredContainer.roundCorners([.topRight, .topLeft], radius: 10)
         stopButton.layer.cornerRadius = 10
     }
+    
+    func mapView(_ mapView: MKMapView, rendererFor overlay: MKOverlay) -> MKOverlayRenderer {
+        let renderer = MKPolylineRenderer(overlay: overlay)
+        renderer.strokeColor = self.view.tintColor
+        renderer.lineWidth = 4.0
+        return renderer
+    }
+    
 }
 
 extension UIView {
