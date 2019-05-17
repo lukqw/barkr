@@ -52,17 +52,16 @@ class RouteSelectionViewController: UIViewController, MKMapViewDelegate, UITable
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        fetchNotificaitonPicker = NotificationCenter.default.addObserver(forName: NSNotification.Name(rawValue: "valuePicker"), object: nil, queue: .main) {
-            (notification) in
+        fetchNotificaitonPicker = NotificationCenter.default.addObserver(forName: NSNotification.Name(rawValue: "valuePicker"), object: nil, queue: .main) { (notification) in
             // swiftlint:disable force_cast
             let pickerVC = notification.object as! PickerViewController
             // swiftlint:enable force_cast
             if pickerVC.isKm {
                 self.kmValue = pickerVC.value
-                self.pickerValueField.titleLabel?.text = String(pickerVC.value) + " km"
+                self.pickerValueField.setTitle(String(pickerVC.value) + " Km", for: .normal)
             } else {
                 self.durationValue = pickerVC.value
-                self.pickerValueField.titleLabel?.text = String(pickerVC.value) + " min"
+                self.pickerValueField.setTitle(String(pickerVC.value) + " Min", for: .normal)
             }
         }
         routeSelectionMap.delegate = self
@@ -74,19 +73,19 @@ class RouteSelectionViewController: UIViewController, MKMapViewDelegate, UITable
         routeSelectionTableView.selectRow(at: IndexPath(row: 0, section: 0), animated: false, scrollPosition: .top)
         routeSelectionMap.userTrackingMode = .follow
     }
-    
+
     @IBAction func minKmSegmentedControlPressed(_ sender: Any) {
         if minKmSegmentedControl.selectedSegmentIndex == 0 {
-            pickerValueField.titleLabel?.text = String(durationValue) + " min"
+            self.pickerValueField.setTitle(String(durationValue) + " Min", for: .normal)
         } else {
-            pickerValueField.titleLabel?.text = " " + String(kmValue) + " km"
+            self.pickerValueField.setTitle(String(kmValue) + " Km", for: .normal)
         }
     }
-    
+
     @IBAction func dismissVC(_ sender: Any) {
         dismiss(animated: true, completion: nil)
     }
-    
+
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "sequeOpenPicker" {
             // swiftlint:disable force_cast
@@ -170,8 +169,11 @@ class RouteSelectionViewController: UIViewController, MKMapViewDelegate, UITable
     }
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let allAnnotations = self.routeSelectionMap.annotations
-        self.routeSelectionMap.removeAnnotations(allAnnotations)
+        self.routeSelectionMap.annotations.forEach {
+            if !($0 is MKUserLocation) {
+                self.routeSelectionMap.removeAnnotation($0)
+            }
+        }
         let allRoutes = self.routeSelectionMap.overlays
         self.routeSelectionMap.removeOverlays(allRoutes)
         self.routeSelectionMap.showAnnotations(self.dogBagArray[indexPath.row], animated: true)

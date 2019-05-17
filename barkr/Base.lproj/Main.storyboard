@@ -230,7 +230,7 @@
                                         </connections>
                                     </barButtonItem>
                                     <barButtonItem style="plain" id="5Hk-8I-0wo">
-                                        <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="R2M-FD-gR7">
+                                        <button key="customView" opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="R2M-FD-gR7">
                                             <rect key="frame" x="346" y="7" width="48" height="30"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             <state key="normal" title="30 Min"/>
@@ -331,7 +331,6 @@
                     <connections>
                         <outlet property="minKmSegmentedControl" destination="y5M-Xw-ve2" id="Hbz-lu-esO"/>
                         <outlet property="minOrKmPicker" destination="sEx-6J-xxh" id="HLq-dO-Zji"/>
-                        <outlet property="pickerContainerToolbar" destination="Fer-Q9-eO6" id="0Lh-9h-pXV"/>
                         <outlet property="pickerValueField" destination="R2M-FD-gR7" id="j3f-kn-DRb"/>
                         <outlet property="routeSelectionMap" destination="biG-gv-tA8" id="MPj-Ps-hhR"/>
                         <outlet property="routeSelectionTableView" destination="r9I-xo-ok4" id="nMc-cR-FKF"/>
@@ -354,34 +353,36 @@
                                 <rect key="frame" x="20" y="349" width="374" height="197"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <subviews>
-                                    <toolbar opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" fixedFrame="YES" translucent="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Fer-Q9-eO6">
+                                    <navigationBar contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="DOE-kP-4qs">
                                         <rect key="frame" x="0.0" y="0.0" width="374" height="44"/>
-                                        <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
+                                        <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
                                         <items>
-                                            <barButtonItem style="plain" id="VRF-yS-hGr">
-                                                <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="9Xz-UF-EUo">
-                                                    <rect key="frame" x="20" y="7" width="48" height="30"/>
-                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                    <state key="normal" title="Cancel"/>
-                                                    <connections>
-                                                        <action selector="pickerValueCancelled:" destination="Xjn-Dh-aih" eventType="touchUpInside" id="sDt-hV-70q"/>
-                                                    </connections>
-                                                </button>
-                                            </barButtonItem>
-                                            <barButtonItem style="plain" systemItem="flexibleSpace" id="91l-yJ-j4u"/>
-                                            <barButtonItem style="plain" id="UHQ-s8-Kt5">
-                                                <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="5yi-kZ-Dyz">
-                                                    <rect key="frame" x="308" y="7" width="46" height="30"/>
-                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="15"/>
-                                                    <state key="normal" title="Done"/>
-                                                    <connections>
-                                                        <action selector="pickerValueSelected:" destination="Xjn-Dh-aih" eventType="touchUpInside" id="HXM-aB-WzA"/>
-                                                    </connections>
-                                                </button>
-                                            </barButtonItem>
+                                            <navigationItem id="cpk-5l-j4i">
+                                                <barButtonItem key="leftBarButtonItem" style="done" id="VRF-yS-hGr">
+                                                    <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="9Xz-UF-EUo">
+                                                        <rect key="frame" x="20" y="7" width="51" height="30"/>
+                                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+                                                        <state key="normal" title="Cancel"/>
+                                                        <connections>
+                                                            <action selector="pickerValueCancelled:" destination="Xjn-Dh-aih" eventType="touchUpInside" id="sDt-hV-70q"/>
+                                                        </connections>
+                                                    </button>
+                                                </barButtonItem>
+                                                <barButtonItem key="rightBarButtonItem" style="done" id="UHQ-s8-Kt5">
+                                                    <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="5yi-kZ-Dyz">
+                                                        <rect key="frame" x="308" y="7" width="46" height="30"/>
+                                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+                                                        <state key="normal" title="Done"/>
+                                                        <connections>
+                                                            <action selector="pickerValueSelected:" destination="Xjn-Dh-aih" eventType="touchUpInside" id="HXM-aB-WzA"/>
+                                                        </connections>
+                                                    </button>
+                                                </barButtonItem>
+                                            </navigationItem>
                                         </items>
-                                    </toolbar>
+                                    </navigationBar>
                                     <pickerView contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="sEx-6J-xxh">
                                         <rect key="frame" x="0.0" y="44" width="374" height="153"/>
                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
@@ -407,7 +408,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Re2-T9-LeQ" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1574" y="1344"/>
+            <point key="canvasLocation" x="1573.913043478261" y="1343.9732142857142"/>
         </scene>
         <!--CurrentRouteViewController-->
         <scene sceneID="2WT-Mt-P1M">
