@@ -21,9 +21,9 @@ class DogBagMarkerView: MKMarkerAnnotationView {
 class DogBagView: MKAnnotationView {
     override var annotation: MKAnnotation? {
         willSet {
-            if let dogbag = newValue as? DogBag {
+            if (newValue as? DogBag) != nil {
                 image = UIImage(named: "greenpoo")
-            } 
+            }
         }
     }
 }

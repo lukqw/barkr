@@ -52,7 +52,8 @@ class RouteSelectionViewController: UIViewController, MKMapViewDelegate, UITable
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        fetchNotificaitonPicker = NotificationCenter.default.addObserver(forName: NSNotification.Name(rawValue: "valuePicker"), object: nil, queue: .main) { (notification) in
+        fetchNotificaitonPicker = NotificationCenter.default.addObserver(
+            forName: NSNotification.Name(rawValue: "valuePicker"), object: nil, queue: .main) { (notification) in
             // swiftlint:disable force_cast
             let pickerVC = notification.object as! PickerViewController
             // swiftlint:enable force_cast
@@ -67,7 +68,6 @@ class RouteSelectionViewController: UIViewController, MKMapViewDelegate, UITable
         routeSelectionMap.delegate = self
         routeSelectionMap.register(DogBagView.self,
                                    forAnnotationViewWithReuseIdentifier: MKMapViewDefaultAnnotationViewReuseIdentifier)
-
         self.routeSelectionMap.showAnnotations(dogBagArray[0], animated: true)
         drawRouteForDogBags(dogBagArray[0], 0)
         routeSelectionTableView.selectRow(at: IndexPath(row: 0, section: 0), animated: false, scrollPosition: .top)
@@ -103,7 +103,6 @@ class RouteSelectionViewController: UIViewController, MKMapViewDelegate, UITable
             nextView.selectedRoute = routeArray[num]
         }
         // swiftlint:enable force_cast
-
     }
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -114,21 +113,21 @@ class RouteSelectionViewController: UIViewController, MKMapViewDelegate, UITable
         let cell = routeSelectionTableView.dequeueReusableCell(withIdentifier: "routeSelectionCell", for: indexPath)
             // swiftlint:disable force_cast
             as! RouteSelectionCell
-        // swiftlint:enable force_cast
+            // swiftlint:enable force_cast
 
         let route = routeArray[indexPath.row]
         cell.timeLabel?.text = String(route.time) + " min"
         cell.bagFlagLabel?.text = String(route.dogBagCount)
         cell.distanceLabel?.text = String(route.distance/1000) + ","
-            + String(route.distance%1000/100)
-            + String(route.distance%100/10) + " km"
+                                    + String(route.distance%1000/100)
+                                    + String(route.distance%100/10) + " km"
         let backgroundView = UIView()
         backgroundView.backgroundColor = UIColor(red: 0.17, green: 0.55, blue: 0.22, alpha: 0.20)
         cell.selectedBackgroundView = backgroundView
         return cell
     }
 
-    func drawRouteForDogBags(_ route: [DogBag],_ selectedRow: Int) {
+    func drawRouteForDogBags(_ route: [DogBag], _ selectedRow: Int) {
         let sourceLocation = routeSelectionMap.userLocation.location?.coordinate
         if sourceLocation != nil {
             routeArray[selectedRow].dogBags = route
@@ -141,7 +140,7 @@ class RouteSelectionViewController: UIViewController, MKMapViewDelegate, UITable
         }
     }
 
-    func drawFromAtoB(_ start: CLLocationCoordinate2D, end: CLLocationCoordinate2D,_ selectedRow: Int) {
+    func drawFromAtoB(_ start: CLLocationCoordinate2D, end: CLLocationCoordinate2D, _ selectedRow: Int) {
         let sourcePlacemark = MKPlacemark(coordinate: start)
         let destinationPlacemark = MKPlacemark(coordinate: end)
 

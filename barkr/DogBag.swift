@@ -15,5 +15,4 @@ class DogBag: NSObject, MKAnnotation {
         self.coordinate = coordinate
         super.init()
     }
-
 }

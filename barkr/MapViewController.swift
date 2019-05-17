@@ -27,9 +27,8 @@ class MapViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         mapViewOutlet.register(DogBagView.self,
-                                   forAnnotationViewWithReuseIdentifier: MKMapViewDefaultAnnotationViewReuseIdentifier)
+                               forAnnotationViewWithReuseIdentifier: MKMapViewDefaultAnnotationViewReuseIdentifier)
         self.mapViewOutlet.showAnnotations(dogBagArray, animated: true)
         mapViewOutlet.userTrackingMode = .follow
     }
-
 }

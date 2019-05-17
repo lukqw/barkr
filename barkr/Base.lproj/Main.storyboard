@@ -568,7 +568,7 @@
                                                 <rect key="frame" x="8" y="12" width="30" height="30"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                <state key="normal" title="Fav" image="favorite-not">
+                                                <state key="normal" title="Fav" image="notstar">
                                                     <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 </state>
                                                 <connections>
@@ -764,11 +764,11 @@
         </scene>
     </scenes>
     <resources>
-        <image name="favorite-not" width="30" height="30"/>
         <image name="icons8-back-filled-50" width="25" height="25"/>
         <image name="icons8-forward-filled-50" width="25" height="25"/>
         <image name="icons8-poo-filled-50" width="25" height="25"/>
         <image name="map" width="30" height="30"/>
+        <image name="notstar" width="25" height="25"/>
         <image name="ok" width="30" height="30"/>
         <image name="routes" width="30" height="30"/>
         <image name="statistics" width="30" height="30"/>

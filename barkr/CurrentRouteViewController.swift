@@ -19,15 +19,17 @@ class CurrentRouteViewController: UIViewController, MKMapViewDelegate {
     var selectedRoute: Route?
     override func viewDidLoad() {
         super.viewDidLoad()
-        fetchNotificaitonSummary = NotificationCenter.default.addObserver(forName: NSNotification.Name(rawValue: "summaryDone"), object: nil, queue: .main) { (notification) in
-            self.navigationController?.popToRootViewController(animated: true)
+        fetchNotificaitonSummary = NotificationCenter.default.addObserver(
+        forName: NSNotification.Name(rawValue: "summaryDone"), object: nil, queue: .main) { (notification) in
+                self.navigationController?.popToRootViewController(animated: true)
         }
         prettify()
         mapView.delegate = self
         for route in selectedRoute!.routes {
             self.mapView.addOverlay(route.polyline, level: MKOverlayLevel.aboveRoads)
         }
-        mapView.register(DogBagView.self, forAnnotationViewWithReuseIdentifier: MKMapViewDefaultAnnotationViewReuseIdentifier)
+        mapView.register(DogBagView.self,
+                         forAnnotationViewWithReuseIdentifier: MKMapViewDefaultAnnotationViewReuseIdentifier)
         mapView.showAnnotations(selectedRoute!.dogBags, animated: true)
         mapView?.userTrackingMode = .followWithHeading
         mapView?.showsCompass = true
@@ -56,7 +58,6 @@ class CurrentRouteViewController: UIViewController, MKMapViewDelegate {
             // swiftlint:enable force_cast
         }
     }
-    
     deinit {
         NotificationCenter.default.removeObserver(fetchNotificaitonSummary as Any)
     }
@@ -65,7 +66,8 @@ class CurrentRouteViewController: UIViewController, MKMapViewDelegate {
 extension UIView {
     func roundCorners(_ corners: UIRectCorner, radius: CGFloat) {
         let path = UIBezierPath(roundedRect: self.bounds,
-                                byRoundingCorners: corners, cornerRadii: CGSize(width: radius, height: radius))
+                                byRoundingCorners: corners,
+                                cornerRadii: CGSize(width: radius, height: radius))
         let mask = CAShapeLayer()
         mask.path = path.cgPath
         self.layer.mask = mask
