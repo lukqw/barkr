@@ -7,16 +7,18 @@
 //
 
 import UIKit
-
+import MapKit
 class Route: NSObject {
 
     let time: Int
-    let dogBags: Int
+    let dogBagCount: Int
     let distance: Int
+    var routes: [MKRoute] = []
+    var dogBags: [DogBag] = []
 
-    init(time: Int, dogBags: Int, distance: Int) {
+    init(time: Int, dogBagCount: Int, distance: Int) {
         self.time = time
-        self.dogBags = dogBags
+        self.dogBagCount = dogBagCount
         self.distance = distance
         super.init()
     }

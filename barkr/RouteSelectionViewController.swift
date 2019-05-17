@@ -11,12 +11,12 @@ import MapKit
 
 class RouteSelectionViewController: UIViewController, MKMapViewDelegate, UITableViewDataSource, UITableViewDelegate {
 
-    var routeArray: [Route] = [Route(time: 30, dogBags: 4, distance: 5300),
-                             Route(time: 27, dogBags: 4, distance: 5025),
-                             Route(time: 33, dogBags: 4, distance: 5740),
-                             Route(time: 34, dogBags: 3, distance: 5800),
-                             Route(time: 23, dogBags: 4, distance: 4700),
-                             Route(time: 26, dogBags: 2, distance: 4900)]
+    var routeArray: [Route] = [Route(time: 30, dogBagCount: 4, distance: 5300),
+                             Route(time: 27, dogBagCount: 4, distance: 5025),
+                             Route(time: 33, dogBagCount: 4, distance: 5740),
+                             Route(time: 34, dogBagCount: 3, distance: 5800),
+                             Route(time: 23, dogBagCount: 4, distance: 4700),
+                             Route(time: 26, dogBagCount: 2, distance: 4900)]
     var dogBagArray: [[DogBag]] = [[DogBag(coordinate: CLLocationCoordinate2D(latitude: 48.167471, longitude: 16.278580)),
                                     DogBag(coordinate: CLLocationCoordinate2D(latitude: 48.168632, longitude: 16.275215)),
                                     DogBag(coordinate: CLLocationCoordinate2D(latitude: 48.170082, longitude: 16.277615)),
@@ -70,7 +70,7 @@ class RouteSelectionViewController: UIViewController, MKMapViewDelegate, UITable
                                    forAnnotationViewWithReuseIdentifier: MKMapViewDefaultAnnotationViewReuseIdentifier)
 
         self.routeSelectionMap.showAnnotations(dogBagArray[0], animated: true)
-        drawRouteForDogBags(dogBagArray[0])
+        drawRouteForDogBags(dogBagArray[0], 0)
         routeSelectionTableView.selectRow(at: IndexPath(row: 0, section: 0), animated: false, scrollPosition: .top)
         routeSelectionMap.userTrackingMode = .follow
     }
@@ -91,7 +91,6 @@ class RouteSelectionViewController: UIViewController, MKMapViewDelegate, UITable
         if segue.identifier == "sequeOpenPicker" {
             // swiftlint:disable force_cast
             let popup = segue.destination as! PickerViewController
-            // swiftlint:enable force_cast
             if minKmSegmentedControl.selectedSegmentIndex == 0 {
                 popup.isKm = false
                 popup.value = durationValue
@@ -99,7 +98,13 @@ class RouteSelectionViewController: UIViewController, MKMapViewDelegate, UITable
                 popup.isKm = true
                 popup.value = kmValue
             }
+        } else if segue.identifier == "currentRouteViewSegue" {
+            let nextView = segue.destination as! CurrentRouteViewController
+            let num:Int = routeSelectionTableView.indexPathForSelectedRow!.row
+            nextView.selectedRoute = routeArray[num]
         }
+        // swiftlint:enable force_cast
+
     }
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -114,7 +119,7 @@ class RouteSelectionViewController: UIViewController, MKMapViewDelegate, UITable
 
         let route = routeArray[indexPath.row]
         cell.timeLabel?.text = String(route.time) + " min"
-        cell.bagFlagLabel?.text = String(route.dogBags)
+        cell.bagFlagLabel?.text = String(route.dogBagCount)
         cell.distanceLabel?.text = String(route.distance/1000) + ","
             + String(route.distance%1000/100)
             + String(route.distance%100/10) + " km"
@@ -124,19 +129,20 @@ class RouteSelectionViewController: UIViewController, MKMapViewDelegate, UITable
         return cell
     }
 
-    func drawRouteForDogBags(_ route: [DogBag]) {
+    func drawRouteForDogBags(_ route: [DogBag],_ selectedRow: Int) {
         let sourceLocation = routeSelectionMap.userLocation.location?.coordinate
         if sourceLocation != nil {
-            drawFromAtoB(sourceLocation.unsafelyUnwrapped, end: route[0].coordinate)
+            routeArray[selectedRow].dogBags = route
+            drawFromAtoB(sourceLocation.unsafelyUnwrapped, end: route[0].coordinate, selectedRow)
             let routeLength = route.count-1
             for index in 0...routeLength-1 {
-                drawFromAtoB(route[index].coordinate, end: route[index+1].coordinate)
+                drawFromAtoB(route[index].coordinate, end: route[index+1].coordinate, selectedRow)
             }
-            drawFromAtoB(route[routeLength].coordinate, end: sourceLocation.unsafelyUnwrapped)
+            drawFromAtoB(route[routeLength].coordinate, end: sourceLocation.unsafelyUnwrapped, selectedRow)
         }
     }
 
-    func drawFromAtoB(_ start: CLLocationCoordinate2D, end: CLLocationCoordinate2D) {
+    func drawFromAtoB(_ start: CLLocationCoordinate2D, end: CLLocationCoordinate2D,_ selectedRow: Int) {
         let sourcePlacemark = MKPlacemark(coordinate: start)
         let destinationPlacemark = MKPlacemark(coordinate: end)
 
@@ -158,6 +164,8 @@ class RouteSelectionViewController: UIViewController, MKMapViewDelegate, UITable
                 return
             }
             let route = response.routes[0]
+    
+            self.routeArray[selectedRow].routes.append(route)
             self.routeSelectionMap.addOverlay(route.polyline, level: MKOverlayLevel.aboveRoads)
         }
     }
@@ -175,7 +183,7 @@ class RouteSelectionViewController: UIViewController, MKMapViewDelegate, UITable
         let allRoutes = self.routeSelectionMap.overlays
         self.routeSelectionMap.removeOverlays(allRoutes)
         self.routeSelectionMap.showAnnotations(self.dogBagArray[indexPath.row], animated: true)
-        drawRouteForDogBags(self.dogBagArray[indexPath.row])
+        drawRouteForDogBags(self.dogBagArray[indexPath.row], indexPath.row)
         routeSelectionMap.userTrackingMode = .follow
     }
 
