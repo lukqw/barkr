@@ -87,7 +87,7 @@ class RouteSelectionViewController: UIViewController, MKMapViewDelegate, UITable
     }
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "sequeOpenPicker" {
+        if segue.identifier == "segueOpenPicker" {
             // swiftlint:disable force_cast
             let popup = segue.destination as! PickerViewController
             if minKmSegmentedControl.selectedSegmentIndex == 0 {
@@ -99,7 +99,7 @@ class RouteSelectionViewController: UIViewController, MKMapViewDelegate, UITable
             }
         } else if segue.identifier == "currentRouteViewSegue" {
             let nextView = segue.destination as! CurrentRouteViewController
-            let num:Int = routeSelectionTableView.indexPathForSelectedRow!.row
+            let num: Int = routeSelectionTableView.indexPathForSelectedRow!.row
             nextView.selectedRoute = routeArray[num]
         }
         // swiftlint:enable force_cast
@@ -123,7 +123,7 @@ class RouteSelectionViewController: UIViewController, MKMapViewDelegate, UITable
             + String(route.distance%1000/100)
             + String(route.distance%100/10) + " km"
         let backgroundView = UIView()
-        backgroundView.backgroundColor = UIColor(red: 0.17, green: 0.55, blue: 0.22, alpha: 0.15)
+        backgroundView.backgroundColor = UIColor(red: 0.17, green: 0.55, blue: 0.22, alpha: 0.20)
         cell.selectedBackgroundView = backgroundView
         return cell
     }
@@ -163,7 +163,6 @@ class RouteSelectionViewController: UIViewController, MKMapViewDelegate, UITable
                 return
             }
             let route = response.routes[0]
-    
             self.routeArray[selectedRow].routes.append(route)
             self.routeSelectionMap.addOverlay(route.polyline, level: MKOverlayLevel.aboveRoads)
         }
@@ -186,7 +185,10 @@ class RouteSelectionViewController: UIViewController, MKMapViewDelegate, UITable
         self.routeSelectionMap.removeOverlays(allRoutes)
         self.routeSelectionMap.showAnnotations(self.dogBagArray[indexPath.row], animated: true)
         drawRouteForDogBags(self.dogBagArray[indexPath.row], indexPath.row)
-        routeSelectionMap.userTrackingMode = .follow
+        let span = MKCoordinateSpan(latitudeDelta: 0.008, longitudeDelta: 0.008)
+        let sourceLocation = routeSelectionMap.userLocation.location?.coordinate
+        let mapRegion = MKCoordinateRegion(center: sourceLocation.unsafelyUnwrapped, span: span)
+        routeSelectionMap.setRegion(mapRegion, animated: true)
     }
 
     deinit {

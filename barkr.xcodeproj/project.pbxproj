@@ -26,6 +26,7 @@
 		A1EDAE34228502F30039247D /* RoutesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1EDAE33228502F30039247D /* RoutesViewController.swift */; };
 		A1EEB1362289BA600064475B /* RouteSelectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1EEB1352289BA600064475B /* RouteSelectionViewController.swift */; };
 		A1EEB13A2289C6860064475B /* RouteSelectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1EEB1392289C6860064475B /* RouteSelectionCell.swift */; };
+		A1F2124D228ED9ED0093B9B4 /* SummaryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1F2124C228ED9ED0093B9B4 /* SummaryViewController.swift */; };
 		DB807F40289C464102148011 /* Pods_barkr.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9CE796EC23ACC7BE024CE92A /* Pods_barkr.framework */; };
 		E5595D1F95530EB7E26616FC /* Pods_barkrUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 376EAC4FB0833467D19AB6A2 /* Pods_barkrUITests.framework */; };
 /* End PBXBuildFile section */
@@ -78,6 +79,7 @@
 		A1EDAE33228502F30039247D /* RoutesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoutesViewController.swift; sourceTree = "<group>"; };
 		A1EEB1352289BA600064475B /* RouteSelectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RouteSelectionViewController.swift; sourceTree = "<group>"; };
 		A1EEB1392289C6860064475B /* RouteSelectionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RouteSelectionCell.swift; sourceTree = "<group>"; };
+		A1F2124C228ED9ED0093B9B4 /* SummaryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SummaryViewController.swift; sourceTree = "<group>"; };
 		ADD3DF9E6D63B2B932328C31 /* Pods-barkrUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-barkrUITests.release.xcconfig"; path = "Target Support Files/Pods-barkrUITests/Pods-barkrUITests.release.xcconfig"; sourceTree = "<group>"; };
 		B2FF046539F6B8CFB9155362 /* Pods_barkrTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_barkrTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		EF96C2D9B02B041A70F7A128 /* Pods-barkrTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-barkrTests.debug.xcconfig"; path = "Target Support Files/Pods-barkrTests/Pods-barkrTests.debug.xcconfig"; sourceTree = "<group>"; };
@@ -164,6 +166,7 @@
 				A1EDAE032284FD770039247D /* AppDelegate.swift */,
 				A1E786F722885553005718BA /* BaseTabBarController.swift */,
 				A1EDAE092284FD770039247D /* Main.storyboard */,
+				A1F2124C228ED9ED0093B9B4 /* SummaryViewController.swift */,
 				A1EC9E37228E101700C7F082 /* PickerViewController.swift */,
 				372E614F228CE478009D300C /* CurrentRouteViewController.swift */,
 				A1EBD89B228B63EB001D36A5 /* Route.swift */,
@@ -444,6 +447,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				A1EBD89C228B63EB001D36A5 /* Route.swift in Sources */,
+				A1F2124D228ED9ED0093B9B4 /* SummaryViewController.swift in Sources */,
 				A1EBD896228B44DC001D36A5 /* DogBag.swift in Sources */,
 				A1E786F822885553005718BA /* BaseTabBarController.swift in Sources */,
 				A1EDAE34228502F30039247D /* RoutesViewController.swift in Sources */,

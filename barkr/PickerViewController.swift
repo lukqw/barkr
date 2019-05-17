@@ -14,6 +14,7 @@ class PickerViewController: UIViewController {
     @IBOutlet weak var pickerContainerDone: UIButton!
     @IBOutlet weak var pickerContainerCancel: UIButton!
     @IBOutlet var minOrKmPicker: UIPickerView!
+    @IBOutlet var minOrKmLabel: UILabel!
 
     var isKm: Bool = false
     var value: Int = 30
@@ -22,6 +23,7 @@ class PickerViewController: UIViewController {
         super.viewDidLoad()
         self.pickerContainerView.layer.cornerRadius = 20
         minOrKmPicker.selectRow(value-1, inComponent: 0, animated: false)
+        minOrKmLabel.text = isKm ? "Km" : "Min"
     }
 
     @IBAction func pickerValueCancelled(_ sender: Any) {
