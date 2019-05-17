@@ -10,9 +10,9 @@ import UIKit
 import Charts
 
 class StatisticsViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
-    let statisticsCategoryTitles: [String] = ["Weekly Total", "Distance Walked", "Average Duration",
-                                              "Walked the Dog", "Dogbag Donator Sum"]
-    let statisticsCategoryValues: [String] = ["9h 30m", "23 km", "23 min", "13 times", "29 dogbags"]
+    let statisticsCategoryTitles: [String] = ["Times Walked", "Total Walk Time", "Average Walk Time",
+                                              "Total Walk Distance", "Average Walk Distance", "Passed Poo Bag Stations"]
+    let statisticsCategoryValues: [String] = ["10x", "9h 30m", "24 min", "23 km", "2.7km", "29"]
     var currentDate = Date()
     @IBOutlet weak var statisticsTableView: UITableView!
     @IBOutlet weak var barChartView: BarChartView!

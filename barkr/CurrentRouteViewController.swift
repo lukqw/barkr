@@ -31,8 +31,7 @@ class CurrentRouteViewController: UIViewController, MKMapViewDelegate {
         mapView.register(DogBagView.self,
                          forAnnotationViewWithReuseIdentifier: MKMapViewDefaultAnnotationViewReuseIdentifier)
         mapView.showAnnotations(selectedRoute!.dogBags, animated: true)
-        mapView?.userTrackingMode = .followWithHeading
-        mapView?.showsCompass = true
+        mapView?.userTrackingMode = .follow
         let span = MKCoordinateSpan(latitudeDelta: 0.0008, longitudeDelta: 0.0008)
         let sourceLocation = mapView.userLocation.location?.coordinate
         let mapRegion = MKCoordinateRegion(center: sourceLocation.unsafelyUnwrapped, span: span)

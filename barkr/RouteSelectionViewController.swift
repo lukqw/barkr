@@ -38,7 +38,7 @@ class RouteSelectionViewController: UIViewController, MKMapViewDelegate, UITable
                                     DogBag(coordinate: CLLocationCoordinate2D(latitude: 48.170932, longitude: 16.282821))],
                                    [DogBag(coordinate: CLLocationCoordinate2D(latitude: 48.167983, longitude: 16.285675)),
                                     DogBag(coordinate: CLLocationCoordinate2D(latitude: 48.170932, longitude: 16.282821))]]
-
+    var routeOverviewOnly = false
     var durationValue: Int = 30
     var kmValue: Int = 5
     private var fetchNotificaitonPicker: NSObjectProtocol?
@@ -46,12 +46,28 @@ class RouteSelectionViewController: UIViewController, MKMapViewDelegate, UITable
     @IBOutlet var minKmSegmentedControl: UISegmentedControl!
     @IBOutlet var pickerValueField: UIButton!
 
+    @IBOutlet weak var segmentToolbar: UIToolbar!
     @IBOutlet var routeSelectionTableView: UITableView!
     @IBOutlet var routeSelectionMap: MKMapView!
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        if routeOverviewOnly {
+            viewWillDisappear(false)
+            segmentToolbar.removeFromSuperview()
+            
+            for const in view.constraints {
+                if const.identifier == "maptop" {
+                    print("asasd")
+                    const.constant = 0
+                    //view.layoutIfNeeded()
+                }
+            }
 
+//routeSelectionMap.removeConstraints(routeSelectionMap.constraints)
+            
+        }
+        
         fetchNotificaitonPicker = NotificationCenter.default.addObserver(
             forName: NSNotification.Name(rawValue: "valuePicker"), object: nil, queue: .main) { (notification) in
             // swiftlint:disable force_cast
@@ -73,7 +89,6 @@ class RouteSelectionViewController: UIViewController, MKMapViewDelegate, UITable
         routeSelectionTableView.selectRow(at: IndexPath(row: 0, section: 0), animated: false, scrollPosition: .top)
         routeSelectionMap.userTrackingMode = .follow
     }
-
     @IBAction func minKmSegmentedControlPressed(_ sender: Any) {
         if minKmSegmentedControl.selectedSegmentIndex == 0 {
             self.pickerValueField.setTitle(String(durationValue) + " Min", for: .normal)
@@ -192,5 +207,10 @@ class RouteSelectionViewController: UIViewController, MKMapViewDelegate, UITable
 
     deinit {
         NotificationCenter.default.removeObserver(fetchNotificaitonPicker as Any)
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        navigationController?.setNavigationBarHidden(true, animated: animated)
     }
 }
