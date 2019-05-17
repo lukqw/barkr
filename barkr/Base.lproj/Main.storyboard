@@ -756,8 +756,14 @@
                                             <constraint firstItem="JTT-t8-APu" firstAttribute="top" secondItem="nqV-uN-42H" secondAttribute="bottom" constant="8" symbolic="YES" id="vMs-fP-80l"/>
                                         </constraints>
                                     </view>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="WEEKLY STATISTICS" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DSD-Qd-WPF">
+                                        <rect key="frame" x="12" y="310" width="109" height="13.5"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="11"/>
+                                        <color key="textColor" cocoaTouchSystemColor="scrollViewTexturedBackgroundColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
                                     <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="vQ2-G7-iV6">
-                                        <rect key="frame" x="0.0" y="310" width="414" height="264"/>
+                                        <rect key="frame" x="0.0" y="326.5" width="414" height="264"/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="264" id="fOF-Kg-h8J"/>
@@ -780,12 +786,14 @@
                                 </subviews>
                                 <constraints>
                                     <constraint firstItem="0ie-9g-xrx" firstAttribute="leading" secondItem="dGO-aY-fHy" secondAttribute="leading" id="Ede-Yc-YdV"/>
-                                    <constraint firstItem="vQ2-G7-iV6" firstAttribute="top" secondItem="0ie-9g-xrx" secondAttribute="bottom" constant="20" id="KwS-dh-yxO"/>
+                                    <constraint firstItem="vQ2-G7-iV6" firstAttribute="top" secondItem="DSD-Qd-WPF" secondAttribute="bottom" constant="3" id="KwS-dh-yxO"/>
                                     <constraint firstItem="0ie-9g-xrx" firstAttribute="top" secondItem="dGO-aY-fHy" secondAttribute="top" constant="20" id="PDQ-Qk-8DN"/>
                                     <constraint firstItem="0ie-9g-xrx" firstAttribute="trailing" secondItem="vQ2-G7-iV6" secondAttribute="trailing" id="XFQ-jr-RLJ"/>
                                     <constraint firstItem="0ie-9g-xrx" firstAttribute="centerX" secondItem="dGO-aY-fHy" secondAttribute="centerX" id="ZzR-Xk-PmX"/>
                                     <constraint firstAttribute="trailing" secondItem="0ie-9g-xrx" secondAttribute="trailing" id="aYZ-bD-dzl"/>
                                     <constraint firstItem="0ie-9g-xrx" firstAttribute="leading" secondItem="vQ2-G7-iV6" secondAttribute="leading" id="eOg-US-LA0"/>
+                                    <constraint firstItem="DSD-Qd-WPF" firstAttribute="top" secondItem="0ie-9g-xrx" secondAttribute="bottom" constant="20" id="gxF-lP-CHb"/>
+                                    <constraint firstItem="DSD-Qd-WPF" firstAttribute="leading" secondItem="dGO-aY-fHy" secondAttribute="leading" constant="12" id="sQ5-RO-Gls"/>
                                     <constraint firstAttribute="bottom" secondItem="vQ2-G7-iV6" secondAttribute="bottom" constant="20" id="vGM-Gp-ECB"/>
                                 </constraints>
                             </scrollView>

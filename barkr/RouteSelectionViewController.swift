@@ -55,19 +55,12 @@ class RouteSelectionViewController: UIViewController, MKMapViewDelegate, UITable
         if routeOverviewOnly {
             viewWillDisappear(false)
             segmentToolbar.removeFromSuperview()
-            
             for const in view.constraints {
                 if const.identifier == "maptop" {
-                    print("asasd")
                     const.constant = 0
-                    //view.layoutIfNeeded()
                 }
             }
-
-//routeSelectionMap.removeConstraints(routeSelectionMap.constraints)
-            
         }
-        
         fetchNotificaitonPicker = NotificationCenter.default.addObserver(
             forName: NSNotification.Name(rawValue: "valuePicker"), object: nil, queue: .main) { (notification) in
             // swiftlint:disable force_cast
@@ -208,7 +201,6 @@ class RouteSelectionViewController: UIViewController, MKMapViewDelegate, UITable
     deinit {
         NotificationCenter.default.removeObserver(fetchNotificaitonPicker as Any)
     }
-    
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         navigationController?.setNavigationBarHidden(true, animated: animated)

@@ -96,7 +96,6 @@ class RoutesViewController: UIViewController, UITableViewDataSource, UITableView
         routesTableView.setEditing(!routesTableView.isEditing, animated: true)
         navigationItem.rightBarButtonItem?.title = routesTableView.isEditing ? "Done" : "Edit"
     }
-    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
 //        if segue.identifier == "showRouteSelectionSegue" {
             // swiftlint:disable force_cast
@@ -108,8 +107,6 @@ class RoutesViewController: UIViewController, UITableViewDataSource, UITableView
   //      }
     }
 
-    
-    
     override func unwind(for unwindSegue: UIStoryboardSegue, towards subsequentVC: UIViewController) {
         if unwindSegue.identifier == "showRouteSelectionSegue" {
             viewWillAppear(true)
@@ -119,5 +116,4 @@ class RoutesViewController: UIViewController, UITableViewDataSource, UITableView
         super.viewWillAppear(animated)
         navigationController?.setNavigationBarHidden(false, animated: animated)
     }
-    
 }
