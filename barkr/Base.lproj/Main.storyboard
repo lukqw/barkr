@@ -231,7 +231,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <navigationBar contentMode="scaleToFill" translucent="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xIG-c2-cZa">
-                                <rect key="frame" x="0.0" y="88" width="414" height="44"/>
+                                <rect key="frame" x="0.0" y="44" width="414" height="44"/>
                                 <items>
                                     <navigationItem title="Select Route" id="bny-8g-QOr">
                                         <barButtonItem key="leftBarButtonItem" style="done" systemItem="cancel" id="Pvq-qc-wEq">
@@ -248,7 +248,7 @@
                                 </items>
                             </navigationBar>
                             <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translucent="NO" translatesAutoresizingMaskIntoConstraints="NO" id="isf-Rp-NWp">
-                                <rect key="frame" x="0.0" y="132" width="414" height="44"/>
+                                <rect key="frame" x="0.0" y="88" width="414" height="44"/>
                                 <items>
                                     <barButtonItem style="plain" id="gz3-Hp-Seq">
                                         <segmentedControl key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="bar" selectedSegmentIndex="0" id="y5M-Xw-ve2">
@@ -279,13 +279,13 @@
                                 </items>
                             </toolbar>
                             <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" scrollEnabled="NO" pitchEnabled="NO" showsUserLocation="YES" showsPointsOfInterest="NO" translatesAutoresizingMaskIntoConstraints="NO" id="biG-gv-tA8">
-                                <rect key="frame" x="0.0" y="176" width="414" height="360"/>
+                                <rect key="frame" x="0.0" y="132" width="414" height="360"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="360" identifier="height" id="F2W-kG-An4"/>
                                 </constraints>
                             </mapView>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="r9I-xo-ok4">
-                                <rect key="frame" x="0.0" y="536" width="414" height="326"/>
+                                <rect key="frame" x="0.0" y="492" width="414" height="370"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="routeSelectionCell" rowHeight="80" id="ts0-EG-SXQ" customClass="RouteSelectionCell" customModule="barkr" customModuleProvider="target">
@@ -465,7 +465,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" pitchEnabled="NO" showsUserLocation="YES" translatesAutoresizingMaskIntoConstraints="NO" id="fRY-8M-tc5">
-                                <rect key="frame" x="0.0" y="88" width="414" height="774"/>
+                                <rect key="frame" x="0.0" y="44" width="414" height="818"/>
                             </mapView>
                             <visualEffectView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="0rq-j9-LwI">
                                 <rect key="frame" x="0.0" y="782" width="414" height="80"/>
@@ -853,7 +853,7 @@
         <image name="statistics" width="30" height="30"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="nFW-kw-2OA"/>
+        <segue reference="szt-FV-AI9"/>
     </inferredMetricsTieBreakers>
     <color key="tintColor" red="0.15294117647058825" green="0.5490196078431373" blue="0.20784313725490194" alpha="0.84999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
 </document>
