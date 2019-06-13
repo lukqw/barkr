@@ -77,8 +77,52 @@ class RouteSelectionViewController: UIViewController, MKMapViewDelegate, UITable
         return resultPOIs
     }
     func generateRoutes() {
-        let nearestPoints = getNearestPOIs(location: routeSelectionMap.userLocation.location!.coordinate)
-        routeArray.append(Route(id: -1, time: 1, dogBagCount: 4, distance: 5, favorite: true, dogBags: nearestPoints))
+        let isKm = minKmSegmentedControl.selectedSegmentIndex == 0
+        let firstLoc = routeSelectionMap.userLocation.location!.coordinate
+        var pointA = routeSelectionMap.userLocation.location!.coordinate
+        var pointB = CLLocationCoordinate2D(latitude: 0, longitude: 0)
+        let wantedValue = isKm ? kmValue : durationValue
+        for _ in 1...5 {
+            var total = 0.0
+            let route = Route()
+            while(total < Double(wantedValue)/2) {
+                let closestPoints = getNearestPOIs(location: pointA)
+                pointB = closestPoints.randomElement()!.coordinate
+
+                let sourcePlacemark = MKPlacemark(coordinate: pointA)
+                let destinationPlacemark = MKPlacemark(coordinate: pointB)
+
+                let sourceMapItem = MKMapItem(placemark: sourcePlacemark)
+                let destinationMapItem = MKMapItem(placemark: destinationPlacemark)
+
+                let directionRequest = MKDirections.Request()
+                directionRequest.source = sourceMapItem
+                directionRequest.destination = destinationMapItem
+                directionRequest.requestsAlternateRoutes = false
+                directionRequest.transportType = .walking
+
+                var singleroute = MKRoute()
+                let directions = MKDirections(request: directionRequest)
+                directions.calculate { (response, error) in
+                    guard let response = response else {
+                        if let error = error {
+                            print(error)
+                        }
+                        return
+                    }
+                    singleroute = response.routes[0]
+                    route.routes.append(singleroute)
+                    route.distance += singleroute.distance/1000
+                    route.time += Int(singleroute.expectedTravelTime/60)
+                    total += isKm ? singleroute.distance/1000 : singleroute.expectedTravelTime/60
+                    pointA = pointB
+                }
+                while(pointB.latitude != firstLoc.latitude && pointB.longitude != firstLoc.longitude) {
+                    break
+                }
+            }
+            routeArray.append(route)
+        }
     }
     @IBAction func minKmSegmentedControlPressed(_ sender: Any) {
         if minKmSegmentedControl.selectedSegmentIndex == 0 {
