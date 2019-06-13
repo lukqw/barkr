@@ -96,7 +96,7 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icons8-poo-filled-50" translatesAutoresizingMaskIntoConstraints="NO" id="HX9-kh-kpH">
-                                                    <rect key="frame" x="212" y="20" width="25" height="39"/>
+                                                    <rect key="frame" x="212" y="20" width="16" height="39"/>
                                                 </imageView>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bBl-uJ-POU">
                                                     <rect key="frame" x="162" y="29" width="42" height="21"/>
@@ -474,14 +474,14 @@
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="00" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PnK-U9-EBn">
-                                            <rect key="frame" x="24" y="24" width="35" height="34"/>
+                                            <rect key="frame" x="24" y="24" width="40" height="34"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="28"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="27" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5Xn-Ke-QlA">
-                                            <rect key="frame" x="67" y="24" width="32" height="34"/>
+                                            <rect key="frame" x="67" y="24" width="40" height="34"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="28"/>
                                             <nil key="textColor"/>
@@ -510,6 +510,7 @@
                                                 <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             </state>
                                             <connections>
+                                                <action selector="stopButtonPressed:" destination="slZ-8t-BKx" eventType="touchUpInside" id="Htj-F1-sGU"/>
                                                 <segue destination="Dkh-os-xRq" kind="presentation" identifier="segueSummary" id="aIR-Oy-u9J"/>
                                             </connections>
                                         </button>
@@ -530,15 +531,37 @@
                                 </view>
                                 <blurEffect style="light"/>
                             </visualEffectView>
+                            <visualEffectView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="yMc-Is-FrO">
+                                <rect key="frame" x="342" y="710" width="60" height="60"/>
+                                <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="Fny-N8-ho2">
+                                    <rect key="frame" x="0.0" y="0.0" width="60" height="60"/>
+                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                    <subviews>
+                                        <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fuL-Ki-tRr">
+                                            <rect key="frame" x="0.0" y="0.0" width="60" height="60"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <state key="normal" image="icons8-marker-filled-50"/>
+                                            <connections>
+                                                <action selector="centerLocation:" destination="slZ-8t-BKx" eventType="touchUpInside" id="b4d-Dz-no4"/>
+                                            </connections>
+                                        </button>
+                                    </subviews>
+                                </view>
+                                <blurEffect style="regular"/>
+                            </visualEffectView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="fRY-8M-tc5" firstAttribute="leading" secondItem="0rq-j9-LwI" secondAttribute="leading" id="89B-bW-X6Y"/>
+                            <constraint firstItem="yMc-Is-FrO" firstAttribute="leading" secondItem="CAq-oe-09v" secondAttribute="trailing" constant="-72" id="Azo-wI-hI8"/>
+                            <constraint firstItem="0rq-j9-LwI" firstAttribute="top" secondItem="yMc-Is-FrO" secondAttribute="bottom" constant="12" id="GhH-Hn-W3Z"/>
                             <constraint firstItem="fRY-8M-tc5" firstAttribute="top" secondItem="CAq-oe-09v" secondAttribute="top" id="Ifi-1A-jLj"/>
                             <constraint firstItem="0rq-j9-LwI" firstAttribute="top" secondItem="CAq-oe-09v" secondAttribute="bottom" constant="-80" id="LiF-ID-R1V"/>
                             <constraint firstAttribute="trailing" secondItem="fRY-8M-tc5" secondAttribute="trailing" id="NyO-5W-PS4"/>
                             <constraint firstItem="fRY-8M-tc5" firstAttribute="bottom" secondItem="0rq-j9-LwI" secondAttribute="bottom" id="faK-DE-RQv"/>
                             <constraint firstItem="fRY-8M-tc5" firstAttribute="bottom" secondItem="CAq-oe-09v" secondAttribute="bottom" id="ltp-PG-6ZR"/>
+                            <constraint firstItem="CAq-oe-09v" firstAttribute="trailing" secondItem="yMc-Is-FrO" secondAttribute="trailing" constant="12" id="q5o-AR-Mc2"/>
+                            <constraint firstItem="yMc-Is-FrO" firstAttribute="top" secondItem="0rq-j9-LwI" secondAttribute="top" constant="-72" id="qsi-8J-Rtb"/>
                             <constraint firstItem="fRY-8M-tc5" firstAttribute="trailing" secondItem="0rq-j9-LwI" secondAttribute="trailing" id="tVe-SL-Drh"/>
                             <constraint firstItem="fRY-8M-tc5" firstAttribute="leading" secondItem="bBQ-MH-BJl" secondAttribute="leading" id="voE-tK-1Hb"/>
                         </constraints>
@@ -546,13 +569,20 @@
                     </view>
                     <connections>
                         <outlet property="blurredContainer" destination="0rq-j9-LwI" id="jtr-HF-wd7"/>
+                        <outlet property="centerLocationButton" destination="fuL-Ki-tRr" id="SBV-8f-l28"/>
+                        <outlet property="centerLocationButtonContainer" destination="yMc-Is-FrO" id="fWh-Nn-sqR"/>
+                        <outlet property="dogBagProgressLabel" destination="SW3-ru-Twg" id="oqi-em-SP2"/>
+                        <outlet property="labelMinute" destination="PnK-U9-EBn" id="mrK-qk-cBV"/>
+                        <outlet property="labelSecond" destination="5Xn-Ke-QlA" id="SSf-Zg-ahC"/>
                         <outlet property="mapView" destination="fRY-8M-tc5" id="qZC-5O-E3q"/>
+                        <outlet property="pooIcon" destination="wdj-rP-cgu" id="UYN-5o-lq7"/>
+                        <outlet property="progressBar" destination="fPK-TJ-G3P" id="39C-mO-JBV"/>
                         <outlet property="stopButton" destination="chi-la-0qM" id="IRY-2Z-YXa"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ee6-jL-7fE" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3214" y="644"/>
+            <point key="canvasLocation" x="3213.04347826087" y="643.52678571428567"/>
         </scene>
         <!--Summary View Controller-->
         <scene sceneID="w0h-jH-mLb">
@@ -625,7 +655,7 @@
                                         </constraints>
                                     </view>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="OOw-JX-j6F">
-                                        <rect key="frame" x="59" y="143" width="209" height="21"/>
+                                        <rect key="frame" x="45" y="143" width="236" height="61"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
@@ -654,7 +684,7 @@
                                     <constraint firstItem="HS1-SN-KdP" firstAttribute="centerX" secondItem="OOw-JX-j6F" secondAttribute="centerX" id="hao-WL-p6D"/>
                                     <constraint firstItem="XvY-ML-VAe" firstAttribute="leading" secondItem="qcC-Wz-tEi" secondAttribute="leading" constant="49" id="lzI-57-YH4"/>
                                     <constraint firstItem="OOw-JX-j6F" firstAttribute="centerX" secondItem="XvY-ML-VAe" secondAttribute="centerX" id="nCh-P8-M7m"/>
-                                    <constraint firstItem="OOw-JX-j6F" firstAttribute="leading" secondItem="qcC-Wz-tEi" secondAttribute="leading" constant="59" id="w93-QZ-zAl"/>
+                                    <constraint firstItem="OOw-JX-j6F" firstAttribute="leading" secondItem="qcC-Wz-tEi" secondAttribute="leading" constant="45" id="w93-QZ-zAl"/>
                                     <constraint firstAttribute="trailing" secondItem="HS1-SN-KdP" secondAttribute="trailing" constant="3" id="yTj-Lj-8sE"/>
                                 </constraints>
                             </view>
@@ -697,7 +727,7 @@
                                                 <rect key="frame" x="8" y="8" width="398" height="66"/>
                                                 <subviews>
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageSizeForAccessibilityContentSizeCategory="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fvK-ZJ-nZU">
-                                                        <rect key="frame" x="0.0" y="8" width="25" height="50"/>
+                                                        <rect key="frame" x="0.0" y="8" width="16" height="50"/>
                                                         <fontDescription key="fontDescription" type="system" pointSize="18"/>
                                                         <state key="normal" image="icons8-back-filled-50"/>
                                                         <connections>
@@ -710,7 +740,7 @@
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageSizeForAccessibilityContentSizeCategory="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="aj1-b5-XUg">
-                                                        <rect key="frame" x="373" y="20.5" width="25" height="25"/>
+                                                        <rect key="frame" x="382" y="22" width="16" height="22"/>
                                                         <state key="normal" image="icons8-forward-filled-50"/>
                                                         <connections>
                                                             <action selector="next:" destination="g76-JN-PuL" eventType="touchUpInside" id="e2g-2w-L6F"/>
@@ -845,6 +875,7 @@
     <resources>
         <image name="icons8-back-filled-50" width="25" height="25"/>
         <image name="icons8-forward-filled-50" width="25" height="25"/>
+        <image name="icons8-marker-filled-50" width="25" height="25"/>
         <image name="icons8-poo-filled-50" width="25" height="25"/>
         <image name="map" width="30" height="30"/>
         <image name="notstar" width="25" height="25"/>

@@ -84,7 +84,7 @@
       <AdditionalOptions>
       </AdditionalOptions>
       <LocationScenarioReference
-         identifier = "../barkr/vienna.gpx"
+         identifier = "../LocationData/vienna.gpx"
          referenceType = "0">
       </LocationScenarioReference>
    </LaunchAction>

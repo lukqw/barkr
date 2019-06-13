@@ -13,6 +13,7 @@ class RouteSelectionViewController: UIViewController, MKMapViewDelegate, UITable
 
     var dogBagArray: [DogBag] = []
     var routeArray: [Route] = []
+
     var routeOverviewOnly = false
     var durationValue: Int = 30
     var kmValue: Int = 5
@@ -54,8 +55,8 @@ class RouteSelectionViewController: UIViewController, MKMapViewDelegate, UITable
         routeSelectionMap.register(DogBagView.self,
                                    forAnnotationViewWithReuseIdentifier: MKMapViewDefaultAnnotationViewReuseIdentifier)
         if(routeArray.count > 0) {
-            self.routeSelectionMap.showAnnotations(routeArray[0].dogBags, animated: true)
-            drawRouteForDogBags(routeArray[0].dogBags, 0)
+            self.routeSelectionMap.showAnnotations(routeArray[0].getDogbagArray(), animated: true)
+            drawRouteForDogBags(routeArray[0].getDogbagArray(), 0)
             routeSelectionTableView.selectRow(at: IndexPath(row: 0, section: 0), animated: false, scrollPosition: .top)
         }
         routeSelectionMap.userTrackingMode = .follow
@@ -77,10 +78,6 @@ class RouteSelectionViewController: UIViewController, MKMapViewDelegate, UITable
     }
     func generateRoutes() {
         let nearestPoints = getNearestPOIs(location: routeSelectionMap.userLocation.location!.coordinate)
-        for point in nearestPoints {
-            print(point.coordinate.latitude)
-            print(point.coordinate.longitude)
-        }
         routeArray.append(Route(id: -1, time: 1, dogBagCount: 4, distance: 5, favorite: true, dogBags: nearestPoints))
     }
     @IBAction func minKmSegmentedControlPressed(_ sender: Any) {
@@ -127,9 +124,7 @@ class RouteSelectionViewController: UIViewController, MKMapViewDelegate, UITable
         let route = routeArray[indexPath.row]
         cell.timeLabel?.text = String(route.time) + " min"
         cell.bagFlagLabel?.text = String(route.dogBagCount)
-        cell.distanceLabel?.text = String(route.distance/1000) + ","
-                                    + String(route.distance%1000/100)
-                                    + String(route.distance%100/10) + " km"
+        cell.distanceLabel?.text = route.distanceToString()
         let backgroundView = UIView()
         backgroundView.backgroundColor = UIColor(red: 0.17, green: 0.55, blue: 0.22, alpha: 0.20)
         cell.selectedBackgroundView = backgroundView
@@ -139,7 +134,7 @@ class RouteSelectionViewController: UIViewController, MKMapViewDelegate, UITable
     func drawRouteForDogBags(_ route: [DogBag], _ selectedRow: Int) {
         let sourceLocation = routeSelectionMap.userLocation.location?.coordinate
         if sourceLocation != nil {
-            routeArray[selectedRow].dogBags = route
+            routeArray[selectedRow].setDogbagArray(route)
             drawFromAtoB(sourceLocation.unsafelyUnwrapped, end: route[0].coordinate, selectedRow)
             let routeLength = route.count-1
             for index in 0...routeLength-1 {
@@ -191,8 +186,8 @@ class RouteSelectionViewController: UIViewController, MKMapViewDelegate, UITable
         }
         let allRoutes = self.routeSelectionMap.overlays
         self.routeSelectionMap.removeOverlays(allRoutes)
-        self.routeSelectionMap.showAnnotations(self.routeArray[indexPath.row].dogBags, animated: true)
-        drawRouteForDogBags(self.routeArray[indexPath.row].dogBags, indexPath.row)
+        self.routeSelectionMap.showAnnotations(self.routeArray[indexPath.row].getDogbagArray(), animated: true)
+        drawRouteForDogBags(self.routeArray[indexPath.row].getDogbagArray(), indexPath.row)
         let span = MKCoordinateSpan(latitudeDelta: 0.008, longitudeDelta: 0.008)
         let sourceLocation = routeSelectionMap.userLocation.location?.coordinate
         let mapRegion = MKCoordinateRegion(center: sourceLocation.unsafelyUnwrapped, span: span)
