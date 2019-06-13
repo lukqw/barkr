@@ -35,5 +35,15 @@ class Route: NSObject {
         self.favorite = favorite
         super.init()
     }
+    
+    init(id: Int, time: Int, dogBagCount: Int, distance: Int, favorite: Bool, dogBags: [DogBag]) {
+        self.id = id
+        self.time = time
+        self.dogBagCount = dogBagCount
+        self.distance = distance
+        self.favorite = favorite
+        self.dogBags = dogBags
+        super.init()
+    }
 
 }
