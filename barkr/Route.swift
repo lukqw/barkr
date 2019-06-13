@@ -20,11 +20,11 @@ class Route: Object {
     let dogBags = List<DogBagRealmObject>()
     //@objc dynamic var dogBags: [DogBagRealmObject] = []
     @objc dynamic var favorite: Bool = false
-    convenience init(_ time: Int,_ dogBagCount: Int,_ distance: Double) {
+    convenience init(_ time: Int, _ dogBagCount: Int, _ distance: Double) {
         self.init(-1, time, dogBagCount,distance, false)
     }
 
-    convenience init(_ id: Int,_ time: Int,_ dogBagCount: Int,_ distance: Double,_ favorite: Bool) {
+    convenience init(_ id: Int, _ time: Int, _ dogBagCount: Int, _ distance: Double, _ favorite: Bool) {
         self.init()
         self.id = id
         self.time = time
@@ -52,14 +52,14 @@ class Route: Object {
     override static func ignoredProperties() -> [String] {
         return ["routes"]
     }
-    func getDogbagArray() -> [DogBag]{
+    func getDogbagArray() -> [DogBag] {
         var dogbags: [DogBag] = []
         for dbro in self.dogBags {
             dogbags.append(dbro.dogbag)
         }
         return dogbags
     }
-    func setDogbagArray(_ arr: [DogBag]){
+    func setDogbagArray(_ arr: [DogBag]) {
         dogBags.removeAll()
         for dogbag in arr {
             let dbro = DogBagRealmObject.init()
