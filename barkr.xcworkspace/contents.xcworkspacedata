@@ -2,6 +2,15 @@
 <Workspace
    version = "1.0">
    <FileRef
+      location = "group:../luki_flash.gpx">
+   </FileRef>
+   <FileRef
+      location = "group:../Luki_sprint.gpx">
+   </FileRef>
+   <FileRef
+      location = "group:../Luki.gpx">
+   </FileRef>
+   <FileRef
       location = "group:rules.swiftlint.yml">
    </FileRef>
    <FileRef
