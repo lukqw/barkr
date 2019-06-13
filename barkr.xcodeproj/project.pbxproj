@@ -9,11 +9,11 @@
 /* Begin PBXBuildFile section */
 		372E6150228CE478009D300C /* CurrentRouteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 372E614F228CE478009D300C /* CurrentRouteViewController.swift */; };
 		373BA75B2285AD72003B4334 /* StatisticsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 373BA75A2285AD72003B4334 /* StatisticsViewController.swift */; };
-		37CF54CE22B27A7D001D61E2 /* Luki_sprint.gpx in Resources */ = {isa = PBXBuildFile; fileRef = 37CF54CB22B27A7D001D61E2 /* Luki_sprint.gpx */; };
-		37CF54CF22B27A7D001D61E2 /* luki_flash.gpx in Resources */ = {isa = PBXBuildFile; fileRef = 37CF54CC22B27A7D001D61E2 /* luki_flash.gpx */; };
-		37CF54D022B27A7D001D61E2 /* Luki.gpx in Resources */ = {isa = PBXBuildFile; fileRef = 37CF54CD22B27A7D001D61E2 /* Luki.gpx */; };
 		37F1EA4022B2AD67006EA179 /* WalkedRoute.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37F1EA3F22B2AD67006EA179 /* WalkedRoute.swift */; };
 		37F1EA4422B2F37E006EA179 /* DogBagRealmObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37F1EA4322B2F37E006EA179 /* DogBagRealmObject.swift */; };
+		37F1EA4822B30310006EA179 /* luki_flash.gpx in Resources */ = {isa = PBXBuildFile; fileRef = 37F1EA4522B30310006EA179 /* luki_flash.gpx */; };
+		37F1EA4922B30310006EA179 /* Luki_sprint.gpx in Resources */ = {isa = PBXBuildFile; fileRef = 37F1EA4622B30310006EA179 /* Luki_sprint.gpx */; };
+		37F1EA4A22B30310006EA179 /* Luki.gpx in Resources */ = {isa = PBXBuildFile; fileRef = 37F1EA4722B30310006EA179 /* Luki.gpx */; };
 		6266E0E5E85B0989ABCF213B /* Pods_barkrTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B2FF046539F6B8CFB9155362 /* Pods_barkrTests.framework */; };
 		A1722E0422859AE3000A5FCF /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1722E0322859AE3000A5FCF /* MapViewController.swift */; };
 		A1E786F822885553005718BA /* BaseTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1E786F722885553005718BA /* BaseTabBarController.swift */; };
@@ -58,11 +58,11 @@
 		372E614F228CE478009D300C /* CurrentRouteViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrentRouteViewController.swift; sourceTree = "<group>"; };
 		373BA75A2285AD72003B4334 /* StatisticsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatisticsViewController.swift; sourceTree = "<group>"; };
 		376EAC4FB0833467D19AB6A2 /* Pods_barkrUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_barkrUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		37CF54CB22B27A7D001D61E2 /* Luki_sprint.gpx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = Luki_sprint.gpx; path = ../../Luki_sprint.gpx; sourceTree = "<group>"; };
-		37CF54CC22B27A7D001D61E2 /* luki_flash.gpx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = luki_flash.gpx; path = ../../luki_flash.gpx; sourceTree = "<group>"; };
-		37CF54CD22B27A7D001D61E2 /* Luki.gpx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = Luki.gpx; path = ../../Luki.gpx; sourceTree = "<group>"; };
 		37F1EA3F22B2AD67006EA179 /* WalkedRoute.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalkedRoute.swift; sourceTree = "<group>"; };
 		37F1EA4322B2F37E006EA179 /* DogBagRealmObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DogBagRealmObject.swift; sourceTree = "<group>"; };
+		37F1EA4522B30310006EA179 /* luki_flash.gpx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = luki_flash.gpx; sourceTree = "<group>"; };
+		37F1EA4622B30310006EA179 /* Luki_sprint.gpx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = Luki_sprint.gpx; sourceTree = "<group>"; };
+		37F1EA4722B30310006EA179 /* Luki.gpx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = Luki.gpx; sourceTree = "<group>"; };
 		6DDD42CD511CF3378C685127 /* Pods-barkr.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-barkr.debug.xcconfig"; path = "Target Support Files/Pods-barkr/Pods-barkr.debug.xcconfig"; sourceTree = "<group>"; };
 		9CE796EC23ACC7BE024CE92A /* Pods_barkr.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_barkr.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		9E7202838A3050B29E75885A /* Pods-barkrUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-barkrUITests.debug.xcconfig"; path = "Target Support Files/Pods-barkrUITests/Pods-barkrUITests.debug.xcconfig"; sourceTree = "<group>"; };
@@ -136,9 +136,9 @@
 		37CF54CA22B27A0E001D61E2 /* LocationData */ = {
 			isa = PBXGroup;
 			children = (
-				37CF54CC22B27A7D001D61E2 /* luki_flash.gpx */,
-				37CF54CB22B27A7D001D61E2 /* Luki_sprint.gpx */,
-				37CF54CD22B27A7D001D61E2 /* Luki.gpx */,
+				37F1EA4522B30310006EA179 /* luki_flash.gpx */,
+				37F1EA4622B30310006EA179 /* Luki_sprint.gpx */,
+				37F1EA4722B30310006EA179 /* Luki.gpx */,
 				A1EC9E35228DEA8E00C7F082 /* vienna.gpx */,
 			);
 			path = LocationData;
@@ -335,10 +335,10 @@
 			files = (
 				A1EC9E36228DEA8F00C7F082 /* vienna.gpx in Resources */,
 				A1EDAE102284FD780039247D /* LaunchScreen.storyboard in Resources */,
+				37F1EA4922B30310006EA179 /* Luki_sprint.gpx in Resources */,
+				37F1EA4A22B30310006EA179 /* Luki.gpx in Resources */,
 				A1EDAE0D2284FD780039247D /* Assets.xcassets in Resources */,
-				37CF54D022B27A7D001D61E2 /* Luki.gpx in Resources */,
-				37CF54CF22B27A7D001D61E2 /* luki_flash.gpx in Resources */,
-				37CF54CE22B27A7D001D61E2 /* Luki_sprint.gpx in Resources */,
+				37F1EA4822B30310006EA179 /* luki_flash.gpx in Resources */,
 				A1EDAE0B2284FD770039247D /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
