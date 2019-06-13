@@ -10,14 +10,14 @@ import UIKit
 
 class RoutesViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
 
-    var historyRoutes: [Route] = [Route(time: 30, dogBagCount: 4, distance: 5300),
-                               Route(time: 27, dogBagCount: 4, distance: 5025),
-                               Route(time: 33, dogBagCount: 4, distance: 5740),
-                               Route(time: 34, dogBagCount: 3, distance: 5800),
-                               Route(time: 23, dogBagCount: 4, distance: 4700),
-                               Route(time: 26, dogBagCount: 2, distance: 4900)]
-    var favoriteRoutes: [Route] = [Route(time: 30, dogBagCount: 4, distance: 5300),
-                                  Route(time: 27, dogBagCount: 4, distance: 5025)]
+    var historyRoutes: [Route] = [Route(30, 4, 5300),
+                                  Route(27, 4, 5025),
+                                  Route(33, 4, 5740),
+                                  Route(34, 3, 5800),
+                                  Route(23, 4, 4700),
+                                  Route(26, 2, 4900)]
+    var favoriteRoutes: [Route] = [Route(30, 4, 5300),
+                                   Route(27, 4, 5025)]
 
     @IBOutlet weak var routesSegmentedControl: UISegmentedControl!
     @IBOutlet weak var routesTableView: UITableView!
@@ -44,9 +44,7 @@ class RoutesViewController: UIViewController, UITableViewDataSource, UITableView
             let route = favoriteRoutes[indexPath.row]
             cell.timeLabel?.text = String(route.time) + " min"
             cell.bagFlagLabel?.text = String(route.dogBagCount)
-            cell.distanceLabel?.text = String(route.distance/1000) + ","
-                + String(route.distance%1000/100)
-                + String(route.distance%100/10) + " km"
+            cell.distanceLabel?.text = route.distanceToString()
             let backgroundView = UIView()
             backgroundView.backgroundColor = UIColor(red: 0.17, green: 0.55, blue: 0.22, alpha: 0.20)
             cell.selectedBackgroundView = backgroundView
@@ -59,9 +57,7 @@ class RoutesViewController: UIViewController, UITableViewDataSource, UITableView
             let route = historyRoutes[indexPath.row]
             cell.timeLabel?.text = String(route.time) + " min"
             cell.bagFlagLabel?.text = String(route.dogBagCount)
-            cell.distanceLabel?.text = String(route.distance/1000) + ","
-                + String(route.distance%1000/100)
-                + String(route.distance%100/10) + " km"
+            cell.distanceLabel?.text = route.distanceToString()
             let backgroundView = UIView()
             backgroundView.backgroundColor = UIColor(red: 0.17, green: 0.55, blue: 0.22, alpha: 0.20)
             cell.selectedBackgroundView = backgroundView

@@ -10,7 +10,7 @@ import UIKit
 import MapKit
 import CoreLocation
 
-class CurrentRouteViewController: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate{
+class CurrentRouteViewController: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate {
     weak var timer: Timer?
     var startTime: Double = 0
     var time: Double = 0
@@ -18,7 +18,6 @@ class CurrentRouteViewController: UIViewController, MKMapViewDelegate, CLLocatio
     var startLocation: CLLocation?
     var lastLocation: CLLocation?
     var traveledDistance: Double = 0
-    var totalDistance: Double = 0
     @IBOutlet weak var mapView: MKMapView!
     @IBOutlet weak var blurredContainer: UIVisualEffectView!
     @IBOutlet weak var stopButton: UIButton!
@@ -51,7 +50,7 @@ class CurrentRouteViewController: UIViewController, MKMapViewDelegate, CLLocatio
         }
         mapView.register(DogBagView.self,
                          forAnnotationViewWithReuseIdentifier: MKMapViewDefaultAnnotationViewReuseIdentifier)
-        mapView.showAnnotations(selectedRoute!.dogBags, animated: true)
+        mapView.showAnnotations(selectedRoute!.getDogbagArray(), animated: true)
         mapView?.userTrackingMode = .follow
         let span = MKCoordinateSpan(latitudeDelta: 0.0008, longitudeDelta: 0.0008)
         let sourceLocation = mapView.userLocation.location?.coordinate
@@ -61,41 +60,42 @@ class CurrentRouteViewController: UIViewController, MKMapViewDelegate, CLLocatio
         for clregion in locationManager.monitoredRegions {
             locationManager.stopMonitoring(for: clregion)
         }
-        for dogbag in selectedRoute!.dogBags {
+        for dogbag in selectedRoute!.getDogbagArray() {
             let clr = CLCircularRegion(center: dogbag.coordinate,
                                        radius: CLLocationDistance(1),
-                                       identifier: dogbag.coordinate.latitude.description + dogbag.coordinate.longitude.description)
+                                       identifier: dogbag.coordinate.latitude.description +
+                                        dogbag.coordinate.longitude.description)
             //print("monitoring region:" + clr.description)
             clr.notifyOnEntry = true
             clr.notifyOnExit = true
             locationManager.startMonitoring(for: clr)
         }
-        for route in selectedRoute!.routes{
-            totalDistance += route.distance.magnitude
-        }
+        selectedRoute?.calculateLength()
         //lm.startMonitoringSignificantLocationChanges()
 
     }
     func start() {
         startTime = Date().timeIntervalSinceReferenceDate - elapsed
-        timer = Timer.scheduledTimer(timeInterval: 0.01, target: self, selector: #selector(updateCounter), userInfo: nil, repeats: true)
+        timer = Timer.scheduledTimer(timeInterval: 0.01, target: self,
+                                     selector: #selector(updateCounter), userInfo: nil, repeats: true)
         locationManager.delegate = self
         locationManager.allowsBackgroundLocationUpdates = true
         locationManager.desiredAccuracy = kCLLocationAccuracyBest
         locationManager.requestAlwaysAuthorization()
         locationManager.startUpdatingLocation()
         startLocation = locationManager.location
-        let loc = CLCircularRegion(center: locationManager.location!.coordinate, radius: CLLocationDistance(1), identifier: "start")
+        let loc = CLCircularRegion(center: locationManager.location!.coordinate,
+                                   radius: CLLocationDistance(1), identifier: "start")
         loc.notifyOnEntry = true
         locationManager.startMonitoring(for: loc)
     }
-    func stop() {
+    @IBAction func stopButtonPressed(_ sender: Any) {
         elapsed = Date().timeIntervalSinceReferenceDate - startTime
         timer?.invalidate()
         for clregion in locationManager.monitoredRegions {
             locationManager.stopMonitoring(for: clregion)
         }
-        stopButton.sendActions(for: .touchUpInside)
+        locationManager.stopUpdatingLocation()
     }
     @objc func updateCounter() {
         // Calculate total time since timer started in seconds
@@ -134,13 +134,14 @@ class CurrentRouteViewController: UIViewController, MKMapViewDelegate, CLLocatio
         traveledDistance += (lastLocation?.distance(from: location!))!
         lastLocation = location
         UIView.animate(withDuration: 0.5) {
-            self.progressBar.setProgress(Float(self.traveledDistance/self.totalDistance), animated: true)
+            self.progressBar.setProgress(Float(self.traveledDistance/self.selectedRoute!.distance), animated: true)
         }
     }
     func locationManager(_ manager: CLLocationManager, didEnterRegion region: CLRegion) {
         //print("entered region" + region.description)
         if region.identifier == "start" && visitedDogbags > 0 {
-            stop()
+            traveledDistance = selectedRoute!.distance
+            stopButton.sendActions(for: .touchUpInside)
         } else {
             visitedDogbags += 1
             updatePoobagCounter()
@@ -164,6 +165,10 @@ class CurrentRouteViewController: UIViewController, MKMapViewDelegate, CLLocatio
             // swiftlint:disable force_cast
             let popup = segue.destination as! SummaryViewController
             popup.route = selectedRoute!
+            popup.travelledDistance = traveledDistance
+            popup.walkedDuration = Date().timeIntervalSinceReferenceDate - startTime
+            popup.timestamp = NSDate().timeIntervalSince1970
+            popup.visitedDogbags = visitedDogbags
             // swiftlint:enable force_cast
         }
     }

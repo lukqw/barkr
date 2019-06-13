@@ -8,6 +8,7 @@
 
 import UIKit
 import Charts
+import RealmSwift
 
 class StatisticsViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
     let statisticsCategoryTitles: [String] = ["Times Walked", "Total Walk Time", "Average Walk Time",
@@ -55,6 +56,11 @@ class StatisticsViewController: UIViewController, UITableViewDataSource, UITable
         self.nextWeekButton.setImage(tintedImage, for: .normal)
         self.nextWeekButton.tintColor = self.view.tintColor
         self.previousWeekButton.backgroundRect(forBounds: CGRect.init(x: 0, y: 0, width: 25, height: 25))
+        // swiftlint:disable force_try
+        let realm = try! Realm()
+        // swiftlint:enable force_try
+        let data = realm.objects(WalkedRoute.self)
+        print(data)
         initializeBarChartView()
         setChartData()
     }

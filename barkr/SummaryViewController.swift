@@ -7,13 +7,17 @@
 //
 
 import UIKit
+import RealmSwift
 
 class SummaryViewController: UIViewController {
 
     @IBOutlet var summaryView: UIView!
-    var route = Route(time: 0, dogBagCount: 0, distance: 0)
+    var route = Route(0, 0, 0)
     var isFav = false
-
+    var timestamp: Double = 0
+    var travelledDistance: Double = 0
+    var walkedDuration: Double = 0
+    var visitedDogbags: Int = 0
     @IBOutlet var dogbagLabel: UILabel!
     @IBOutlet var distanceLabel: UILabel!
     @IBOutlet var timeLabel: UILabel!
@@ -22,15 +26,30 @@ class SummaryViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.summaryView.layer.cornerRadius = 20
-        dogbagLabel.text = String(route.dogBagCount)
-        distanceLabel.text = String(route.distance/1000) + ","
-                            + String(route.distance%1000/100)
-                            + String(route.distance%100/10) + " km"
+        dogbagLabel.text = String(visitedDogbags) + "/" + String(route.dogBagCount)
+        distanceLabel.text = route.distanceToString()
         timeLabel.text = String(route.time) + " min"
-        resultLabel.text = "Your time: 27 Minutes"
+        resultLabel.text = "You walked " + distanceToString(Int(travelledDistance))
+            + " in " + durationToString(walkedDuration) + " minutes!"
+        resultLabel.lineBreakMode = .byWordWrapping
+        resultLabel.numberOfLines = 0
     }
 
     @IBAction func doneButtonPressd(_ sender: Any) {
+        print(timestamp)
+        let walkedRoute = WalkedRoute()
+        walkedRoute.routeId = route.id
+        walkedRoute.duration = walkedDuration
+        walkedRoute.dogbags = visitedDogbags
+        walkedRoute.timestamp = timestamp
+        walkedRoute.distance = travelledDistance
+        // swiftlint:disable force_try
+        let realm = try! Realm()
+        try! realm.write {
+            realm.add(walkedRoute)
+            realm.add(route)
+        }
+        // swiftlint:enable force_cast
         self.dismiss(animated: true, completion: {
             NotificationCenter.default.post(name: Notification.Name(rawValue: "summaryDone"), object: self)
         })
@@ -43,6 +62,25 @@ class SummaryViewController: UIViewController {
             favButton.setImage(UIImage(named: "notstar"), for: .normal)
         }
         isFav = !isFav
+        route.favorite = isFav
+    }
+    func distanceToString(_ distance: Int) -> String {
+        return String(distance/1000) + ","
+            + String(distance%1000/100)
+            + String(distance%100/10) + " km"
     }
 
+    func durationToString(_ duration: Double) -> String {
+        //print(duration)
+        var time = duration
+        let minutes = UInt8(time / 60.0)
+        time -= (TimeInterval(minutes) * 60)
+        // Calculate seconds
+        let seconds = UInt8(time)
+        time -= TimeInterval(seconds)
+        // Format time vars with leading zero
+        let strMinutes = String(format: "%02d", minutes)
+        let strSeconds = String(format: "%02d", seconds)
+        return strMinutes + ":" + strSeconds
+    }
 }

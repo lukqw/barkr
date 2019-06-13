@@ -6,6 +6,7 @@ target 'barkr' do
   # Pods for barkr
 pod 'SwiftLint'
 pod 'Charts'
+pod 'RealmSwift'
 
   target 'barkrTests' do
     inherit! :search_paths

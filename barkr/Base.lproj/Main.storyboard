@@ -96,7 +96,7 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icons8-poo-filled-50" translatesAutoresizingMaskIntoConstraints="NO" id="HX9-kh-kpH">
-                                                    <rect key="frame" x="212" y="20" width="25" height="39"/>
+                                                    <rect key="frame" x="212" y="20" width="16" height="39"/>
                                                 </imageView>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bBl-uJ-POU">
                                                     <rect key="frame" x="162" y="29" width="42" height="21"/>
@@ -510,6 +510,7 @@
                                                 <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             </state>
                                             <connections>
+                                                <action selector="stopButtonPressed:" destination="slZ-8t-BKx" eventType="touchUpInside" id="Htj-F1-sGU"/>
                                                 <segue destination="Dkh-os-xRq" kind="presentation" identifier="segueSummary" id="aIR-Oy-u9J"/>
                                             </connections>
                                         </button>
@@ -654,7 +655,7 @@
                                         </constraints>
                                     </view>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="OOw-JX-j6F">
-                                        <rect key="frame" x="59" y="143" width="209" height="21"/>
+                                        <rect key="frame" x="45" y="143" width="236" height="61"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
@@ -683,7 +684,7 @@
                                     <constraint firstItem="HS1-SN-KdP" firstAttribute="centerX" secondItem="OOw-JX-j6F" secondAttribute="centerX" id="hao-WL-p6D"/>
                                     <constraint firstItem="XvY-ML-VAe" firstAttribute="leading" secondItem="qcC-Wz-tEi" secondAttribute="leading" constant="49" id="lzI-57-YH4"/>
                                     <constraint firstItem="OOw-JX-j6F" firstAttribute="centerX" secondItem="XvY-ML-VAe" secondAttribute="centerX" id="nCh-P8-M7m"/>
-                                    <constraint firstItem="OOw-JX-j6F" firstAttribute="leading" secondItem="qcC-Wz-tEi" secondAttribute="leading" constant="59" id="w93-QZ-zAl"/>
+                                    <constraint firstItem="OOw-JX-j6F" firstAttribute="leading" secondItem="qcC-Wz-tEi" secondAttribute="leading" constant="45" id="w93-QZ-zAl"/>
                                     <constraint firstAttribute="trailing" secondItem="HS1-SN-KdP" secondAttribute="trailing" constant="3" id="yTj-Lj-8sE"/>
                                 </constraints>
                             </view>
@@ -726,7 +727,7 @@
                                                 <rect key="frame" x="8" y="8" width="398" height="66"/>
                                                 <subviews>
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageSizeForAccessibilityContentSizeCategory="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fvK-ZJ-nZU">
-                                                        <rect key="frame" x="0.0" y="8" width="25" height="50"/>
+                                                        <rect key="frame" x="0.0" y="8" width="16" height="50"/>
                                                         <fontDescription key="fontDescription" type="system" pointSize="18"/>
                                                         <state key="normal" image="icons8-back-filled-50"/>
                                                         <connections>
@@ -739,7 +740,7 @@
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageSizeForAccessibilityContentSizeCategory="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="aj1-b5-XUg">
-                                                        <rect key="frame" x="373" y="20.5" width="25" height="25"/>
+                                                        <rect key="frame" x="382" y="22" width="16" height="22"/>
                                                         <state key="normal" image="icons8-forward-filled-50"/>
                                                         <connections>
                                                             <action selector="next:" destination="g76-JN-PuL" eventType="touchUpInside" id="e2g-2w-L6F"/>
