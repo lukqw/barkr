@@ -29,6 +29,9 @@ class RouteSelectionViewController: UIViewController, MKMapViewDelegate, UITable
     override func viewDidLoad() {
         super.viewDidLoad()
         generateRoutes()
+        for route in routeArray {
+            
+        }
         if routeOverviewOnly {
             viewWillDisappear(false)
             segmentToolbar.removeFromSuperview()
@@ -76,64 +79,80 @@ class RouteSelectionViewController: UIViewController, MKMapViewDelegate, UITable
         }
         return resultPOIs
     }
-    func getSingleRoute(start: CLLocationCoordinate2D, end: CLLocationCoordinate2D) -> MKRoute {
-        let sourcePlacemark = MKPlacemark(coordinate: start)
-        let destinationPlacemark = MKPlacemark(coordinate: end)
-
-        let sourceMapItem = MKMapItem(placemark: sourcePlacemark)
-        let destinationMapItem = MKMapItem(placemark: destinationPlacemark)
-
-        let directionRequest = MKDirections.Request()
-        directionRequest.source = sourceMapItem
-        directionRequest.destination = destinationMapItem
-        directionRequest.requestsAlternateRoutes = false
-        directionRequest.transportType = .walking
-
-        let directions = MKDirections(request: directionRequest)
-        var singleroute = MKRoute()
-        directions.calculate { (response, error) in
-            guard let response = response else {
-                if let error = error {
-                    print(error)
-                }
-                return
-            }
-            singleroute = response.routes[0]
+    func getNearestPOI(location: CLLocationCoordinate2D, dogBags: [DogBag]) -> DogBag {
+        var diffArray = [Double]()
+        for poi in dogBags {
+            let difference = abs(location.latitude - poi.coordinate.latitude) +
+                abs(location.longitude - poi.coordinate.longitude)
+            diffArray.append(difference)
         }
-        while directions.isCalculating {
-        }
-        return singleroute
+        return dogBags[diffArray.firstIndex(of: diffArray.min()!)!]
     }
     func generateRoutes() {
-        var mkRequests = 0
-        let isKm = minKmSegmentedControl.selectedSegmentIndex == 0
+        let isKm = minKmSegmentedControl.selectedSegmentIndex != 0
         let firstLoc = routeSelectionMap.userLocation.location!.coordinate
         var pointA = routeSelectionMap.userLocation.location!.coordinate
         var pointB = DogBag(coordinate: CLLocationCoordinate2D(latitude: 0, longitude: 0))
-        let wantedValue = isKm ? kmValue : durationValue
+        let wantedValue = isKm ? kmValue*1000 : durationValue
         for _ in 1...5 {
             var total = 0.0
             let route = Route()
             var dogBags = dogBagArray
-            while total < Double(wantedValue)/2 && mkRequests < 10 {
+            while total < Double(wantedValue)/2 {
                 let closestPoints = getNearestPOIs(location: pointA, dogBags: dogBags)
                 pointB = closestPoints.randomElement()!
                 let index = dogBags.firstIndex(of: pointB)!
                 dogBags.remove(at: index)
 
-                let singleroute = getSingleRoute(start: pointA, end: pointB.coordinate)
-
-                route.routes.append(singleroute)
-                route.distance += singleroute.distance/1000
-                route.time += Int(singleroute.expectedTravelTime/60)
-                total += isKm ? singleroute.distance/1000 : singleroute.expectedTravelTime/60
-
-                mkRequests += 1
+                let difference = sqrt(pow(pointA.latitude - pointB.coordinate.latitude, 2) +
+                    pow(pointA.longitude - pointB.coordinate.longitude, 2))
+                let time = Int(difference * 1000)
+                let distance = difference * 100000
+                var dogbagarr = route.getDogbagArray()
+                dogbagarr.append(pointB)
+                route.setDogbagArray(dogbagarr)
+                route.distance += distance
+                route.time += time
+                route.dogBagCount += 1
+                total += isKm ? distance : Double(time)
 
                 pointA = pointB.coordinate
             }
-            while pointB.coordinate.latitude != firstLoc.latitude && pointB.coordinate.longitude != firstLoc.longitude {
-                break
+            var stop = false
+            while !stop && dogBags.count > 5 && route.dogBagCount < 10 {
+                let closestPoints = getNearestPOIs(location: pointA, dogBags: dogBags)
+                let startClosestPoint = getNearestPOI(location: firstLoc, dogBags: closestPoints)
+                let startClosestDiff = sqrt(pow(firstLoc.latitude - startClosestPoint.coordinate.latitude, 2) +
+                    pow(firstLoc.longitude - startClosestPoint.coordinate.longitude, 2))
+                let currDiff = sqrt(pow(firstLoc.latitude - pointA.latitude, 2) +
+                    pow(firstLoc.longitude - pointA.longitude, 2))
+                if currDiff <= startClosestDiff {
+                    stop = true
+                    let time = Int(currDiff * 1000)
+                    let distance = currDiff * 100000
+                    route.distance += distance
+                    route.time += time
+                    total += isKm ? distance : Double(time)
+                    break
+                }
+                if !stop {
+                    pointB = startClosestPoint
+                    let index = dogBags.firstIndex(of: pointB)!
+                    dogBags.remove(at: index)
+
+                    let difference = sqrt(pow(pointA.latitude - pointB.coordinate.latitude, 2) +
+                        pow(pointA.longitude - pointB.coordinate.longitude, 2))
+                    let time = Int(difference * 1000)
+                    let distance = difference * 100000
+                    var dogbagarr = route.getDogbagArray()
+                    dogbagarr.append(pointB)
+                    route.setDogbagArray(dogbagarr)
+                    route.distance += distance
+                    route.time += time
+                    route.dogBagCount += 1
+                    total += isKm ? distance : Double(time)
+                    pointA = pointB.coordinate
+                }
             }
             if route.distance > 0 {
                 routeArray.append(route)
