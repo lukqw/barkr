@@ -72,9 +72,37 @@ class RouteSelectionViewController: UIViewController, MKMapViewDelegate, UITable
         for _ in 1...5 {
             let index = diffArray.firstIndex(of: diffArray.min()!)
             diffArray[index!] = 10000
-            resultPOIs.append(dogBagArray[index!])
+            resultPOIs.append(dogBags[index!])
         }
         return resultPOIs
+    }
+    func getSingleRoute(start: CLLocationCoordinate2D, end: CLLocationCoordinate2D) -> MKRoute {
+        let sourcePlacemark = MKPlacemark(coordinate: start)
+        let destinationPlacemark = MKPlacemark(coordinate: end)
+
+        let sourceMapItem = MKMapItem(placemark: sourcePlacemark)
+        let destinationMapItem = MKMapItem(placemark: destinationPlacemark)
+
+        let directionRequest = MKDirections.Request()
+        directionRequest.source = sourceMapItem
+        directionRequest.destination = destinationMapItem
+        directionRequest.requestsAlternateRoutes = false
+        directionRequest.transportType = .walking
+
+        let directions = MKDirections(request: directionRequest)
+        var singleroute = MKRoute()
+        directions.calculate { (response, error) in
+            guard let response = response else {
+                if let error = error {
+                    print(error)
+                }
+                return
+            }
+            singleroute = response.routes[0]
+        }
+        while directions.isCalculating {
+        }
+        return singleroute
     }
     func generateRoutes() {
         var mkRequests = 0
@@ -87,41 +115,22 @@ class RouteSelectionViewController: UIViewController, MKMapViewDelegate, UITable
             var total = 0.0
             let route = Route()
             var dogBags = dogBagArray
-            while total < Double(wantedValue)/2 && mkRequests < 1 {
+            while total < Double(wantedValue)/2 && mkRequests < 10 {
                 let closestPoints = getNearestPOIs(location: pointA, dogBags: dogBags)
                 pointB = closestPoints.randomElement()!
                 let index = dogBags.firstIndex(of: pointB)!
                 dogBags.remove(at: index)
 
-                let sourcePlacemark = MKPlacemark(coordinate: pointA)
-                let destinationPlacemark = MKPlacemark(coordinate: pointB.coordinate)
+                let singleroute = getSingleRoute(start: pointA, end: pointB.coordinate)
 
-                let sourceMapItem = MKMapItem(placemark: sourcePlacemark)
-                let destinationMapItem = MKMapItem(placemark: destinationPlacemark)
-
-                let directionRequest = MKDirections.Request()
-                directionRequest.source = sourceMapItem
-                directionRequest.destination = destinationMapItem
-                directionRequest.requestsAlternateRoutes = false
-                directionRequest.transportType = .walking
+                route.routes.append(singleroute)
+                route.distance += singleroute.distance/1000
+                route.time += Int(singleroute.expectedTravelTime/60)
+                total += isKm ? singleroute.distance/1000 : singleroute.expectedTravelTime/60
 
                 mkRequests += 1
-                var singleroute = MKRoute()
-                let directions = MKDirections(request: directionRequest)
-                directions.calculate { (response, error) in
-                    guard let response = response else {
-                        if let error = error {
-                            print(error)
-                        }
-                        return
-                    }
-                    singleroute = response.routes[0]
-                    route.routes.append(singleroute)
-                    route.distance += singleroute.distance/1000
-                    route.time += Int(singleroute.expectedTravelTime/60)
-                    total += isKm ? singleroute.distance/1000 : singleroute.expectedTravelTime/60
-                    pointA = pointB.coordinate
-                }
+
+                pointA = pointB.coordinate
             }
             while pointB.coordinate.latitude != firstLoc.latitude && pointB.coordinate.longitude != firstLoc.longitude {
                 break
