@@ -16,6 +16,7 @@ class Route: Object {
     @objc dynamic var time: Int = 0
     @objc dynamic var dogBagCount: Int = 0
     @objc dynamic var distance: Double = 0.0
+    @objc dynamic var deleted: Bool = false
     var routes: [MKRoute] = []
     let dogBags = List<DogBagRealmObject>()
     //@objc dynamic var dogBags: [DogBagRealmObject] = []

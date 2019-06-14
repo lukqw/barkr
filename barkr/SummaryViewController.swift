@@ -43,6 +43,7 @@ class SummaryViewController: UIViewController {
         walkedRoute.dogbags = visitedDogbags
         walkedRoute.timestamp = timestamp
         walkedRoute.distance = travelledDistance
+        print(route)
         // swiftlint:disable force_try
         let realm = try! Realm()
         try! realm.write {
@@ -56,13 +57,14 @@ class SummaryViewController: UIViewController {
     }
 
     @IBAction func favoriteButtonPressed(_ sender: Any) {
+        isFav = !isFav
         if isFav {
             favButton.setImage(UIImage(named: "star"), for: .normal)
         } else {
             favButton.setImage(UIImage(named: "notstar"), for: .normal)
         }
-        isFav = !isFav
         route.favorite = isFav
+        print(route)
     }
     func distanceToString(_ distance: Int) -> String {
         return String(distance/1000) + ","

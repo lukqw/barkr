@@ -10,12 +10,13 @@ import UIKit
 import MapKit
 
 class MapViewController: UIViewController {
-    
+   
     var dogBagArray = [DogBag]()
 
     @IBOutlet weak var mapViewOutlet: MKMapView!
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         mapViewOutlet.register(DogBagView.self,
                                forAnnotationViewWithReuseIdentifier: MKMapViewDefaultAnnotationViewReuseIdentifier)
         let session = URLSession.shared

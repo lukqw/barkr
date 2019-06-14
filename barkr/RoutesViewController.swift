@@ -70,30 +70,44 @@ class RoutesViewController: UIViewController, UITableViewDataSource, UITableView
     }
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle,
                    forRowAt indexPath: IndexPath) {
-        if editingStyle == .delete {
-            if routesSegmentedControl.selectedSegmentIndex == 0 {
-                favoriteRoutes.remove(at: indexPath.row)
-            } else {
-                historyRoutes.remove(at: indexPath.row)
+        // swiftlint:disable force_try
+        let realm = try! Realm()
+        try! realm.write {
+            if editingStyle == .delete {
+                if routesSegmentedControl.selectedSegmentIndex == 0 {
+                    favoriteRoutes[indexPath.row].favorite = false
+                    favoriteRoutes.remove(at: indexPath.row)
+                } else {
+                    historyRoutes[indexPath.row].deleted = true
+                    historyRoutes.remove(at: indexPath.row)
+                }
+                routesTableView.deleteRows(at: [indexPath], with: .fade)
             }
-            routesTableView.deleteRows(at: [indexPath], with: .fade)
         }
+        // swiftlint:enable force_try
+
     }
 
     @IBAction func routesSegmentedControlPressed(_ sender: Any) {
-        routesTableView.reloadData()
+        loadData()
     }
 
     override func viewDidLoad() {
         super.viewDidLoad()
         let editButton = UIBarButtonItem(title: "Edit", style: .plain, target: self, action: #selector(toggleEditing))
         self.navigationItem.rightBarButtonItem = editButton
-        
+        loadData()
+    }
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        loadData()
+    }
+    func loadData(){
         // swiftlint:disable force_try
         let realm = try! Realm()
         // swiftlint:enable force_try
-        let fav = realm.objects(Route.self).filter("favorite = true")
-        let all = realm.objects(Route.self)
+        let fav = realm.objects(Route.self).filter("favorite = true").sorted(byKeyPath: "id", ascending: false)
+        let all = realm.objects(Route.self).filter("deleted = false").sorted(byKeyPath: "id", ascending: false)
         favoriteRoutes.removeAll()
         historyRoutes.removeAll()
         for frt in fav {

@@ -60,6 +60,11 @@ class StatisticsViewController: UIViewController, UITableViewDataSource, UITable
         setChartData()
         setTableViewData()
     }
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        setChartData()
+        setTableViewData()
+    }
     func setTableViewData(){
         // swiftlint:disable force_try
         let realm = try! Realm()
