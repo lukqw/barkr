@@ -11,33 +11,9 @@ import MapKit
 
 class RouteSelectionViewController: UIViewController, MKMapViewDelegate, UITableViewDataSource, UITableViewDelegate {
 
-    var routeArray: [Route] = [Route(30, 4, 5300),
-                               Route(27, 4, 5025),
-                               Route(33, 4, 5740),
-                               Route(34, 3, 5800),
-                               Route(23, 4, 4700),
-                               Route(26, 2, 4900)]
-    var dogBagArray: [[DogBag]] = [[DogBag(coordinate: CLLocationCoordinate2D(latitude: 48.167471, longitude: 16.278580)),
-                                    DogBag(coordinate: CLLocationCoordinate2D(latitude: 48.168632, longitude: 16.275215)),
-                                    DogBag(coordinate: CLLocationCoordinate2D(latitude: 48.170082, longitude: 16.277615)),
-                                    DogBag(coordinate: CLLocationCoordinate2D(latitude: 48.168849, longitude: 16.279870))],
-                                   [DogBag(coordinate: CLLocationCoordinate2D(latitude: 48.166939, longitude: 16.280633)),
-                                    DogBag(coordinate: CLLocationCoordinate2D(latitude: 48.164921, longitude: 16.281158)),
-                                    DogBag(coordinate: CLLocationCoordinate2D(latitude: 48.165894, longitude: 16.284109)),
-                                    DogBag(coordinate: CLLocationCoordinate2D(latitude: 48.167983, longitude: 16.285675))],
-                                   [DogBag(coordinate: CLLocationCoordinate2D(latitude: 48.170932, longitude: 16.282821)),
-                                    DogBag(coordinate: CLLocationCoordinate2D(latitude: 48.171461, longitude: 16.279237)),
-                                    DogBag(coordinate: CLLocationCoordinate2D(latitude: 48.170082, longitude: 16.277615)),
-                                    DogBag(coordinate: CLLocationCoordinate2D(latitude: 48.168849, longitude: 16.279870))],
-                                   [DogBag(coordinate: CLLocationCoordinate2D(latitude: 48.168849, longitude: 16.279870)),
-                                    DogBag(coordinate: CLLocationCoordinate2D(latitude: 48.167471, longitude: 16.278580)),
-                                    DogBag(coordinate: CLLocationCoordinate2D(latitude: 48.166939, longitude: 16.280633))],
-                                   [DogBag(coordinate: CLLocationCoordinate2D(latitude: 48.166939, longitude: 16.280633)),
-                                    DogBag(coordinate: CLLocationCoordinate2D(latitude: 48.167471, longitude: 16.278580)),
-                                    DogBag(coordinate: CLLocationCoordinate2D(latitude: 48.168849, longitude: 16.279870)),
-                                    DogBag(coordinate: CLLocationCoordinate2D(latitude: 48.170932, longitude: 16.282821))],
-                                   [DogBag(coordinate: CLLocationCoordinate2D(latitude: 48.167983, longitude: 16.285675)),
-                                    DogBag(coordinate: CLLocationCoordinate2D(latitude: 48.170932, longitude: 16.282821))]]
+    var dogBagArray: [DogBag] = []
+    var routeArray: [Route] = []
+
     var routeOverviewOnly = false
     var durationValue: Int = 30
     var kmValue: Int = 5
@@ -52,6 +28,7 @@ class RouteSelectionViewController: UIViewController, MKMapViewDelegate, UITable
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        generateRoutes()
         if routeOverviewOnly {
             viewWillDisappear(false)
             segmentToolbar.removeFromSuperview()
@@ -77,10 +54,31 @@ class RouteSelectionViewController: UIViewController, MKMapViewDelegate, UITable
         routeSelectionMap.delegate = self
         routeSelectionMap.register(DogBagView.self,
                                    forAnnotationViewWithReuseIdentifier: MKMapViewDefaultAnnotationViewReuseIdentifier)
-        self.routeSelectionMap.showAnnotations(dogBagArray[0], animated: true)
-        drawRouteForDogBags(dogBagArray[0], 0)
-        routeSelectionTableView.selectRow(at: IndexPath(row: 0, section: 0), animated: false, scrollPosition: .top)
+        if(routeArray.count > 0) {
+            self.routeSelectionMap.showAnnotations(routeArray[0].getDogbagArray(), animated: true)
+            drawRouteForDogBags(routeArray[0].getDogbagArray(), 0)
+            routeSelectionTableView.selectRow(at: IndexPath(row: 0, section: 0), animated: false, scrollPosition: .top)
+        }
         routeSelectionMap.userTrackingMode = .follow
+    }
+    func getNearestPOIs(location: CLLocationCoordinate2D) -> [DogBag] {
+        var resultPOIs = [DogBag]()
+        var diffArray = [Double]()
+        for poi in dogBagArray {
+            let difference = abs(location.latitude - poi.coordinate.latitude) +
+                abs(location.longitude - poi.coordinate.longitude)
+            diffArray.append(difference)
+        }
+        for _ in 1...5 {
+            let index = diffArray.firstIndex(of: diffArray.min()!)
+            diffArray[index!] = 10000
+            resultPOIs.append(dogBagArray[index!])
+        }
+        return resultPOIs
+    }
+    func generateRoutes() {
+        let nearestPoints = getNearestPOIs(location: routeSelectionMap.userLocation.location!.coordinate)
+        routeArray.append(Route(id: -1, time: 1, dogBagCount: 4, distance: 5, favorite: true, dogBags: nearestPoints))
     }
     @IBAction func minKmSegmentedControlPressed(_ sender: Any) {
         if minKmSegmentedControl.selectedSegmentIndex == 0 {
@@ -188,8 +186,8 @@ class RouteSelectionViewController: UIViewController, MKMapViewDelegate, UITable
         }
         let allRoutes = self.routeSelectionMap.overlays
         self.routeSelectionMap.removeOverlays(allRoutes)
-        self.routeSelectionMap.showAnnotations(self.dogBagArray[indexPath.row], animated: true)
-        drawRouteForDogBags(self.dogBagArray[indexPath.row], indexPath.row)
+        self.routeSelectionMap.showAnnotations(self.routeArray[indexPath.row].getDogbagArray(), animated: true)
+        drawRouteForDogBags(self.routeArray[indexPath.row].getDogbagArray(), indexPath.row)
         let span = MKCoordinateSpan(latitudeDelta: 0.008, longitudeDelta: 0.008)
         let sourceLocation = routeSelectionMap.userLocation.location?.coordinate
         let mapRegion = MKCoordinateRegion(center: sourceLocation.unsafelyUnwrapped, span: span)

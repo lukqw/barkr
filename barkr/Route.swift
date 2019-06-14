@@ -32,6 +32,17 @@ class Route: Object {
         self.distance = distance
         self.favorite = favorite
     }
+
+    convenience init(id: Int, time: Int, dogBagCount: Int, distance: Double, favorite: Bool, dogBags: [DogBag]) {
+        self.init()
+        self.id = id
+        self.time = time
+        self.dogBagCount = dogBagCount
+        self.distance = distance
+        self.favorite = favorite
+        setDogbagArray(dogBags)
+    }
+
     func calculateLength() {
         if routes.count != 0 {
             distance = 0

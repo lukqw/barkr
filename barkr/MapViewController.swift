@@ -10,11 +10,12 @@ import UIKit
 import MapKit
 
 class MapViewController: UIViewController {
+    
+    var dogBagArray = [DogBag]()
 
     @IBOutlet weak var mapViewOutlet: MKMapView!
     override func viewDidLoad() {
         super.viewDidLoad()
-        var dogBagArray = [DogBag]()
         mapViewOutlet.register(DogBagView.self,
                                forAnnotationViewWithReuseIdentifier: MKMapViewDefaultAnnotationViewReuseIdentifier)
         let session = URLSession.shared
@@ -39,14 +40,20 @@ class MapViewController: UIViewController {
                     for feature in features! {
                         if let geometry = feature["geometry"] as? [String: Any] {
                             if let coordinates = geometry["coordinates"] as? [Double] {
-                                let dogbag = DogBag(coordinate: CLLocationCoordinate2D(latitude: coordinates[1], longitude: coordinates[0]))
-                                dogBagArray.append(dogbag)
+                                let poiLocation = CLLocationCoordinate2D(latitude: coordinates[1], longitude: coordinates[0])
+                                let sourceLocation = self.mapViewOutlet.userLocation.location?.coordinate
+                                let difference = abs(sourceLocation!.latitude - poiLocation.latitude) +
+                                    abs(sourceLocation!.longitude - poiLocation.longitude)
+                                if difference < 0.02 {
+                                    let dogbag = DogBag(coordinate: poiLocation)
+                                    self.dogBagArray.append(dogbag)
+                                }
                             }
                         }
                     }
                 }
                 DispatchQueue.main.async {
-                    self.mapViewOutlet.showAnnotations(dogBagArray, animated: false)
+                    self.mapViewOutlet.showAnnotations(self.dogBagArray, animated: false)
                     self.mapViewOutlet.userTrackingMode = .follow
                 }
             } catch {
@@ -54,5 +61,13 @@ class MapViewController: UIViewController {
             }
         })
         task.resume()
+    }
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "segueRouteSelection" {
+            // swiftlint:disable force_cast
+            let nextScreen = segue.destination as! RouteSelectionViewController
+            nextScreen.dogBagArray = dogBagArray
+        } 
+        // swiftlint:enable force_cast
     }
 }

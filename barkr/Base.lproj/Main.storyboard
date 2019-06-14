@@ -197,7 +197,7 @@
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
                                 <connections>
-                                    <segue destination="feJ-65-anf" kind="show" id="szt-FV-AI9"/>
+                                    <segue destination="feJ-65-anf" kind="show" identifier="segueRouteSelection" id="szt-FV-AI9"/>
                                 </connections>
                             </button>
                         </subviews>
