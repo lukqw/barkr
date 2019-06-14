@@ -77,6 +77,7 @@ class RouteSelectionViewController: UIViewController, MKMapViewDelegate, UITable
         return resultPOIs
     }
     func generateRoutes() {
+        var mkRequests = 0
         let isKm = minKmSegmentedControl.selectedSegmentIndex == 0
         let firstLoc = routeSelectionMap.userLocation.location!.coordinate
         var pointA = routeSelectionMap.userLocation.location!.coordinate
@@ -85,7 +86,7 @@ class RouteSelectionViewController: UIViewController, MKMapViewDelegate, UITable
         for _ in 1...5 {
             var total = 0.0
             let route = Route()
-            while(total < Double(wantedValue)/2) {
+            while(total < Double(wantedValue)/2 && mkRequests < 1) {
                 let closestPoints = getNearestPOIs(location: pointA)
                 pointB = closestPoints.randomElement()!.coordinate
 
@@ -101,6 +102,7 @@ class RouteSelectionViewController: UIViewController, MKMapViewDelegate, UITable
                 directionRequest.requestsAlternateRoutes = false
                 directionRequest.transportType = .walking
 
+                mkRequests += 1
                 var singleroute = MKRoute()
                 let directions = MKDirections(request: directionRequest)
                 directions.calculate { (response, error) in
@@ -117,9 +119,9 @@ class RouteSelectionViewController: UIViewController, MKMapViewDelegate, UITable
                     total += isKm ? singleroute.distance/1000 : singleroute.expectedTravelTime/60
                     pointA = pointB
                 }
-                while(pointB.latitude != firstLoc.latitude && pointB.longitude != firstLoc.longitude) {
-                    break
-                }
+            }
+            while(pointB.latitude != firstLoc.latitude && pointB.longitude != firstLoc.longitude) {
+                break
             }
             routeArray.append(route)
         }
