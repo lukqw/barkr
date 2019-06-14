@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import RealmSwift
 
 class RoutesViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
 
@@ -87,6 +88,21 @@ class RoutesViewController: UIViewController, UITableViewDataSource, UITableView
         super.viewDidLoad()
         let editButton = UIBarButtonItem(title: "Edit", style: .plain, target: self, action: #selector(toggleEditing))
         self.navigationItem.rightBarButtonItem = editButton
+        
+        // swiftlint:disable force_try
+        let realm = try! Realm()
+        // swiftlint:enable force_try
+        let fav = realm.objects(Route.self).filter("favorite = true")
+        let all = realm.objects(Route.self)
+        favoriteRoutes.removeAll()
+        historyRoutes.removeAll()
+        for frt in fav {
+            favoriteRoutes.append(frt)
+        }
+        for art in all {
+            historyRoutes.append(art)
+        }
+        routesTableView.reloadData()
     }
     @objc private func toggleEditing() {
         routesTableView.setEditing(!routesTableView.isEditing, animated: true)
