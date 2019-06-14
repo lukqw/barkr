@@ -33,6 +33,8 @@ class SummaryViewController: UIViewController {
             + " in " + durationToString(walkedDuration) + " minutes!"
         resultLabel.lineBreakMode = .byWordWrapping
         resultLabel.numberOfLines = 0
+        isFav = route.favorite
+        setFavButton()
     }
 
     @IBAction func doneButtonPressd(_ sender: Any) {
@@ -56,14 +58,22 @@ class SummaryViewController: UIViewController {
         })
     }
 
-    @IBAction func favoriteButtonPressed(_ sender: Any) {
-        isFav = !isFav
+    func setFavButton() {
         if isFav {
             favButton.setImage(UIImage(named: "star"), for: .normal)
         } else {
             favButton.setImage(UIImage(named: "notstar"), for: .normal)
         }
-        route.favorite = isFav
+    }
+    @IBAction func favoriteButtonPressed(_ sender: Any) {
+        isFav = !isFav
+        setFavButton()
+        // swiftlint:disable force_try
+        let realm = try! Realm()
+        try! realm.write {
+            route.favorite = isFav
+        }
+        // swiftlint:enable force_cast
         print(route)
     }
     func distanceToString(_ distance: Int) -> String {

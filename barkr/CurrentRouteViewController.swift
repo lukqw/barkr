@@ -70,7 +70,7 @@ class CurrentRouteViewController: UIViewController, MKMapViewDelegate, CLLocatio
             clr.notifyOnExit = true
             locationManager.startMonitoring(for: clr)
         }
-        selectedRoute?.calculateLength()
+        //selectedRoute?.calculateLength()
         //lm.startMonitoringSignificantLocationChanges()
 
     }
@@ -124,6 +124,7 @@ class CurrentRouteViewController: UIViewController, MKMapViewDelegate, CLLocatio
         blurredContainer.roundCorners([.topRight, .topLeft], radius: 3)
         stopButton.layer.cornerRadius = 10
         progressBar.transform  = CGAffineTransform(scaleX: 1, y: 4)
+        dogBagProgressLabel.text = visitedDogbags.description + "/" + (selectedRoute!.dogBagCount).description
 
     }
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {

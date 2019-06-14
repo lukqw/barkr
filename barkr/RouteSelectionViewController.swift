@@ -8,7 +8,7 @@
 
 import UIKit
 import MapKit
-
+import RealmSwift
 class RouteSelectionViewController: UIViewController, MKMapViewDelegate, UITableViewDataSource, UITableViewDelegate {
 
     var dogBagArray: [DogBag] = []
@@ -28,10 +28,6 @@ class RouteSelectionViewController: UIViewController, MKMapViewDelegate, UITable
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        generateRoutes()
-        for route in routeArray {
-            
-        }
         if routeOverviewOnly {
             viewWillDisappear(false)
             segmentToolbar.removeFromSuperview()
@@ -40,6 +36,8 @@ class RouteSelectionViewController: UIViewController, MKMapViewDelegate, UITable
                     const.constant = 0
                 }
             }
+        } else {
+            generateRoutes()
         }
         fetchNotificaitonPicker = NotificationCenter.default.addObserver(
             forName: NSNotification.Name(rawValue: "valuePicker"), object: nil, queue: .main) { (notification) in
@@ -96,7 +94,7 @@ class RouteSelectionViewController: UIViewController, MKMapViewDelegate, UITable
         let wantedValue = isKm ? kmValue*1000 : durationValue
         for _ in 1...5 {
             var total = 0.0
-            let route = Route()
+            let route = Route.init(0, 0, 0, 0, false)
             var dogBags = dogBagArray
             while total < Double(wantedValue)/2 {
                 let closestPoints = getNearestPOIs(location: pointA, dogBags: dogBags)
@@ -213,7 +211,12 @@ class RouteSelectionViewController: UIViewController, MKMapViewDelegate, UITable
     func drawRouteForDogBags(_ route: [DogBag], _ selectedRow: Int) {
         let sourceLocation = routeSelectionMap.userLocation.location?.coordinate
         if sourceLocation != nil {
-            routeArray[selectedRow].setDogbagArray(route)
+            // swiftlint:disable force_try
+            let realm = try! Realm()
+            try! realm.write {
+                routeArray[selectedRow].setDogbagArray(route)
+            }
+            // swiftlint:enable force_try
             drawFromAtoB(sourceLocation.unsafelyUnwrapped, end: route[0].coordinate, selectedRow)
             let routeLength = route.count-1
             for index in 0...routeLength-1 {
@@ -224,6 +227,8 @@ class RouteSelectionViewController: UIViewController, MKMapViewDelegate, UITable
     }
 
     func drawFromAtoB(_ start: CLLocationCoordinate2D, end: CLLocationCoordinate2D, _ selectedRow: Int) {
+        print(start)
+        print(end)
         let sourcePlacemark = MKPlacemark(coordinate: start)
         let destinationPlacemark = MKPlacemark(coordinate: end)
 

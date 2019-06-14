@@ -11,14 +11,8 @@ import RealmSwift
 
 class RoutesViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
 
-    var historyRoutes: [Route] = [Route(30, 4, 5300),
-                                  Route(27, 4, 5025),
-                                  Route(33, 4, 5740),
-                                  Route(34, 3, 5800),
-                                  Route(23, 4, 4700),
-                                  Route(26, 2, 4900)]
-    var favoriteRoutes: [Route] = [Route(30, 4, 5300),
-                                   Route(27, 4, 5025)]
+    var historyRoutes: [Route] = []
+    var favoriteRoutes: [Route] = []
 
     @IBOutlet weak var routesSegmentedControl: UISegmentedControl!
     @IBOutlet weak var routesTableView: UITableView!
@@ -125,10 +119,10 @@ class RoutesViewController: UIViewController, UITableViewDataSource, UITableView
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
 //        if segue.identifier == "showRouteSelectionSegue" {
             // swiftlint:disable force_cast
-           let nextView = segue.destination as! RouteSelectionViewController
-            nextView.routeOverviewOnly = true
+        let nextView = segue.destination as! RouteSelectionViewController
+        nextView.routeOverviewOnly = true
         let num: Int = routesTableView.indexPathForSelectedRow!.row
-        nextView.routeArray = [historyRoutes[num]]
+        nextView.routeArray = routesSegmentedControl.selectedSegmentIndex == 0 ? [favoriteRoutes[num]] : [historyRoutes[num]]
             // swiftlint:enable force_cast
   //      }
     }

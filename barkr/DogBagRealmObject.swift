@@ -11,8 +11,8 @@ import RealmSwift
 import MapKit
 
 class DogBagRealmObject: Object {
-    dynamic var latitude = 0.0
-    dynamic var longitude = 0.0
+    @objc dynamic var latitude = 0.0
+    @objc dynamic var longitude = 0.0
     
     var dogbag: DogBag {
         return DogBag.init(coordinate: CLLocationCoordinate2D(latitude: latitude, longitude: longitude))
