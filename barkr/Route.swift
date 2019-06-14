@@ -35,7 +35,7 @@ class Route: Object {
 
     convenience init(id: Int, time: Int, dogBagCount: Int, distance: Double, favorite: Bool, dogBags: [DogBag]) {
         self.init()
-        self.id = id
+        self.id = incrementID()
         self.time = time
         self.dogBagCount = dogBagCount
         self.distance = distance
