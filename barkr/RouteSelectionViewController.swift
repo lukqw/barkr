@@ -54,17 +54,17 @@ class RouteSelectionViewController: UIViewController, MKMapViewDelegate, UITable
         routeSelectionMap.delegate = self
         routeSelectionMap.register(DogBagView.self,
                                    forAnnotationViewWithReuseIdentifier: MKMapViewDefaultAnnotationViewReuseIdentifier)
-        if(routeArray.count > 0) {
+        if routeArray.count > 0 {
             self.routeSelectionMap.showAnnotations(routeArray[0].getDogbagArray(), animated: true)
             drawRouteForDogBags(routeArray[0].getDogbagArray(), 0)
             routeSelectionTableView.selectRow(at: IndexPath(row: 0, section: 0), animated: false, scrollPosition: .top)
         }
         routeSelectionMap.userTrackingMode = .follow
     }
-    func getNearestPOIs(location: CLLocationCoordinate2D) -> [DogBag] {
+    func getNearestPOIs(location: CLLocationCoordinate2D, dogBags: [DogBag]) -> [DogBag] {
         var resultPOIs = [DogBag]()
         var diffArray = [Double]()
-        for poi in dogBagArray {
+        for poi in dogBags {
             let difference = abs(location.latitude - poi.coordinate.latitude) +
                 abs(location.longitude - poi.coordinate.longitude)
             diffArray.append(difference)
@@ -81,17 +81,20 @@ class RouteSelectionViewController: UIViewController, MKMapViewDelegate, UITable
         let isKm = minKmSegmentedControl.selectedSegmentIndex == 0
         let firstLoc = routeSelectionMap.userLocation.location!.coordinate
         var pointA = routeSelectionMap.userLocation.location!.coordinate
-        var pointB = CLLocationCoordinate2D(latitude: 0, longitude: 0)
+        var pointB = DogBag(coordinate: CLLocationCoordinate2D(latitude: 0, longitude: 0))
         let wantedValue = isKm ? kmValue : durationValue
         for _ in 1...5 {
             var total = 0.0
             let route = Route()
-            while(total < Double(wantedValue)/2 && mkRequests < 1) {
-                let closestPoints = getNearestPOIs(location: pointA)
-                pointB = closestPoints.randomElement()!.coordinate
+            var dogBags = dogBagArray
+            while total < Double(wantedValue)/2 && mkRequests < 1 {
+                let closestPoints = getNearestPOIs(location: pointA, dogBags: dogBags)
+                pointB = closestPoints.randomElement()!
+                let index = dogBags.firstIndex(of: pointB)!
+                dogBags.remove(at: index)
 
                 let sourcePlacemark = MKPlacemark(coordinate: pointA)
-                let destinationPlacemark = MKPlacemark(coordinate: pointB)
+                let destinationPlacemark = MKPlacemark(coordinate: pointB.coordinate)
 
                 let sourceMapItem = MKMapItem(placemark: sourcePlacemark)
                 let destinationMapItem = MKMapItem(placemark: destinationPlacemark)
@@ -117,13 +120,15 @@ class RouteSelectionViewController: UIViewController, MKMapViewDelegate, UITable
                     route.distance += singleroute.distance/1000
                     route.time += Int(singleroute.expectedTravelTime/60)
                     total += isKm ? singleroute.distance/1000 : singleroute.expectedTravelTime/60
-                    pointA = pointB
+                    pointA = pointB.coordinate
                 }
             }
-            while(pointB.latitude != firstLoc.latitude && pointB.longitude != firstLoc.longitude) {
+            while pointB.coordinate.latitude != firstLoc.latitude && pointB.coordinate.longitude != firstLoc.longitude {
                 break
             }
-            routeArray.append(route)
+            if route.distance > 0 {
+                routeArray.append(route)
+            }
         }
     }
     @IBAction func minKmSegmentedControlPressed(_ sender: Any) {
