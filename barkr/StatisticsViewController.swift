@@ -13,7 +13,7 @@ import RealmSwift
 class StatisticsViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
     let statisticsCategoryTitles: [String] = ["Times Walked", "Total Walk Time", "Average Walk Time",
                                               "Total Walk Distance", "Average Walk Distance", "Passed Poo Bag Stations"]
-    let statisticsCategoryValues: [String] = ["10x", "9h 30m", "24 min", "23 km", "2.7km", "29"]
+    var statisticsCategoryValues: [String] = ["10x", "9h 30m", "24 min", "23 km", "2.7km", "29"]
     var currentDate = Date()
     @IBOutlet weak var statisticsTableView: UITableView!
     @IBOutlet weak var barChartView: BarChartView!
@@ -56,13 +56,38 @@ class StatisticsViewController: UIViewController, UITableViewDataSource, UITable
         self.nextWeekButton.setImage(tintedImage, for: .normal)
         self.nextWeekButton.tintColor = self.view.tintColor
         self.previousWeekButton.backgroundRect(forBounds: CGRect.init(x: 0, y: 0, width: 25, height: 25))
+        initializeBarChartView()
+        setChartData()
+        setTableViewData()
+    }
+    func setTableViewData(){
         // swiftlint:disable force_try
         let realm = try! Realm()
         // swiftlint:enable force_try
-        let data = realm.objects(WalkedRoute.self)
-        print(data)
-        initializeBarChartView()
-        setChartData()
+        let beginTimestamp = currentDate.previous(.monday).timeIntervalSince1970.magnitude
+        let endTimestamp = currentDate.next(.monday).timeIntervalSince1970.magnitude
+        let walkedRoutes = realm.objects(WalkedRoute.self).filter("timestamp >= " + String(beginTimestamp) + " AND timestamp <=" + String(endTimestamp))
+        var totalWalkTime = Double(0)
+        var avgWalkTime = Double(0)
+        var totalWalkDistance = Double(0)
+        var avgWalkDistance = Double(0)
+        var passedStations = 0
+        for wkr in walkedRoutes {
+            totalWalkTime += wkr.duration
+            totalWalkDistance += wkr.distance
+            passedStations += wkr.dogbags
+        }
+        if totalWalkTime != Double(0) {avgWalkTime = totalWalkTime / Double(walkedRoutes.count)}
+        if totalWalkDistance != Double(0) {avgWalkDistance = totalWalkDistance / Double(walkedRoutes.count)}
+        statisticsCategoryValues[0] = String(walkedRoutes.count) + "x"
+        var (hours, minutes, _) = secondsToHoursMinutesSeconds(seconds: Int(totalWalkTime))
+        statisticsCategoryValues[1] = String(hours) + "h " + String(minutes) + "m"
+        (hours, minutes, _) = secondsToHoursMinutesSeconds(seconds: Int(avgWalkTime))
+        statisticsCategoryValues[2] = String(hours) + "h " + String(minutes) + "m"
+        statisticsCategoryValues[3] = String(floor(totalWalkDistance/100)/10) + "km"
+        statisticsCategoryValues[4] = String(floor(avgWalkDistance/100)/10) + "km"
+        statisticsCategoryValues[5] = String(passedStations)
+        statisticsTableView.reloadData()
     }
     func initializeBarChartView() {
         barChartView.drawBarShadowEnabled = false
@@ -89,18 +114,26 @@ class StatisticsViewController: UIViewController, UITableViewDataSource, UITable
     func setChartData(_ count: Int = 7) {
         barChartView.clear()
         barChartView.rightAxis.removeAllLimitLines()
+        // swiftlint:disable force_try
+        let realm = try! Realm()
+        // swiftlint:enable force_try
+        var beginTimestamp = currentDate.previous(.monday).timeIntervalSince1970.magnitude
         var avgDuration: Double = 0
         let values = (0..<count).map {(iii) -> ChartDataEntry in
-            let val = Double(arc4random_uniform(150))/100
-            avgDuration += val
-            return BarChartDataEntry(x: Double(iii), y: val)
+            var val = Double(0)
+            let walkedRoutes = realm.objects(WalkedRoute.self).filter("timestamp >= " + String(beginTimestamp) + " AND timestamp <=" + String(beginTimestamp+60*60*24))
+            for rt in walkedRoutes {
+                val += rt.duration
+            }
+            avgDuration += val/(60)
+            beginTimestamp += 60*60*24
+            return BarChartDataEntry(x: Double(iii), y: val/60)
         }
         avgDuration /= Double(count)
         let set = BarChartDataSet(entries: values, label: "Test")
         let data = BarChartData(dataSet: set)
         set.setColor(UIColor(red: 0x2b/255, green: 0x8b/255, blue: 0x38/255, alpha: 1))
         set.highlightEnabled = false
-        set.label = "test"
         set.drawValuesEnabled = false
         //set.highlightEnabled = true
         let avgLine = ChartLimitLine(limit: avgDuration)
@@ -109,6 +142,7 @@ class StatisticsViewController: UIViewController, UITableViewDataSource, UITable
         avgLine.lineWidth = 0.2
         avgLine.lineDashLengths = [3, 3]
         barChartView.rightAxis.addLimitLine(avgLine)
+        avgDuration /= 60
         avgDuration = Double(round(100*avgDuration)/100)
         averageDurationLabel.text = (Int(floor(avgDuration)).description + "h " +
             Int((60 * (avgDuration.truncatingRemainder(dividingBy: 1)))).description + "min")
@@ -125,6 +159,7 @@ class StatisticsViewController: UIViewController, UITableViewDataSource, UITable
         nextWeekButton.isEnabled = true
         currentDate = Calendar.current.date(byAdding: .day, value: -7, to: currentDate)!
         setChartData()
+        setTableViewData()
     }
     @IBAction func next(_ sender: Any) {
         currentDate = Calendar.current.date(byAdding: .day, value: 7, to: currentDate)!
@@ -132,12 +167,16 @@ class StatisticsViewController: UIViewController, UITableViewDataSource, UITable
             nextWeekButton.isEnabled = false
         }
         setChartData()
+        setTableViewData()
     }
     func changeCurrentWeekLabel() {
         let format = DateFormatter()
         format.dateFormat = "w"
         let formattedDate = format.string(from: currentDate)
         weekLabel.text = "Week " + formattedDate
+    }
+    func secondsToHoursMinutesSeconds (seconds : Int) -> (Int, Int, Int) {
+        return (seconds / 3600, (seconds % 3600) / 60, (seconds % 3600) % 60)
     }
 }
 
@@ -162,5 +201,83 @@ extension Date {
     }
     func hasSame(_ component: Calendar.Component, as date: Date) -> Bool {
         return self.compare(with: date, only: component) == 0
+    }
+}
+
+extension Date {
+    
+    static func today() -> Date {
+        return Date()
+    }
+    
+    func next(_ weekday: Weekday, considerToday: Bool = false) -> Date {
+        return get(.Next,
+                   weekday,
+                   considerToday: considerToday)
+    }
+    
+    func previous(_ weekday: Weekday, considerToday: Bool = false) -> Date {
+        return get(.Previous,
+                   weekday,
+                   considerToday: considerToday)
+    }
+    
+    func get(_ direction: SearchDirection,
+             _ weekDay: Weekday,
+             considerToday consider: Bool = false) -> Date {
+        
+        let dayName = weekDay.rawValue
+        
+        let weekdaysName = getWeekDaysInEnglish().map { $0.lowercased() }
+        
+        assert(weekdaysName.contains(dayName), "weekday symbol should be in form \(weekdaysName)")
+        
+        let searchWeekdayIndex = weekdaysName.index(of: dayName)! + 1
+        
+        let calendar = Calendar(identifier: .gregorian)
+        
+        if consider && calendar.component(.weekday, from: self) == searchWeekdayIndex {
+            return self
+        }
+        
+        var nextDateComponent = DateComponents()
+        nextDateComponent.weekday = searchWeekdayIndex
+        
+        
+        let date = calendar.nextDate(after: self,
+                                     matching: nextDateComponent,
+                                     matchingPolicy: .nextTime,
+                                     direction: direction.calendarSearchDirection)
+        
+        return date!
+    }
+    
+}
+
+// MARK: Helper methods
+extension Date {
+    func getWeekDaysInEnglish() -> [String] {
+        var calendar = Calendar(identifier: .gregorian)
+        calendar.locale = Locale(identifier: "en_US_POSIX")
+        return calendar.weekdaySymbols
+    }
+    
+    enum Weekday: String {
+        case monday, tuesday, wednesday, thursday, friday, saturday, sunday
+    }
+    
+    enum SearchDirection {
+        // swiftlint:disable identifier_name
+        case Next
+        case Previous
+        //swiftlint:enable identifier_name
+        var calendarSearchDirection: Calendar.SearchDirection {
+            switch self {
+            case .Next:
+                return .forward
+            case .Previous:
+                return .backward
+            }
+        }
     }
 }
